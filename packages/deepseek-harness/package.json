@@ -1,0 +1,46 @@
+{
+  "name": "@zealagent/plugin-flow-deepseek-harness",
+  "version": "1.0.0-beta.1",
+  "private": true,
+  "type": "module",
+  "description": "PM/Reviewer build workflow with approval gates, launched from a left-sidebar page or the /zla-flow command.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealagent/plugin-flow.git",
+    "directory": "packages/deepseek-harness"
+  },
+  "homepage": "https://github.com/zealagent/plugin-flow/tree/main/packages/deepseek-harness",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "files": [
+    "index.js",
+    "protocol.js",
+    "client.js",
+    "cordis.patch.yml",
+    "config/coder.example.json",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

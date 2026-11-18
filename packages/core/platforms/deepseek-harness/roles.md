@@ -1,0 +1,4 @@
+- `self`: this session does the work.
+- `subagent`: a read-only subagent on this session's default model.
+- `subagent:<provider>/<model>`: a read-only subagent on an explicit provider and model; any provider this session has works.
+- `coder:<profile>[/<alias>]`: a read-only subagent on the provider and real model of that coder.json profile (resolved as in Coder resolution). Only an anthropic or openai profile can hold a role; a command profile cannot, because a CLI coder edits files: say so and ask for another value.

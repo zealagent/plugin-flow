@@ -1,0 +1,12 @@
+{
+  "name": "@zealagent/plugin-flow-core",
+  "version": "1.0.0-beta.1",
+  "private": true,
+  "type": "module",
+  "description": "Shared sources for every zla-flow platform: the protocol, the coder.json template and the icon. Not shipped; platforms get generated copies.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  }
+}

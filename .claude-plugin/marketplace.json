@@ -1,0 +1,14 @@
+{
+  "name": "zealagent",
+  "description": "Zealagent plugins for Claude Code.",
+  "owner": {
+    "name": "nqhed - Huy Ed. Nguyen"
+  },
+  "plugins": [
+    {
+      "name": "zla-flow",
+      "source": "./packages/claude",
+      "description": "PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding, Review, Commit."
+    }
+  ]
+}

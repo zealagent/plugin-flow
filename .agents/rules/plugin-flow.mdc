@@ -1,0 +1,30 @@
+---
+description: Zealagent Plugin Flow monorepo conventions — generated files, platform parity, no vendor lock-in, release limits
+alwaysApply: true
+---
+
+# Zealagent Plugin Flow conventions
+
+- `packages/core` is the only source of the protocol, platform fragments, `coder.json`
+  template and icon. Never edit a generated copy (`SKILL.md`, `protocol.js`, the
+  `config/coder.example.json` files, `icon.svg`, the `CODER_TEMPLATE` block of `client.js`);
+  edit core, run `pnpm sync`, commit both.
+- Platform packages are self-contained when installed: no runtime import from `packages/core`.
+- Every platform keeps the same five ⏸ gate lines, word for word. Platform differences go in
+  `packages/core/platforms/<platform>/*.md` only. Run `pnpm check:parity`.
+- The protocol names no vendor, provider, model, or CLI. Never read, print, store, or commit
+  an API key; config holds the name of an environment variable.
+- Never weaken an approval gate or infer an approval from files on disk.
+- The Harness has no build step: plain JavaScript ESM, no JSX, no bundler, JSDoc for types.
+  The Claude plugin is Markdown and JSON only.
+- The command, skill and plugin are `zla-flow`; the project-side folder is `.zla-flow/`;
+  packages are `@zealagent/plugin-flow-*`. Do not reintroduce `zl-*`, `zap-*`, `zealakit` or
+  `agent-plugins`. Files and folders are `kebab-case`.
+- Biome formats; run `pnpm lint:fix`. Tests use `node:test` only: do not add a second test
+  framework. New behavior ships with a focused test in the owning package.
+- One shared version, changed only with `pnpm set-version <v>`.
+- No `docs/` folder. Documentation lives in the root and package READMEs. Load
+  `.agents/skills/readme-system/SKILL.md` before touching any README.
+- Verify with `pnpm check` before reporting work as done.
+- Agents never publish, tag, push a tag, or create a release; there is no CI publishing.
+- Load `.agents/skills/plugin-flow/SKILL.md` before code, test, docs, or release work.

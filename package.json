@@ -1,0 +1,48 @@
+{
+  "name": "@zealagent/plugin-flow",
+  "version": "1.0.0-beta.1",
+  "private": true,
+  "description": "PM/Reviewer build workflow with a human approval gate at every step (BRD, Plan, delegated coding, Review, Commit): shared sources in packages/core, one plugin per platform.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealagent/plugin-flow.git"
+  },
+  "homepage": "https://github.com/zealagent/plugin-flow#readme",
+  "bugs": {
+    "url": "https://github.com/zealagent/plugin-flow/issues"
+  },
+  "keywords": [
+    "workflow",
+    "pm",
+    "review",
+    "human-in-the-loop",
+    "approval-gates",
+    "claude-code",
+    "plugin",
+    "zealagent"
+  ],
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "sync:check": "node scripts/sync.mjs --check",
+    "test": "node --test \"packages/*/tests/*.test.mjs\" \"scripts/tests/*.test.mjs\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "check": "pnpm sync:check && pnpm typecheck && pnpm test && pnpm lint && pnpm check:parity",
+    "check:parity": "node scripts/check-parity.mjs",
+    "set-version": "node scripts/set-version.mjs",
+    "pack:packages": "node scripts/pack-packages.mjs",
+    "release:check": "pnpm check && pnpm readme:check && pnpm pack:packages",
+    "readme:check": "node scripts/check-readmes.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "@types/node": "^24.19.0",
+    "typescript": "^6.0.3"
+  }
+}
