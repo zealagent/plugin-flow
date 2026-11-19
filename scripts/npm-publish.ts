@@ -2,7 +2,7 @@
  * Manual npm publish for the Plugin Flow platform packages.
  *
  *   pnpm npm:publish:check
- *   pnpm npm:publish:claude | npm:publish:codex | npm:publish:gemini | npm:publish:dsh
+ *   pnpm npm:publish:claude | npm:publish:codex | npm:publish:gemini | npm:publish:opencode | npm:publish:dsh
  *   pnpm npm:publish:all
  *
  * Only the platform packages are published. `@zealakit/agent-plugin-flow-core` is private and
@@ -23,7 +23,7 @@ const PROJECT_ROOT = path.resolve(
 );
 const CORE_NAME = "@zealakit/agent-plugin-flow-core";
 
-type PackageId = "claude" | "codex" | "dsh" | "gemini";
+type PackageId = "claude" | "codex" | "dsh" | "gemini" | "opencode";
 type Command = "check" | PackageId | "all";
 type DependencyField =
   | "dependencies"
@@ -100,6 +100,22 @@ const PACKAGES: PackageMeta[] = [
     ],
   },
   {
+    id: "opencode",
+    label: "OpenCode",
+    expectedName: "@zealakit/agent-plugin-flow-opencode",
+    required: [
+      "commands/zlak-flow.md",
+      "agents/zlak-flow-planner.md",
+      "agents/zlak-flow-reviewer.md",
+      "agents/zlak-flow-coder.md",
+      "config/coder.example.json",
+      "install.mjs",
+      "README.md",
+      "LICENSE",
+      "package.json",
+    ],
+  },
+  {
     id: "dsh",
     label: "DeepSeek Harness",
     expectedName: "@zealakit/agent-plugin-flow-dsh",
@@ -135,18 +151,20 @@ function printHelp(): void {
   pnpm npm:publish:claude
   pnpm npm:publish:codex
   pnpm npm:publish:gemini
+  pnpm npm:publish:opencode
   pnpm npm:publish:dsh
   pnpm npm:publish:all
 
 Or:
-  node --strip-types scripts/npm-publish.ts <check|claude|codex|gemini|dsh|all>
+  node --strip-types scripts/npm-publish.ts <check|claude|codex|gemini|opencode|dsh|all>
 
 check             Run every pre-publish check for all packages (no publish)
 claude            Validate, check, pack and publish @zealakit/agent-plugin-flow-claude
 codex             Validate, check, pack and publish @zealakit/agent-plugin-flow-codex
 gemini            Validate, check, pack and publish @zealakit/agent-plugin-flow-gemini
+opencode          Validate, check, pack and publish @zealakit/agent-plugin-flow-opencode
 dsh               Validate, check, pack and publish @zealakit/agent-plugin-flow-dsh
-all               Publish claude → codex → gemini → dsh sequentially (stops on first failure)
+all               Publish claude → codex → gemini → opencode → dsh sequentially (stops on first failure)
 
 Core (@zealakit/agent-plugin-flow-core) is internal and is never published.
 `);
@@ -163,6 +181,7 @@ function parseCommand(argv: string[]): Command {
     command === "claude" ||
     command === "codex" ||
     command === "gemini" ||
+    command === "opencode" ||
     command === "dsh" ||
     command === "all"
   ) {
@@ -172,7 +191,7 @@ function parseCommand(argv: string[]): Command {
   fail(
     command
       ? `Unknown command "${command}".`
-      : "Missing command. Pass check, claude, codex, gemini, dsh, or all.",
+      : "Missing command. Pass check, claude, codex, gemini, opencode, dsh, or all.",
   );
 }
 

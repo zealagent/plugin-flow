@@ -1,0 +1,12 @@
+{
+  "name": "OpenCode",
+  "format": "skill-md",
+  "output": "commands/zlak-flow.md",
+  "header": "command-header.md",
+  "args": "$ARGUMENTS",
+  "copies": [
+    { "from": "config/coder.example.json", "to": "config/coder.example.json" }
+  ],
+  "manifests": [],
+  "pack": { "type": "pnpm-pack" }
+}

@@ -23,10 +23,11 @@ Plugin Flow 从不跳过关卡，从不自己写代码，也从不保存 API key
 | --- | --- | --- |
 | Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
 | DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| OpenCode | `@zealakit/agent-plugin-flow-opencode` (command `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/opencode/README.md) |
 | Gemini CLI | `@zealakit/agent-plugin-flow-gemini` (extension `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/gemini/README.md) |
 | Codex CLI | `@zealakit/agent-plugin-flow-codex` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/codex/README.md) |
 
-每个平台插件都独立完整，可单独安装。Claude Code、DeepSeek Harness 和 Gemini CLI 通过 `/zlak-flow` 运行；Codex CLI 通过 `$zlak-flow` 运行。
+每个平台插件都独立完整，可单独安装。Claude Code、DeepSeek Harness、Gemini CLI 和 OpenCode 通过 `/zlak-flow` 运行；Codex CLI 通过 `$zlak-flow` 运行。
 
 ## Installation
 
@@ -36,6 +37,7 @@ Claude Code:      /plugin marketplace add zealakit/agent-plugin-flow
 DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
 Codex CLI:        cd packages/codex && ./install.sh
 Gemini CLI:       gemini extensions install ./packages/gemini
+OpenCode:         cd packages/opencode && node install.mjs
 ```
 
 ## License

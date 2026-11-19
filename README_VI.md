@@ -23,10 +23,11 @@ Plugin Flow không bao giờ bỏ qua cổng, không tự viết code và không
 | --- | --- | --- |
 | Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
 | DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| OpenCode | `@zealakit/agent-plugin-flow-opencode` (command `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/opencode/README.md) |
 | Gemini CLI | `@zealakit/agent-plugin-flow-gemini` (extension `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/gemini/README.md) |
 | Codex CLI | `@zealakit/agent-plugin-flow-codex` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/codex/README.md) |
 
-Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Claude Code, DeepSeek Harness và Gemini CLI chạy bằng `/zlak-flow`; Codex CLI chạy bằng `$zlak-flow`.
+Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Claude Code, DeepSeek Harness, Gemini CLI và OpenCode chạy bằng `/zlak-flow`; Codex CLI chạy bằng `$zlak-flow`.
 
 ## Installation
 
@@ -36,6 +37,7 @@ Claude Code:      /plugin marketplace add zealakit/agent-plugin-flow
 DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
 Codex CLI:        cd packages/codex && ./install.sh
 Gemini CLI:       gemini extensions install ./packages/gemini
+OpenCode:         cd packages/opencode && node install.mjs
 ```
 
 ## License
