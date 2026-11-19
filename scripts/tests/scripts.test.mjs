@@ -20,7 +20,7 @@ test("semver: prereleases sort before their release", () => {
 
 test("parity: every platform shares the five gate lines", async () => {
   const platforms = await checkParity();
-  assert.deepEqual(platforms.sort(), ["claude", "dsh"]);
+  assert.deepEqual(platforms.sort(), ["claude", "codex", "dsh"]);
 });
 
 test("parity: gateLines finds gate and part-failed lines", () => {
@@ -34,7 +34,7 @@ test("set-version: writes every file and refuses a lower version", () => {
     cpSync(`${root}${entry}`, `${copy}/${entry}`, { recursive: true });
   }
   const files = setVersion("1.0.0-beta.2", `${copy}/`);
-  assert.equal(files.length, 5);
+  assert.equal(files.length, 6);
   for (const file of files) {
     assert.match(readFileSync(file, "utf8"), /"version": "1\.0\.0-beta\.2"/);
   }

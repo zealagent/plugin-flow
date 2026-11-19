@@ -23,8 +23,9 @@ Plugin Flow không bao giờ bỏ qua cổng, không tự viết code và không
 | --- | --- | --- |
 | Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
 | DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| Codex CLI | `@zealakit/agent-plugin-flow-codex` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/codex/README.md) |
 
-Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Cả hai đều chạy bằng `/zlak-flow`.
+Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Claude Code và DeepSeek Harness chạy bằng `/zlak-flow`; Codex CLI chạy bằng `$zlak-flow`.
 
 ## Installation
 
@@ -32,6 +33,7 @@ Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Cả hai �
 Claude Code:      /plugin marketplace add zealakit/agent-plugin-flow
                   /plugin install zlak-flow@zealakit
 DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
+Codex CLI:        cd packages/codex && ./install.sh
 ```
 
 ## License

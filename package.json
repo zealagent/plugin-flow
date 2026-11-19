@@ -41,6 +41,7 @@
     "readme:check": "node scripts/check-readmes.mjs",
     "npm:publish:check": "node --strip-types scripts/npm-publish.ts check",
     "npm:publish:claude": "node --strip-types scripts/npm-publish.ts claude",
+    "npm:publish:codex": "node --strip-types scripts/npm-publish.ts codex",
     "npm:publish:dsh": "node --strip-types scripts/npm-publish.ts dsh",
     "npm:publish:all": "node --strip-types scripts/npm-publish.ts all"
   },

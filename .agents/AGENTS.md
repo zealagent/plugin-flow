@@ -31,6 +31,7 @@ Load the agent-plugin-flow skill before code, test, docs, or release work.
 | Shared sources: protocol, platform fragments, `coder.json` template, icon | `packages/core/` | `@zealakit/agent-plugin-flow-core` (private, never published) |
 | Claude Code plugin (`/zlak-flow` skill) | `packages/claude/` | `@zealakit/agent-plugin-flow-claude` (installs as `zlak-flow@zealakit`) |
 | DeepSeek Harness bundle (`/zlak-flow` command + sidebar page) | `packages/dsh/` | `@zealakit/agent-plugin-flow-dsh` |
+| Codex CLI skill (`$zlak-flow`) | `packages/codex/` | `@zealakit/agent-plugin-flow-codex` |
 | Claude Code marketplace | `.claude-plugin/marketplace.json` | — |
 | Generator and policy scripts | `scripts/` (`sync`, `check-parity`, `check-readmes`, `set-version`, `pack-packages`, `npm-publish.ts`, `lib/semver`, `lib/platforms`); each platform is described by `packages/core/platforms/<id>/platform.json` | — |
 | Cover image | `assets/images/agent-plugin-flow-cover.jpg` | — |

@@ -2,7 +2,7 @@
  * Manual npm publish for the Plugin Flow platform packages.
  *
  *   pnpm npm:publish:check
- *   pnpm npm:publish:claude | npm:publish:dsh
+ *   pnpm npm:publish:claude | npm:publish:codex | npm:publish:dsh
  *   pnpm npm:publish:all
  *
  * Only the platform packages are published. `@zealakit/agent-plugin-flow-core` is private and
@@ -23,7 +23,7 @@ const PROJECT_ROOT = path.resolve(
 );
 const CORE_NAME = "@zealakit/agent-plugin-flow-core";
 
-type PackageId = "claude" | "dsh";
+type PackageId = "claude" | "codex" | "dsh";
 type Command = "check" | PackageId | "all";
 type DependencyField =
   | "dependencies"
@@ -73,6 +73,20 @@ const PACKAGES: PackageMeta[] = [
     ],
   },
   {
+    id: "codex",
+    label: "Codex CLI",
+    expectedName: "@zealakit/agent-plugin-flow-codex",
+    required: [
+      "skills/zlak-flow/SKILL.md",
+      "skills/zlak-flow/agents/openai.yaml",
+      "config/coder.example.json",
+      "install.sh",
+      "README.md",
+      "LICENSE",
+      "package.json",
+    ],
+  },
+  {
     id: "dsh",
     label: "DeepSeek Harness",
     expectedName: "@zealakit/agent-plugin-flow-dsh",
@@ -106,16 +120,18 @@ function printHelp(): void {
   console.log(`Usage:
   pnpm npm:publish:check
   pnpm npm:publish:claude
+  pnpm npm:publish:codex
   pnpm npm:publish:dsh
   pnpm npm:publish:all
 
 Or:
-  node --strip-types scripts/npm-publish.ts <check|claude|dsh|all>
+  node --strip-types scripts/npm-publish.ts <check|claude|codex|dsh|all>
 
 check             Run every pre-publish check for all packages (no publish)
 claude            Validate, check, pack and publish @zealakit/agent-plugin-flow-claude
-dsh  Validate, check, pack and publish @zealakit/agent-plugin-flow-dsh
-all               Publish claude → dsh sequentially (stops on first failure)
+codex             Validate, check, pack and publish @zealakit/agent-plugin-flow-codex
+dsh               Validate, check, pack and publish @zealakit/agent-plugin-flow-dsh
+all               Publish claude → codex → dsh sequentially (stops on first failure)
 
 Core (@zealakit/agent-plugin-flow-core) is internal and is never published.
 `);
@@ -130,6 +146,7 @@ function parseCommand(argv: string[]): Command {
   if (
     command === "check" ||
     command === "claude" ||
+    command === "codex" ||
     command === "dsh" ||
     command === "all"
   ) {
@@ -139,7 +156,7 @@ function parseCommand(argv: string[]): Command {
   fail(
     command
       ? `Unknown command "${command}".`
-      : "Missing command. Pass check, claude, dsh, or all.",
+      : "Missing command. Pass check, claude, codex, dsh, or all.",
   );
 }
 

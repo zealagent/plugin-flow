@@ -1,0 +1,12 @@
+{
+  "name": "Codex CLI",
+  "format": "skill-md",
+  "output": "skills/zlak-flow/SKILL.md",
+  "header": "skill-header.md",
+  "args": "The user's message that invoked this skill, without the `$zlak-flow` mention. Codex gives skills no argument placeholder: read the message itself.",
+  "copies": [
+    { "from": "config/coder.example.json", "to": "config/coder.example.json" }
+  ],
+  "manifests": [],
+  "pack": { "type": "pnpm-pack" }
+}
