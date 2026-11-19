@@ -1,0 +1,12 @@
+{
+  "name": "Claude Code",
+  "format": "skill-md",
+  "output": "skills/zlak-flow/SKILL.md",
+  "header": "skill-header.md",
+  "args": "$ARGUMENTS",
+  "copies": [
+    { "from": "config/coder.example.json", "to": "config/coder.example.json" }
+  ],
+  "manifests": [".claude-plugin/plugin.json"],
+  "pack": { "type": "tar", "exclude": ["tests", "package.json"] }
+}

@@ -4,12 +4,13 @@
  *
  *   node scripts/check-parity.mjs
  *
- * The shipped protocols are `packages/claude/skills/zlak-flow/SKILL.md` and the
- * `PROTOCOL` constant of `packages/dsh/protocol.js`.
+ * The shipped protocol of each platform is the `output` its platform.json names:
+ * a Markdown file, or the `PROTOCOL` constant of a JS module.
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { platforms } from "./lib/platforms.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 
@@ -24,16 +25,17 @@ export function gateLines(text) {
     .sort();
 }
 
-/** Load every shipped protocol, keyed by platform. */
+/** Load every shipped protocol, keyed by platform, as the platform.json files declare. */
 export async function shippedProtocols() {
-  const harness = await import(`${root}packages/dsh/protocol.js`);
-  return {
-    claude: readFileSync(
-      `${root}packages/claude/skills/zlak-flow/SKILL.md`,
-      "utf8",
-    ),
-    dsh: harness.PROTOCOL,
-  };
+  const loaded = {};
+  for (const platform of platforms()) {
+    const file = `${root}packages/${platform.id}/${platform.output}`;
+    loaded[platform.id] =
+      platform.format === "js-module"
+        ? (await import(pathToFileURL(file).href)).PROTOCOL
+        : readFileSync(file, "utf8");
+  }
+  return loaded;
 }
 
 /** Assert the five gate lines match on every platform. */

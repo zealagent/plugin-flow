@@ -1,0 +1,14 @@
+{
+  "name": "DeepSeek Harness",
+  "format": "js-module",
+  "output": "protocol.js",
+  "header": null,
+  "args": null,
+  "copies": [
+    { "from": "config/coder.example.json", "to": "config/coder.example.json" },
+    { "from": "icon.svg", "to": "icon.svg" }
+  ],
+  "clientTemplate": "client.js",
+  "manifests": [],
+  "pack": { "type": "pnpm-pack" }
+}

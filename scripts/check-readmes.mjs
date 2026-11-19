@@ -3,6 +3,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { platforms } from "./lib/platforms.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://github.com/zealakit/agent-plugin-flow/blob/main";
@@ -10,8 +11,10 @@ const files = ["README.md", "README_VI.md", "README_CN.md"];
 const units = [
   { dir: "", name: "Zealakit Agent Plugin Flow" },
   { dir: "packages/core", name: "Plugin Flow Core" },
-  { dir: "packages/claude", name: "zlak-flow for Claude Code" },
-  { dir: "packages/dsh", name: "zlak-flow for DeepSeek Harness" },
+  ...platforms().map((platform) => ({
+    dir: `packages/${platform.id}`,
+    name: `zlak-flow for ${platform.name}`,
+  })),
 ];
 
 const errors = [];

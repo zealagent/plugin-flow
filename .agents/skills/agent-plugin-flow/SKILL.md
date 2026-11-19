@@ -92,11 +92,13 @@ language but keeps these lines in English.
 
 ## Adding a platform
 
-1. Create `packages/core/platforms/<platform>/` with one `.md` per placeholder the protocol uses.
+1. Create `packages/core/platforms/<platform>/` with one `.md` per placeholder the protocol uses
+   and a `platform.json` (format, output, header, args, copies, manifests, pack; see
+   `scripts/lib/platforms.mjs`).
 2. Create `packages/<platform>/` with its own `package.json` (`@zealakit/agent-plugin-flow-<platform>`,
    the shared version, a `test` script) and `tests/`.
-3. Add its outputs to the `outputs` list in `scripts/sync.mjs` and its protocol to
-   `shippedProtocols()` in `scripts/check-parity.mjs`.
+3. Nothing to register: `sync`, `check-parity`, `set-version`, `pack-packages` and
+   `check-readmes` read `platform.json`. A new `format` needs a builder in `scripts/sync.mjs`.
 4. Run `pnpm sync`, then `pnpm check`. Add the package README (EN/VI/CN) following the
    readme-system skill, and a row in `AGENTS.md` and the root README.
 

@@ -4,10 +4,11 @@
  *   node scripts/set-version.mjs <version>
  *
  * Writes the root package.json, every packages/<name>/package.json and the
- * Claude plugin manifest. Refuses a version lower than the current one.
+ * manifests each platform.json lists. Refuses a version lower than the current one.
  */
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { pathToFileURL, fileURLToPath } from "node:url";
+import { platforms } from "./lib/platforms.mjs";
 import { compare, parse } from "./lib/semver.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -19,7 +20,9 @@ export function versionFiles() {
     ...readdirSync(`${root}packages`).map(
       (name) => `packages/${name}/package.json`,
     ),
-    "packages/claude/.claude-plugin/plugin.json",
+    ...platforms().flatMap((platform) =>
+      platform.manifests.map((file) => `packages/${platform.id}/${file}`),
+    ),
   ];
 }
 
