@@ -5,6 +5,7 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { checkParity, gateLines } from "../check-parity.mjs";
 import { compare, parse } from "../lib/semver.mjs";
+import { parseToml, tomlMultiline } from "../lib/toml-subset.mjs";
 import { setVersion } from "../set-version.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
@@ -20,7 +21,7 @@ test("semver: prereleases sort before their release", () => {
 
 test("parity: every platform shares the five gate lines", async () => {
   const platforms = await checkParity();
-  assert.deepEqual(platforms.sort(), ["claude", "codex", "dsh"]);
+  assert.deepEqual(platforms.sort(), ["claude", "codex", "dsh", "gemini"]);
 });
 
 test("parity: gateLines finds gate and part-failed lines", () => {
@@ -34,7 +35,7 @@ test("set-version: writes every file and refuses a lower version", () => {
     cpSync(`${root}${entry}`, `${copy}/${entry}`, { recursive: true });
   }
   const files = setVersion("1.0.0-beta.2", `${copy}/`);
-  assert.equal(files.length, 6);
+  assert.equal(files.length, 8);
   for (const file of files) {
     assert.match(readFileSync(file, "utf8"), /"version": "1\.0\.0-beta\.2"/);
   }
@@ -59,4 +60,32 @@ test("every package and the plugin manifest share the root version", () => {
     readFileSync(`${root}packages/claude/.claude-plugin/plugin.json`, "utf8"),
   );
   assert.equal(manifest.version, version);
+});
+
+test("toml-subset: tomlMultiline round-trips awkward text exactly", () => {
+  const samples = [
+    "plain\ntext\n",
+    "back\\slash and \"quotes\" and 'single'",
+    "triple ''' inside\n",
+    'triple """ inside\n',
+    "ends with a quote'",
+    "tab\there, bell \u0007, esc \u001b, del \u007f",
+    "unicode ⏸ Phạm 中文\n",
+    "{{args}} !{ @{ {model}\n",
+    "",
+  ];
+  for (const text of samples) {
+    const parsed = parseToml(`k = ${tomlMultiline(text)}\n`);
+    assert.equal(parsed.k, text, JSON.stringify(text));
+  }
+});
+
+test("toml-subset: rejects what it cannot read", () => {
+  assert.throws(() => parseToml("a = 1\n"), /unsupported/);
+  assert.throws(() => parseToml("a = '''x\n"), /unterminated/);
+  assert.throws(() => parseToml('a = "x"\na = "y"\n'), /duplicate/);
+  assert.deepEqual(parseToml('# c\na = "x" # d\n\nb = "y"\n'), {
+    a: "x",
+    b: "y",
+  });
 });

@@ -5,7 +5,9 @@
  *
  * Fields of `platform.json` (paths are relative to `packages/<id>/` unless noted):
  *   name            display name used in READMEs ("Claude Code")
- *   format          "skill-md" (header + protocol + input section) or "js-module" (protocol.js)
+ *   format          "skill-md" (header + protocol + input section), "toml-command" (Gemini
+ *                   command file: description + prompt) or "js-module" (protocol.js)
+ *   description     one line for formats that carry one (toml-command)
  *   output          the shipped protocol file
  *   header          fragment (in the platform folder) put before the protocol, or null
  *   args            host placeholder for the run's input, appended after rendering, or null
@@ -24,7 +26,7 @@ export const repoRoot = fileURLToPath(new URL("../../", import.meta.url));
 
 /**
  * Load every platform definition.
- * @returns {Array<{ id: string, name: string, format: string, output: string, header: string | null, args: string | null, copies: { from: string, to: string }[], clientTemplate?: string, manifests: string[], pack: { type: string, exclude?: string[] } }>}
+ * @returns {Array<{ id: string, name: string, format: string, description?: string, output: string, header: string | null, args: string | null, copies: { from: string, to: string }[], clientTemplate?: string, manifests: string[], pack: { type: string, exclude?: string[] } }>}
  */
 export function platforms() {
   return readdirSync(`${coreDir}platforms`, { withFileTypes: true })

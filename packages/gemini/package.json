@@ -1,0 +1,40 @@
+{
+  "name": "@zealakit/agent-plugin-flow-gemini",
+  "version": "1.0.0-beta.1",
+  "type": "module",
+  "description": "zlak-flow for Gemini CLI: the PM/Reviewer workflow with approval gates, as the /zlak-flow extension command.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git",
+    "directory": "packages/gemini"
+  },
+  "homepage": "https://github.com/zealakit/agent-plugin-flow/tree/main/packages/gemini",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
+  },
+  "keywords": [
+    "gemini-cli",
+    "gemini-extension",
+    "workflow",
+    "human-in-the-loop",
+    "approval-gates",
+    "zealakit"
+  ],
+  "files": [
+    "gemini-extension.json",
+    "commands",
+    "config",
+    "README.md",
+    "README_VI.md",
+    "README_CN.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -23,9 +23,10 @@ Plugin Flow never skips a gate, never writes code itself, and never stores an AP
 | --- | --- | --- |
 | Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
 | DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| Gemini CLI | `@zealakit/agent-plugin-flow-gemini` (extension `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/gemini/README.md) |
 | Codex CLI | `@zealakit/agent-plugin-flow-codex` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/codex/README.md) |
 
-Each platform plugin is self-contained and installs on its own. Claude Code and DeepSeek Harness run it as `/zlak-flow`; Codex CLI runs it as `$zlak-flow`.
+Each platform plugin is self-contained and installs on its own. Claude Code, DeepSeek Harness and Gemini CLI run it as `/zlak-flow`; Codex CLI runs it as `$zlak-flow`.
 
 ## Installation
 
@@ -34,6 +35,7 @@ Claude Code:      /plugin marketplace add zealakit/agent-plugin-flow
                   /plugin install zlak-flow@zealakit
 DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
 Codex CLI:        cd packages/codex && ./install.sh
+Gemini CLI:       gemini extensions install ./packages/gemini
 ```
 
 ## License

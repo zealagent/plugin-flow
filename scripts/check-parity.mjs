@@ -11,6 +11,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { platforms } from "./lib/platforms.mjs";
+import { parseToml } from "./lib/toml-subset.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 
@@ -30,10 +31,13 @@ export async function shippedProtocols() {
   const loaded = {};
   for (const platform of platforms()) {
     const file = `${root}packages/${platform.id}/${platform.output}`;
-    loaded[platform.id] =
-      platform.format === "js-module"
-        ? (await import(pathToFileURL(file).href)).PROTOCOL
-        : readFileSync(file, "utf8");
+    if (platform.format === "js-module") {
+      loaded[platform.id] = (await import(pathToFileURL(file).href)).PROTOCOL;
+    } else if (platform.format === "toml-command") {
+      loaded[platform.id] = parseToml(readFileSync(file, "utf8")).prompt;
+    } else {
+      loaded[platform.id] = readFileSync(file, "utf8");
+    }
   }
   return loaded;
 }

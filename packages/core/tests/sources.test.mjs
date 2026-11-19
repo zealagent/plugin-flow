@@ -49,7 +49,10 @@ test("the coder.json template parses", () => {
 
 test("every platform.json names a known format, an existing header and copy sources", () => {
   for (const platform of definitions) {
-    assert.ok(["skill-md", "js-module"].includes(platform.format), platform.id);
+    assert.ok(
+      ["skill-md", "toml-command", "js-module"].includes(platform.format),
+      platform.id,
+    );
     assert.ok(platform.name && platform.output, `${platform.id}: name, output`);
     if (platform.header) {
       readFileSync(
@@ -57,7 +60,13 @@ test("every platform.json names a known format, an existing header and copy sour
         "utf8",
       );
     }
-    if (platform.format === "skill-md") {
+    if (platform.format === "toml-command") {
+      assert.ok(
+        platform.description,
+        `${platform.id}: a TOML command needs a description`,
+      );
+    }
+    if (platform.format !== "js-module") {
       assert.ok(platform.args, `${platform.id}: a file platform needs args`);
     }
     for (const { from } of platform.copies) {

@@ -42,6 +42,7 @@
     "npm:publish:check": "node --strip-types scripts/npm-publish.ts check",
     "npm:publish:claude": "node --strip-types scripts/npm-publish.ts claude",
     "npm:publish:codex": "node --strip-types scripts/npm-publish.ts codex",
+    "npm:publish:gemini": "node --strip-types scripts/npm-publish.ts gemini",
     "npm:publish:dsh": "node --strip-types scripts/npm-publish.ts dsh",
     "npm:publish:all": "node --strip-types scripts/npm-publish.ts all"
   },
