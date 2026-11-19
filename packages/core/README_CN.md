@@ -1,8 +1,8 @@
 # Plugin Flow Core
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 zla-flow 各平台共用内容的唯一来源。这里的任何内容都不会发布：每个平台插件在安装后都必须自包含，因此 `pnpm sync` 会把生成的副本写入各平台目录，而 `pnpm check` 会在任何副本过期时失败。
 
@@ -15,12 +15,12 @@ zla-flow 各平台共用内容的唯一来源。这里的任何内容都不会�
 
 | Source | Generated into |
 |---|---|
-| `protocol/protocol.md`：工作流协议（阶段、关卡、状态文件、coder 解析、flag、硬性规则） | `packages/claude/skills/zla-flow/SKILL.md`（含 skill frontmatter 与 `$ARGUMENTS`）、`packages/deepseek-harness/protocol.js`（`PROTOCOL`） |
-| `protocol/usage.txt`：唯一的 usage 行 | 两个协议、skill 的 `argument-hint`，以及 `packages/deepseek-harness/protocol.js` 中的 `USAGE` |
+| `protocol/protocol.md`：工作流协议（阶段、关卡、状态文件、coder 解析、flag、硬性规则） | `packages/claude/skills/zla-flow/SKILL.md`（含 skill frontmatter 与 `$ARGUMENTS`）、`packages/dsh/protocol.js`（`PROTOCOL`） |
+| `protocol/usage.txt`：唯一的 usage 行 | 两个协议、skill 的 `argument-hint`，以及 `packages/dsh/protocol.js` 中的 `USAGE` |
 | `platforms/<platform>/*.md`：各平台不同的部分 | 拼接进该平台的协议 |
 | `platforms/claude/skill-header.md`：skill 的 frontmatter | `SKILL.md` 的开头 |
-| `config/coder.example.json`：`coder.json` 模板 | `packages/claude/config/`、`packages/deepseek-harness/config/`，以及 `packages/deepseek-harness/client.js` 中的 `CODER_TEMPLATE` 块 |
-| `icon.svg`：图标 | `packages/deepseek-harness/icon.svg` |
+| `config/coder.example.json`：`coder.json` 模板 | `packages/claude/config/`、`packages/dsh/config/`，以及 `packages/dsh/client.js` 中的 `CODER_TEMPLATE` 块 |
+| `icon.svg`：图标 | `packages/dsh/icon.svg` |
 
 ## Placeholders
 
@@ -54,4 +54,4 @@ zla-flow 各平台共用内容的唯一来源。这里的任何内容都不会�
 
 ## License
 
-MIT © Zealagent
+MIT © Zealamic

@@ -1,0 +1,3 @@
+- insert:
+    - id: zla-flow
+      name: "@zealamic/agent-plugin-flow-dsh"

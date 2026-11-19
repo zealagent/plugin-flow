@@ -1,8 +1,8 @@
 # zla-flow for Claude Code
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 Quy trình xây dựng PM/Reviewer với cổng phê duyệt của con người ở mọi bước, dưới dạng plugin Claude Code: skill `/zla-flow`. Plan và Review có thể chạy trong session hiện tại hoặc trên một model Claude rẻ hơn.
 
@@ -23,8 +23,8 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 Từ marketplace trong repository này:
 
 ```text
-/plugin marketplace add zealagent/plugin-flow
-/plugin install zla-flow@zealagent
+/plugin marketplace add zealamic/agent-plugin-flow
+/plugin install zla-flow@zealamic
 ```
 
 Hoặc nạp trực tiếp từ một bản checkout cho một session:
@@ -50,10 +50,11 @@ reject <reason>
 
 | Flag | Argument | Default | Description |
 | --- | --- | --- | --- |
+| `--setup` | — | — | Ghi hoặc làm mới `coder.json`. Lệnh hỏi bạn giao thức, endpoint và tên biến khóa của từng provider, và ghi ngay. Lệnh cũng thêm `.zla-flow/` vào `.gitignore` nếu chưa được bỏ qua. |
+| `--approve-all` | — | — | Duyệt trước GATE 1, 2 và 3. Vẫn dừng khi có part lỗi, review chưa OK, model chưa resolve hoặc BRD chưa rõ. Không bao giờ commit hay push: bạn nói khi nào commit. |
 | `--planner` | `<use>` | `roles.planner.use`, nếu không có thì `self` | Ai viết kế hoạch. |
 | `--reviewer` | `<use>` | `roles.reviewer.use`, nếu không có thì `self` | Ai review. |
-| `--coder` | `<profile>` | `active` trong `coder.json` | Coder profile cho lần chạy này. |
-| `--model` | `<alias>` | `model` của profile | Alias model trong profile đó. |
+| `--coder` | `model:<profile>[/<alias>]` | `active` trong `coder.json` | Coder profile cho lần chạy này, kèm alias model của profile đó nếu cần. |
 | `--adopt` | `[path]` | — | Tiếp quản một dự án đã có plan, BRD hoặc code. |
 | `--resume` | `<task-id>` | — | Tiếp tục một lần chạy bị gián đoạn từ file trạng thái của nó. |
 | `--from` | `<brd\|plan\|execute\|review>` | — | Bắt đầu từ phase đó khi các artifact trước đó đã có. |
@@ -82,18 +83,18 @@ Plan và Review được chọn từ `--planner` / `--reviewer`, rồi `roles.<r
 | `self` | Session này làm việc đó. Mặc định, đắt nhất. |
 | `subagent` | Một subagent chỉ đọc, dùng model subagent mặc định của session. |
 | `claude:<model>` | Một subagent chỉ đọc trên alias model đó, ví dụ `claude:haiku` hoặc `claude:sonnet`. |
-| `coder:<profile>[/<alias>]` | Công cụ `run_role` của Harness trên profile `coder.json` đó, chỉ đọc. Cần có Harness. |
+| `model:<profile>[/<alias>]` | Công cụ `run_role` của Harness trên profile `coder.json` đó, chỉ đọc. Cần có Harness. |
 
 Planner được giao việc sẽ trả về văn bản plan và session này ghi các file. Vai trò nào thiếu lane sẽ được báo ở GATE 1, và chỉ dùng `self` nếu bạn đồng ý.
 
 ## Coder configuration
 
-`coder.json` là tùy chọn. Để cấu hình coder, hãy sao chép [`config/coder.example.json`](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/config/coder.example.json) vào `.zla-flow/coder.json` trong dự án của bạn và điền endpoint, model và **tên** biến môi trường chứa key. File này giống nhau trên mọi nền tảng của zla-flow. Khi hoàn toàn không có `coder.json`, coder là một subagent biết sửa file của session hiện tại.
+`coder.json` là tùy chọn. Để cấu hình coder, hãy sao chép [`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/config/coder.example.json) vào `.zla-flow/coder.json` trong dự án của bạn và điền endpoint, model và **tên** biến môi trường chứa key. File này giống nhau trên mọi nền tảng của zla-flow. Khi hoàn toàn không có `coder.json`, coder là một subagent biết sửa file của session hiện tại.
 
 | Situation | Lane |
 | --- | --- |
 | Một Harness MCP server đang được kết nối | Harness chạy mọi phần, cho mọi profile. |
-| Không có `coder.json` và không có `--coder`/`--model` | Một subagent biết sửa file của session này. |
+| Không có `coder.json` và không có `--coder` | Một subagent biết sửa file của session này. |
 | Profile `protocol: "command"` | CLI chạy qua Bash với `{model}`, `{prompt_file}`, `{workdir}`, `{branch}`. |
 | Profile `protocol: "anthropic"` | `claude -p` chạy headless trên `base_url`, key được truyền từ `api_key_env`. |
 | Profile `protocol: "openai"` | Cần Harness; nếu không có, lần chạy dừng và báo rõ. |
@@ -110,7 +111,7 @@ Một gói plan mới của nhà cung cấp hiện có là một profile `extend
 "provider-pro": { "extends": "provider-lite", "api_key_env": "PROVIDER_PRO_API_KEY" }
 ```
 
-Một model mới của nhà cung cấp hiện có là một alias trong map `models` của profile đó, dùng như `/zla-flow --model <alias> <task>`. Một nhà cung cấp mới là một profile có `protocol`:
+Một model mới của nhà cung cấp hiện có là một alias trong map `models` của profile đó, dùng như `/zla-flow --coder model:<profile>/<alias> <task>`. Một nhà cung cấp mới là một profile có `protocol`:
 
 | Protocol | Use when | How zla-flow runs it without a Harness |
 | --- | --- | --- |
@@ -142,7 +143,7 @@ packages/claude/
 └── README.md                    this document
 ```
 
-`SKILL.md` và `config/coder.example.json` được sinh ra từ [`packages/core`](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md): hãy sửa giao thức và các fragment của Claude ở đó rồi chạy `pnpm sync` ở thư mục gốc repository. `pnpm check` xác nhận các file được sinh ra còn mới, manifest và skill đúng định dạng, và marketplace ở thư mục gốc trỏ về đây.
+`SKILL.md` và `config/coder.example.json` được sinh ra từ [`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md): hãy sửa giao thức và các fragment của Claude ở đó rồi chạy `pnpm sync` ở thư mục gốc repository. `pnpm check` xác nhận các file được sinh ra còn mới, manifest và skill đúng định dạng, và marketplace ở thư mục gốc trỏ về đây.
 
 ## Limitations
 
@@ -153,4 +154,4 @@ packages/claude/
 
 ## License
 
-MIT © Zealagent. Viết bởi nqhed - Huy Ed. Nguyen.
+MIT © Zealamic. Viết bởi nqhed - Huy Ed. Nguyen.

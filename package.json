@@ -1,5 +1,5 @@
 {
-  "name": "@zealagent/plugin-flow",
+  "name": "@zealamic/agent-plugin-flow",
   "version": "1.0.0-beta.1",
   "private": true,
   "description": "PM/Reviewer build workflow with a human approval gate at every step (BRD, Plan, delegated coding, Review, Commit): shared sources in packages/core, one plugin per platform.",
@@ -7,11 +7,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zealagent/plugin-flow.git"
+    "url": "git+https://github.com/zealamic/agent-plugin-flow.git"
   },
-  "homepage": "https://github.com/zealagent/plugin-flow#readme",
+  "homepage": "https://github.com/zealamic/agent-plugin-flow#readme",
   "bugs": {
-    "url": "https://github.com/zealagent/plugin-flow/issues"
+    "url": "https://github.com/zealamic/agent-plugin-flow/issues"
   },
   "keywords": [
     "workflow",
@@ -21,7 +21,7 @@
     "approval-gates",
     "claude-code",
     "plugin",
-    "zealagent"
+    "zealamic"
   ],
   "type": "module",
   "packageManager": "pnpm@12.18.0",
@@ -38,7 +38,11 @@
     "set-version": "node scripts/set-version.mjs",
     "pack:packages": "node scripts/pack-packages.mjs",
     "release:check": "pnpm check && pnpm readme:check && pnpm pack:packages",
-    "readme:check": "node scripts/check-readmes.mjs"
+    "readme:check": "node scripts/check-readmes.mjs",
+    "npm:publish:check": "node --strip-types scripts/npm-publish.ts check",
+    "npm:publish:claude": "node --strip-types scripts/npm-publish.ts claude",
+    "npm:publish:dsh": "node --strip-types scripts/npm-publish.ts dsh",
+    "npm:publish:all": "node --strip-types scripts/npm-publish.ts all"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.8",

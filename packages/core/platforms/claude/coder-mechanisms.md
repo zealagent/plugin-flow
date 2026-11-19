@@ -10,5 +10,6 @@
 
      Exit code 0 is success; any other exit code, or running longer than timeout_seconds, is a failed part.
    - `openai`: needs a Harness; without one, say so and stop.
+   - `host`: needs a Harness that holds that provider; without one, say so and stop.
 
 For Bash lanes, when timeout_seconds is longer than a foreground Bash call allows, run the job in the background, wait for it to finish, and stop it once timeout_seconds have passed.

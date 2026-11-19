@@ -1,8 +1,8 @@
 # zla-flow for Claude Code
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 每一步都有人工审批关卡的 PM/Reviewer 构建工作流，以 Claude Code 插件的形式提供：`/zla-flow` skill。Plan 和 Review 可以在当前会话中运行，也可以交给更便宜的 Claude 模型。
 
@@ -23,8 +23,8 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 通过本仓库中的 marketplace 安装：
 
 ```text
-/plugin marketplace add zealagent/plugin-flow
-/plugin install zla-flow@zealagent
+/plugin marketplace add zealamic/agent-plugin-flow
+/plugin install zla-flow@zealamic
 ```
 
 或者直接从本地检出加载，仅对当前会话有效：
@@ -50,10 +50,11 @@ reject <reason>
 
 | Flag | Argument | Default | Description |
 | --- | --- | --- | --- |
+| `--setup` | — | — | 写入或刷新 `coder.json`。它会询问每个提供商的协议、端点和密钥变量名，并直接写入。若 `.zla-flow/` 尚未被忽略，它还会将其加入 `.gitignore`。 |
+| `--approve-all` | — | — | 预先批准 GATE 1、2 和 3。遇到失败的部分、未通过的 review、未解析的模型或不清楚的 BRD 时仍会停止。它从不 commit 或 push：由你决定何时 commit。 |
 | `--planner` | `<use>` | `roles.planner.use`，否则 `self` | 由谁编写计划。 |
 | `--reviewer` | `<use>` | `roles.reviewer.use`，否则 `self` | 由谁 review。 |
-| `--coder` | `<profile>` | `coder.json` 中的 `active` | 本次运行使用的 coder profile。 |
-| `--model` | `<alias>` | 该 profile 的 `model` | 该 profile 内的模型别名。 |
+| `--coder` | `model:<profile>[/<alias>]` | `coder.json` 中的 `active` | 本次运行使用的 coder profile，可附带该 profile 内的模型别名。 |
 | `--adopt` | `[path]` | — | 接管一个已经有计划、BRD 或代码的项目。 |
 | `--resume` | `<task-id>` | — | 从状态文件继续一次被中断的运行。 |
 | `--from` | `<brd\|plan\|execute\|review>` | — | 在之前的产物已存在时，从该阶段开始。 |
@@ -82,18 +83,18 @@ Plan 和 Review 先取 `--planner` / `--reviewer`，再取 `.zla-flow/coder.json
 | `self` | 由本会话完成。默认值，成本最高。 |
 | `subagent` | 使用会话默认 subagent 模型的只读 subagent。 |
 | `claude:<model>` | 使用该模型别名的只读 subagent，例如 `claude:haiku` 或 `claude:sonnet`。 |
-| `coder:<profile>[/<alias>]` | 在该 `coder.json` profile 上调用 Harness 的 `run_role` 工具，只读。需要 Harness。 |
+| `model:<profile>[/<alias>]` | 在该 `coder.json` profile 上调用 Harness 的 `run_role` 工具，只读。需要 Harness。 |
 
 被委派的 planner 返回计划文本，由本会话写入文件。缺少对应 lane 的角色会在 GATE 1 报告，只有在你同意时才使用 `self`。
 
 ## Coder configuration
 
-`coder.json` 是可选的。要配置 coder，请把 [`config/coder.example.json`](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/config/coder.example.json) 复制到项目中的 `.zla-flow/coder.json`，并填写端点、模型以及存放 key 的环境变量的**名称**。该文件在 zla-flow 的所有平台上都相同。完全没有 `coder.json` 时，coder 是当前会话中一个能编辑文件的 subagent。
+`coder.json` 是可选的。要配置 coder，请把 [`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/config/coder.example.json) 复制到项目中的 `.zla-flow/coder.json`，并填写端点、模型以及存放 key 的环境变量的**名称**。该文件在 zla-flow 的所有平台上都相同。完全没有 `coder.json` 时，coder 是当前会话中一个能编辑文件的 subagent。
 
 | Situation | Lane |
 | --- | --- |
 | 已连接 Harness MCP 服务器 | 由 Harness 运行每个部分，适用于任何 profile。 |
-| 没有 `coder.json`，也没有 `--coder`/`--model` | 本会话中一个能编辑文件的 subagent。 |
+| 没有 `coder.json`，也没有 `--coder` | 本会话中一个能编辑文件的 subagent。 |
 | Profile `protocol: "command"` | CLI 通过 Bash 运行，并替换 `{model}`、`{prompt_file}`、`{workdir}`、`{branch}`。 |
 | Profile `protocol: "anthropic"` | 针对 `base_url` 以无头方式运行 `claude -p`，key 由 `api_key_env` 传入。 |
 | Profile `protocol: "openai"` | 需要 Harness；没有时运行会停止并说明原因。 |
@@ -110,7 +111,7 @@ Plan 和 Review 先取 `--planner` / `--reviewer`，再取 `.zla-flow/coder.json
 "provider-pro": { "extends": "provider-lite", "api_key_env": "PROVIDER_PRO_API_KEY" }
 ```
 
-现有供应商下的新模型，是该 profile 的 `models` 映射中的一个别名，用法为 `/zla-flow --model <alias> <task>`。新的供应商则是带有 `protocol` 的 profile：
+现有供应商下的新模型，是该 profile 的 `models` 映射中的一个别名，用法为 `/zla-flow --coder model:<profile>/<alias> <task>`。新的供应商则是带有 `protocol` 的 profile：
 
 | Protocol | Use when | How zla-flow runs it without a Harness |
 | --- | --- | --- |
@@ -142,7 +143,7 @@ packages/claude/
 └── README.md                    this document
 ```
 
-`SKILL.md` 和 `config/coder.example.json` 由 [`packages/core`](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md) 生成：请在那里修改协议和 Claude 的 fragment，然后在仓库根目录运行 `pnpm sync`。`pnpm check` 会确认生成的文件是最新的、manifest 和 skill 格式正确，并且根目录的 marketplace 指向这里。
+`SKILL.md` 和 `config/coder.example.json` 由 [`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) 生成：请在那里修改协议和 Claude 的 fragment，然后在仓库根目录运行 `pnpm sync`。`pnpm check` 会确认生成的文件是最新的、manifest 和 skill 格式正确，并且根目录的 marketplace 指向这里。
 
 ## Limitations
 
@@ -153,4 +154,4 @@ packages/claude/
 
 ## License
 
-MIT © Zealagent。作者：nqhed - Huy Ed. Nguyen。
+MIT © Zealamic。作者：nqhed - Huy Ed. Nguyen。

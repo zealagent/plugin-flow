@@ -1,12 +1,12 @@
 ---
-name: plugin-flow-architecture
+name: agent-plugin-flow-architecture
 description: >-
-  Use for any Zealagent Plugin Flow code, test, documentation, or release work:
+  Use for any Zealamic Plugin Flow code, test, documentation, or release work:
   deciding where a change belongs (core source vs. generated copy vs. platform),
   keeping platforms in parity, validating behavior, and packaging releases.
 ---
 
-# Zealagent Plugin Flow
+# Zealamic Plugin Flow
 
 Read `.agents/AGENTS.md` first, then the plan for the work (`plans/`). This file is compact and
 holds no protocol text: the workflow itself lives in `packages/core/protocol/protocol.md`, and
@@ -23,7 +23,7 @@ packages/core  (private source, never shipped)
   icon.svg
         │  pnpm sync  (scripts/sync.mjs)
         ├──> packages/claude            Claude Code plugin: skills/zla-flow/SKILL.md, config/
-        └──> packages/deepseek-harness  Harness bundle: protocol.js, client.js template block, config/, icon.svg
+        └──> packages/dsh  Harness bundle: protocol.js, client.js template block, config/, icon.svg
 .claude-plugin/marketplace.json  ->  packages/claude
 ```
 
@@ -37,9 +37,9 @@ packages/core  (private source, never shipped)
 | Source | Generated into |
 | --- | --- |
 | `protocol/protocol.md` + `platforms/claude/*.md` + `usage.txt` | `packages/claude/skills/zla-flow/SKILL.md` |
-| `protocol/protocol.md` + `platforms/deepseek-harness/*.md` + `usage.txt` | `packages/deepseek-harness/protocol.js` (`USAGE`, `PROTOCOL`) |
-| `config/coder.example.json` | `packages/claude/config/`, `packages/deepseek-harness/config/`, and the `CODER_TEMPLATE` block in `packages/deepseek-harness/client.js` |
-| `icon.svg` | `packages/deepseek-harness/icon.svg` (the Claude `icon.png` is rendered by hand) |
+| `protocol/protocol.md` + `platforms/dsh/*.md` + `usage.txt` | `packages/dsh/protocol.js` (`USAGE`, `PROTOCOL`) |
+| `config/coder.example.json` | `packages/claude/config/`, `packages/dsh/config/`, and the `CODER_TEMPLATE` block in `packages/dsh/client.js` |
+| `icon.svg` | `packages/dsh/icon.svg` (the Claude `icon.png` is rendered by hand) |
 
 `{{usage}}` is the usage line; every other `{{name}}` is the file
 `platforms/<platform>/<name>.md`, trimmed. Every platform needs every fragment the protocol
@@ -52,7 +52,7 @@ uses; an empty file is allowed. `scripts/sync.mjs` is the only writer of generat
 | A phase, gate, flag, state field, or hard rule | `packages/core/protocol/protocol.md`, then `pnpm sync` |
 | Something true for one platform only (how a coder is launched, which roles can be delegated) | `packages/core/platforms/<platform>/<fragment>.md` |
 | A new `coder.json` field or profile default | `packages/core/config/coder.example.json` (all three consumers update on sync) |
-| Panel layout, locale strings, command registration | `packages/deepseek-harness/{client.js,index.js,locale/}` (hand-written) |
+| Panel layout, locale strings, command registration | `packages/dsh/{client.js,index.js,locale/}` (hand-written) |
 | Plugin manifest, icon, marketplace entry | `packages/claude/.claude-plugin/`, `.claude-plugin/marketplace.json` |
 | A new platform | see below |
 
@@ -93,7 +93,7 @@ language but keeps these lines in English.
 ## Adding a platform
 
 1. Create `packages/core/platforms/<platform>/` with one `.md` per placeholder the protocol uses.
-2. Create `packages/<platform>/` with its own `package.json` (`@zealagent/plugin-flow-<platform>`,
+2. Create `packages/<platform>/` with its own `package.json` (`@zealamic/agent-plugin-flow-<platform>`,
    the shared version, a `test` script) and `tests/`.
 3. Add its outputs to the `outputs` list in `scripts/sync.mjs` and its protocol to
    `shippedProtocols()` in `scripts/check-parity.mjs`.
@@ -115,14 +115,14 @@ Manual. Agents prepare and verify; the maintainer publishes.
 1. `pnpm set-version <v>`, `pnpm sync`.
 2. `pnpm release:check`.
 3. Maintainer only: tag, push, publish the Harness bundle, and let `/plugin marketplace add
-   zealagent/plugin-flow` pick up the Claude plugin from the repository.
+   zealamic/agent-plugin-flow` pick up the Claude plugin from the repository.
 
 Agents never tag, push a tag, publish, or create a release. Say which of these steps were not
 run.
 
 ## Documentation
 
-Root README plus one README per published package (`claude`, `deepseek-harness`) and the core
+Root README plus one README per published package (`claude`, `dsh`) and the core
 maintainer README, in EN, VI, and CN. Load `.agents/skills/readme-system/SKILL.md` before
 editing any README. Per-platform READMEs describe the platform in its own words; the protocol
 text is never copied into a README.

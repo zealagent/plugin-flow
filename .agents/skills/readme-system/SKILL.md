@@ -24,19 +24,19 @@ them when porting. Rules later reference the keys, not the literal values.
 
 | Key | Current value | Used by |
 | --- | --- | --- |
-| Project name | `Zealagent Plugin Flow` | Root H1, cover alt text |
-| Org / repo | `zealagent/plugin-flow` | Absolute links |
-| Absolute base | `https://github.com/zealagent/plugin-flow/blob/main` | Every cross-link |
-| Cover image | `<base>/assets/images/plugin-flow-cover.jpg?raw=true` | Root + unit READMEs |
-| License line | `MIT © Zealagent` | Last section |
+| Project name | `Zealamic Plugin Flow` | Root H1, cover alt text |
+| Org / repo | `zealamic/agent-plugin-flow` | Absolute links |
+| Absolute base | `https://github.com/zealamic/agent-plugin-flow/blob/main` | Every cross-link |
+| Cover image | `<base>/assets/images/agent-plugin-flow-cover.jpg?raw=true` | Root + unit READMEs |
+| License line | `MIT © Zealamic` | Last section |
 | Languages | EN `README.md`, VI `README_VI.md`, CN `README_CN.md` | Switcher, parity |
-| Units | root + `packages/{core,claude,deepseek-harness}` | File set, checker |
-| Layouts | claude, deepseek-harness → plugin; core → maintainer | Section 3 |
+| Units | root + `packages/{core,claude,dsh}` | File set, checker |
+| Layouts | claude, dsh → plugin; core → maintainer | Section 3 |
 | Package READMEs excluded | `plans/`, `scripts/` | File structure |
-| Internal agent skills | `.agents/skills/{plugin-flow,readme-system}/SKILL.md` | Never linked from user-facing READMEs |
+| Internal agent skills | `.agents/skills/{agent-plugin-flow,readme-system}/SKILL.md` | Never linked from user-facing READMEs |
 | User-facing integration skills | none (the plugin is the skill) | Root has no `## Agent Skills` section |
 | Checker | `pnpm readme:check` | Pre-flight checklist |
-| Architecture skill | `.agents/skills/plugin-flow/SKILL.md` | Optional pre-read |
+| Architecture skill | `.agents/skills/agent-plugin-flow/SKILL.md` | Optional pre-read |
 
 Canonical `> **Note**` text (the same wording in every README and language):
 
@@ -101,7 +101,7 @@ Pick one layout per unit in the profile and keep its section order. Every layout
 H1 equal to the unit name listed in `scripts/check-readmes.mjs`, language switcher + cover (reuse the root image), canonical
 Note, `## License`, and (except the maintainer layout) `## Install`.
 
-### plugin layout (`claude`, `deepseek-harness`)
+### plugin layout (`claude`, `dsh`)
 
 1. `# zla-flow for <platform>` (for example `zla-flow for Claude Code`)
 2. Language switcher + cover.

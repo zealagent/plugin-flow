@@ -1,8 +1,8 @@
 # zla-flow for DeepSeek Harness
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 A PM/Reviewer build workflow with a human approval gate at every step, brought into DSH as a left-sidebar page plus a `/zla-flow` command. Plan and Review can run in the current session or be delegated to a cheaper or different model; the coder can be any provider, any model, or any CLI this profile can reach. Nothing is pinned to a vendor.
 
@@ -18,7 +18,7 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 
 ## Install
 
-Enable the `@zealagent/plugin-flow-deepseek-harness` bundle in Settings → Plugins, then refresh the page. The `/zla-flow` command and the sidebar entry appear after that.
+Enable the `@zealamic/agent-plugin-flow-dsh` bundle in Settings → Plugins, then refresh the page. The `/zla-flow` command and the sidebar entry appear after that.
 
 ## What it adds
 
@@ -58,7 +58,7 @@ reject <reason>
 ```
 
 Typing the command directly is equivalent:
-`/zla-flow --coder default --model fast Add pagination to GET /orders`.
+`/zla-flow --coder model:default/fast Add pagination to GET /orders`.
 
 ## Phases and gates
 
@@ -113,7 +113,7 @@ Plan and Review are the expensive steps. Each role resolves from the flag, then
 | `self` | This session does the work. Default, most expensive. |
 | `subagent` | A read-only subagent on the profile's default model. |
 | `subagent:<provider>/<model>` | A read-only subagent on an explicit provider and model, for example `subagent:openai/gpt-5.1` or `subagent:deepseek/deepseek-chat`. Any provider the profile has works. |
-| `coder:<profile>[/<alias>]` | A read-only subagent on the provider and model of a `coder.json` profile, optionally with an alias. Only `anthropic` or `openai` profiles: a `command` profile edits files, so it cannot hold a role. |
+| `model:<profile>[/<alias>]` | A read-only subagent on the provider and model of a `coder.json` profile, optionally with an alias. Only `anthropic`, `openai` or `host` profiles: a `command` profile edits files, so it cannot hold a role. |
 
 A delegated role is read-only: it may not edit files, run git writes, or
 commit. The planner and reviewer are named at GATE 1, and the reviewer again at
@@ -135,9 +135,15 @@ reports the failure, names the alternatives, and waits.
 
 ## Coder configuration
 
-`coder.json` is optional. Without it, and without `--coder` or `--model`, the
+`coder.json` is optional. Without it, and without `--coder`, the
 coder is the session default: a file-editing subagent on this session's default
 model, else a connected MCP coder. A CLI coder always needs a profile.
+
+To use the providers this app already holds without writing endpoints or keys,
+run `/zla-flow --setup` once after install. It reads the app's providers and
+models and writes `.zla-flow/coder.json` straight away, with no approval step. It adds one `host` profile per provider and never touches profiles you
+wrote, nor `roles`, `workspace` or `limits`, and it never deletes a profile. It also adds `.zla-flow/` to the project's `.gitignore` when it isn't ignored yet, so the workflow files stay out of your commits. Run it again after you add a
+provider; GATE 1 also tells you when the app has a provider `coder.json` lacks.
 
 A coder that cannot be resolved (a missing profile or alias, a broken
 `extends` chain) never blocks the BRD or the Plan: GATE 1 and GATE 2 show it as
@@ -146,7 +152,7 @@ it.
 
 Create `.zla-flow/coder.json` in the project. The page's **Copy coder.json
 template** button copies a starter file; the same file ships as
-[`config/coder.example.json`](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/config/coder.example.json). It is a convention the
+[`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json). It is a convention the
 workflow reads, not a file DSH validates.
 
 ```jsonc
@@ -176,6 +182,7 @@ workflow reads, not a file DSH validates.
 | `anthropic` | The provider speaks the Anthropic messages API, directly or through a proxy. | `base_url`, `api_key_env`, `model`, `models` |
 | `openai` | The provider speaks the OpenAI chat API: hosted APIs, gateways, vLLM, Ollama, LM Studio. | `base_url`, `api_key_env`, `model`, `models`, `temperature`, `max_tokens` |
 | `command` | Any CLI on the machine: a vendor CLI, an agent CLI, or your own script. | `command`, `env`, `model`, `models`, `timeout_seconds` |
+| `host` | A provider this app already holds, written by `--setup`: no `base_url` and no key. | `provider`, `model`, `models`, `generated` |
 
 A `command` profile's placeholders are `{model}`, `{prompt_file}`, `{workdir}`
 and `{branch}`. The command must edit files in `{workdir}` and exit 0 on success.
@@ -298,10 +305,11 @@ uncommitted changes, the run reports them and stops before executing.
 
 | Flag | Meaning |
 |---|---|
+| `--setup` | Write or refresh `coder.json` from the app's providers and models. |
+| `--approve-all` | Approve GATE 1, 2 and 3 up front. It still stops on a failed part, a review that is not OK, an unresolved model or an unclear BRD. It never commits or pushes: you say when to commit. |
 | `--planner <use>` | Who writes the plan. |
 | `--reviewer <use>` | Who reviews. |
-| `--coder <profile>` | Coder profile for this run. |
-| `--model <alias>` | Model alias inside that profile. |
+| `--coder model:<profile>[/<alias>]` | Coder profile for this run, with an optional model alias from that profile. |
 | `--adopt [path]` | Take over a project that already has plans, a BRD or code. |
 | `--resume <task-id>` | Continue an interrupted run from its state file. |
 | `--from <brd\|plan\|execute\|review>` | Start at that phase when the earlier artifacts exist. |
@@ -316,16 +324,16 @@ failed, and continues at the first part that isn't done.
 
 | Symptom | Check |
 |---|---|
-| The sidebar entry is missing | Settings → Plugins: the `@zealagent/plugin-flow-deepseek-harness` bundle is enabled. After a bundle change, refresh the page. |
+| The sidebar entry is missing | Settings → Plugins: the `@zealamic/agent-plugin-flow-dsh` bundle is enabled. After a bundle change, refresh the page. |
 | `/zla-flow` is not offered | The Host half loads with the process; toggle the plugin row or restart DSH, then start a new session. |
 | Start opens no session | The page opens the workspace of the session on screen, else the most recent workspace. Open a workspace first. |
 | Phase 3 stops immediately | No coder lane: connect an MCP coder, or set a `coders.<name>` profile and point `active` at it. |
-| A profile's model is rejected | The `--model` alias must be a key of that profile's `models` map. |
+| A profile's model is rejected | The alias in `--coder model:<profile>/<alias>` must be a key of that profile's `models` map. |
 
 ## Package layout
 
 ```text
-packages/deepseek-harness/
+packages/dsh/
 ├── package.json            bundle manifest (dsh.bundle.patch + dsh.client)
 ├── cordis.patch.yml        inserts the zla-flow row
 ├── index.js                Host half: the /zla-flow command
@@ -340,7 +348,7 @@ packages/deepseek-harness/
 
 `protocol.js`, `config/coder.example.json`, `icon.svg` and the
 `CODER_TEMPLATE` block in `client.js` are generated from
-[`packages/core`](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md): edit them there and run `pnpm sync` at the
+[`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md): edit them there and run `pnpm sync` at the
 repository root.
 
 `pnpm check` confirms the generated files are current, the embedded
@@ -362,6 +370,6 @@ behaves. Run it after any edit.
 
 ## License
 
-MIT © Zealagent. Written by nqhed - Huy Ed. Nguyen.
+MIT © Zealamic. Written by nqhed - Huy Ed. Nguyen.
 
 The workflow is the same one the Claude Code plugin runs; this package is its DeepSeek Harness port. The page ships English and Vietnamese dictionaries (`locale/en.json`, `locale/vi.json`, and the Client dictionaries), because a DSH plugin follows the reader's active language.

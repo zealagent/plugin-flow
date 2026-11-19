@@ -192,6 +192,11 @@ test("the /zla-flow command", async () => {
     "After PART FAILED",
     "0. No configuration",
     "a command profile cannot",
+    "## Setup",
+    "## Approve all",
+    "git check-ignore",
+    "\u23f8 COMMIT",
+    "HOST PROVIDERS",
   ]) {
     assert.ok(protocol.includes(marker), `protocol mentions ${marker}`);
   }
@@ -222,4 +227,58 @@ test("a rejected start promise surfaces as a failure on the page", async () => {
   find(started, (n) => n.type === "button")[0].props.onClick();
   await new Promise((resolve) => setTimeout(resolve, 0));
   assert.equal(failureSet, "start.failed");
+});
+
+test("the command reads the host's providers and models", async () => {
+  const host = await import(`${root}index.js`);
+  assert.deepEqual(host.inject, ["commands", "llm"]);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: {
+      register: (c) => {
+        commands[c.name] = c;
+      },
+    },
+    llm: {
+      listProviders: () => [
+        { id: "deepseek", name: "DeepSeek" },
+        { id: "byteplus", name: "BytePlus" },
+      ],
+      listModels: async (id) =>
+        id === "deepseek" ? [{ id: "flash" }, "pro"] : [{ name: "flash" }],
+    },
+  });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  let queued;
+  const agent = { followup: (m) => (queued = m) };
+  commands["zla-flow"].handler({ rawInput: "--setup", agent });
+  const text = queued.content[0].text;
+  assert.ok(
+    text.includes("THIS RUN'S INPUT\n--setup\n\nHOST PROVIDERS"),
+    text.slice(-300),
+  );
+  assert.ok(text.includes("- deepseek (DeepSeek): flash, pro"));
+  assert.ok(text.includes("- byteplus (BytePlus): flash"));
+  assert.ok(!/key|token|secret/i.test(text.split("HOST PROVIDERS (read")[1]));
+});
+
+test("the command still runs when the host has no llm service", async () => {
+  const host = await import(`${root}index.js`);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: { register: (c) => (commands[c.name] = c) },
+    llm: {
+      listProviders: () => {
+        throw new Error("down");
+      },
+    },
+  });
+  let queued;
+  commands["zla-flow"].handler({
+    rawInput: "x",
+    agent: { followup: (m) => (queued = m) },
+  });
+  assert.ok(!queued.content[0].text.includes("HOST PROVIDERS (read"));
 });

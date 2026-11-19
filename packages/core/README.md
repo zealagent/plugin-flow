@@ -1,8 +1,8 @@
 # Plugin Flow Core
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 The single source for everything the zla-flow platforms share. Nothing here
 ships: each platform plugin must stay self-contained when installed, so
@@ -18,12 +18,12 @@ ships: each platform plugin must stay self-contained when installed, so
 
 | Source | Generated into |
 |---|---|
-| `protocol/protocol.md`: the workflow protocol (phases, gates, state file, coder resolution, flags, hard rules) | `packages/claude/skills/zla-flow/SKILL.md` (with the skill frontmatter and `$ARGUMENTS`), `packages/deepseek-harness/protocol.js` (`PROTOCOL`) |
-| `protocol/usage.txt`: the one usage line | Both protocols, the skill's `argument-hint`, and `USAGE` in `packages/deepseek-harness/protocol.js` |
+| `protocol/protocol.md`: the workflow protocol (phases, gates, state file, coder resolution, flags, hard rules) | `packages/claude/skills/zla-flow/SKILL.md` (with the skill frontmatter and `$ARGUMENTS`), `packages/dsh/protocol.js` (`PROTOCOL`) |
+| `protocol/usage.txt`: the one usage line | Both protocols, the skill's `argument-hint`, and `USAGE` in `packages/dsh/protocol.js` |
 | `platforms/<platform>/*.md`: what differs per platform | Spliced into that platform's protocol |
 | `platforms/claude/skill-header.md`: the skill frontmatter | The top of `SKILL.md` |
-| `config/coder.example.json`: the `coder.json` template | `packages/claude/config/`, `packages/deepseek-harness/config/`, and the `CODER_TEMPLATE` block in `packages/deepseek-harness/client.js` |
-| `icon.svg`: the icon | `packages/deepseek-harness/icon.svg` |
+| `config/coder.example.json`: the `coder.json` template | `packages/claude/config/`, `packages/dsh/config/`, and the `CODER_TEMPLATE` block in `packages/dsh/client.js` |
+| `icon.svg`: the icon | `packages/dsh/icon.svg` |
 
 ## Placeholders
 
@@ -65,4 +65,4 @@ and removes the placeholder.
 
 ## License
 
-MIT © Zealagent
+MIT © Zealamic

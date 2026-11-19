@@ -1,9 +1,9 @@
 ---
-description: Zealagent Plugin Flow monorepo conventions — generated files, platform parity, no vendor lock-in, release limits
+description: Zealamic Plugin Flow monorepo conventions — generated files, platform parity, no vendor lock-in, release limits
 alwaysApply: true
 ---
 
-# Zealagent Plugin Flow conventions
+# Zealamic Plugin Flow conventions
 
 - `packages/core` is the only source of the protocol, platform fragments, `coder.json`
   template and icon. Never edit a generated copy (`SKILL.md`, `protocol.js`, the
@@ -14,11 +14,11 @@ alwaysApply: true
   `packages/core/platforms/<platform>/*.md` only. Run `pnpm check:parity`.
 - The protocol names no vendor, provider, model, or CLI. Never read, print, store, or commit
   an API key; config holds the name of an environment variable.
-- Never weaken an approval gate or infer an approval from files on disk.
+- Never weaken an approval gate or infer an approval from files on disk. Only the user's own `--approve-all` pre-approves gates 1-3, never the commit.
 - The Harness has no build step: plain JavaScript ESM, no JSX, no bundler, JSDoc for types.
   The Claude plugin is Markdown and JSON only.
 - The command, skill and plugin are `zla-flow`; the project-side folder is `.zla-flow/`;
-  packages are `@zealagent/plugin-flow-*`. Do not reintroduce `zl-*`, `zap-*`, `zealakit` or
+  packages are `@zealamic/agent-plugin-flow-*`. Do not reintroduce `zl-*`, `zap-*`, `zealakit` or
   `agent-plugins`. Files and folders are `kebab-case`.
 - Biome formats; run `pnpm lint:fix`. Tests use `node:test` only: do not add a second test
   framework. New behavior ships with a focused test in the owning package.
@@ -27,4 +27,4 @@ alwaysApply: true
   `.agents/skills/readme-system/SKILL.md` before touching any README.
 - Verify with `pnpm check` before reporting work as done.
 - Agents never publish, tag, push a tag, or create a release; there is no CI publishing.
-- Load `.agents/skills/plugin-flow/SKILL.md` before code, test, docs, or release work.
+- Load `.agents/skills/agent-plugin-flow/SKILL.md` before code, test, docs, or release work.

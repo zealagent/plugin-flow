@@ -1,0 +1,1 @@
+this session cannot list the host's providers, so ask the user, one provider at a time, for its `protocol` (anthropic, openai or command), `base_url`, the NAME of the environment variable that holds its key, and its model ids. Never ask for or accept a key itself. Write each answer as an ordinary profile straight away; generated host profiles are not available here.

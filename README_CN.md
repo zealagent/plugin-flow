@@ -1,8 +1,8 @@
-# Zealagent Plugin Flow
+# Zealamic Plugin Flow
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 为你已在使用的 agent 平台提供的 PM/Reviewer 构建工作流，每一步都有人工审批关卡：BRD、Plan、委派编码、Review、Commit。
 
@@ -21,19 +21,19 @@ Plugin Flow 从不跳过关卡，从不自己写代码，也从不保存 API key
 
 | Platform | Package | Documentation |
 | --- | --- | --- |
-| Claude Code | `@zealagent/plugin-flow-claude` (plugin `zla-flow`) | [README](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README.md) |
-| DeepSeek Harness | `@zealagent/plugin-flow-deepseek-harness` | [README](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README.md) |
+| Claude Code | `@zealamic/agent-plugin-flow-claude` (plugin `zla-flow`) | [README](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README.md) |
+| DeepSeek Harness | `@zealamic/agent-plugin-flow-dsh` | [README](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) |
 
 每个平台插件都独立完整，可单独安装。两者都通过 `/zla-flow` 运行。
 
 ## Installation
 
 ```text
-Claude Code:      /plugin marketplace add zealagent/plugin-flow
-                  /plugin install zla-flow@zealagent
-DeepSeek Harness: enable @zealagent/plugin-flow-deepseek-harness in Settings → Plugins
+Claude Code:      /plugin marketplace add zealamic/agent-plugin-flow
+                  /plugin install zla-flow@zealamic
+DeepSeek Harness: enable @zealamic/agent-plugin-flow-dsh in Settings → Plugins
 ```
 
 ## License
 
-MIT © Zealagent
+MIT © Zealamic

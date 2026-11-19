@@ -180,7 +180,7 @@ importers:
 
   packages/core: {}
 
-  packages/deepseek-harness: {}
+  packages/dsh: {}
 
 packages:
 

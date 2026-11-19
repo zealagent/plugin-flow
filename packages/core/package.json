@@ -1,5 +1,5 @@
 {
-  "name": "@zealagent/plugin-flow-core",
+  "name": "@zealamic/agent-plugin-flow-core",
   "version": "1.0.0-beta.1",
   "private": true,
   "type": "module",

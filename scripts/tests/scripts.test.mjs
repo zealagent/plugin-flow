@@ -20,7 +20,7 @@ test("semver: prereleases sort before their release", () => {
 
 test("parity: every platform shares the five gate lines", async () => {
   const platforms = await checkParity();
-  assert.deepEqual(platforms.sort(), ["claude", "deepseek-harness"]);
+  assert.deepEqual(platforms.sort(), ["claude", "dsh"]);
 });
 
 test("parity: gateLines finds gate and part-failed lines", () => {
@@ -29,7 +29,7 @@ test("parity: gateLines finds gate and part-failed lines", () => {
 });
 
 test("set-version: writes every file and refuses a lower version", () => {
-  const copy = mkdtempSync(`${tmpdir()}/plugin-flow-`);
+  const copy = mkdtempSync(`${tmpdir()}/agent-plugin-flow-`);
   for (const entry of ["package.json", "packages"]) {
     cpSync(`${root}${entry}`, `${copy}/${entry}`, { recursive: true });
   }

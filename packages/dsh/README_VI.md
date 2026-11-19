@@ -1,8 +1,8 @@
 # zla-flow for DeepSeek Harness
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 Quy trình xây dựng PM/Reviewer với cổng phê duyệt của con người ở mọi bước, được đưa vào DSH dưới dạng một trang ở thanh bên trái cùng lệnh `/zla-flow`. Plan và Review có thể chạy trong session hiện tại hoặc giao cho một model rẻ hơn hay khác; coder có thể là bất kỳ nhà cung cấp, model hay CLI nào mà profile này truy cập được. Không có gì bị gắn cứng với một nhà cung cấp.
 
@@ -18,7 +18,7 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 
 ## Install
 
-Bật bundle `@zealagent/plugin-flow-deepseek-harness` trong Settings → Plugins, rồi tải lại trang. Lệnh `/zla-flow` và mục ở thanh bên sẽ xuất hiện sau đó.
+Bật bundle `@zealamic/agent-plugin-flow-dsh` trong Settings → Plugins, rồi tải lại trang. Lệnh `/zla-flow` và mục ở thanh bên sẽ xuất hiện sau đó.
 
 ## What it adds
 
@@ -50,7 +50,7 @@ approve review, commit
 reject <reason>
 ```
 
-Gõ lệnh trực tiếp cũng tương đương: `/zla-flow --coder default --model fast Add pagination to GET /orders`.
+Gõ lệnh trực tiếp cũng tương đương: `/zla-flow --coder model:default/fast Add pagination to GET /orders`.
 
 ## Phases and gates
 
@@ -98,7 +98,7 @@ Plan và Review là các bước tốn kém nhất. Mỗi vai trò được ch�
 | `self` | Session này làm việc đó. Mặc định, đắt nhất. |
 | `subagent` | Một subagent chỉ đọc trên model mặc định của profile. |
 | `subagent:<provider>/<model>` | Một subagent chỉ đọc trên nhà cung cấp và model chỉ định rõ, ví dụ `subagent:openai/gpt-5.1` hoặc `subagent:deepseek/deepseek-chat`. Nhà cung cấp nào profile có đều dùng được. |
-| `coder:<profile>[/<alias>]` | Một subagent chỉ đọc trên nhà cung cấp và model của một profile `coder.json`, có thể kèm alias. Chỉ các profile `anthropic` hoặc `openai`: profile `command` sửa file nên không thể giữ vai trò. |
+| `model:<profile>[/<alias>]` | Một subagent chỉ đọc trên nhà cung cấp và model của một profile `coder.json`, có thể kèm alias. Chỉ các profile `anthropic`, `openai` hoặc `host`: profile `command` sửa file nên không thể giữ vai trò. |
 
 Vai trò được giao là chỉ đọc: không được sửa file, ghi git hay commit. Planner và reviewer được nêu tên ở GATE 1, và reviewer lại được nêu ở GATE 2, để bạn đổi trước khi tốn bất kỳ chi phí nào.
 
@@ -114,11 +114,13 @@ Nó không bao giờ tự thay cơ chế này bằng cơ chế khác sau một l
 
 ## Coder configuration
 
-`coder.json` là tùy chọn. Khi không có nó, cũng không có `--coder` hay `--model`, coder là mặc định của session: một subagent biết sửa file trên model mặc định của session này, nếu không thì một MCP coder đang kết nối. Một CLI coder luôn cần một profile.
+`coder.json` là tùy chọn. Khi không có nó, cũng không có `--coder`, coder là mặc định của session: một subagent biết sửa file trên model mặc định của session này, nếu không thì một MCP coder đang kết nối. Một CLI coder luôn cần một profile.
+
+Để dùng các provider mà app đã có mà không phải ghi endpoint hay khóa, hãy chạy `/zla-flow --setup` một lần sau khi cài. Lệnh đọc provider và model của app, ghi `.zla-flow/coder.json` ngay, không có bước duyệt, và không bao giờ xóa profile. Lệnh cũng thêm `.zla-flow/` vào `.gitignore` của project nếu chưa được bỏ qua, để các file của workflow không lọt vào commit của bạn. Mỗi provider được thêm thành một profile `host`; profile bạn tự viết, cùng `roles`, `workspace` và `limits`, không bị đụng tới. Chạy lại khi thêm provider; GATE 1 cũng báo khi app có provider mà `coder.json` chưa có.
 
 Một coder không chọn được (thiếu profile hoặc alias, chuỗi `extends` bị hỏng) không bao giờ chặn BRD hay Plan: GATE 1 và GATE 2 hiển thị nó là "unresolved" kèm lý do, để bạn sửa kịp thời. Chỉ Phase 3 mới dừng vì nó.
 
-Tạo `.zla-flow/coder.json` trong dự án. Nút **Copy coder.json template** của trang sao chép một file khởi tạo; cùng file đó được phát hành dưới dạng [`config/coder.example.json`](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/config/coder.example.json). Đây là một quy ước mà quy trình đọc, không phải file mà DSH kiểm tra.
+Tạo `.zla-flow/coder.json` trong dự án. Nút **Copy coder.json template** của trang sao chép một file khởi tạo; cùng file đó được phát hành dưới dạng [`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json). Đây là một quy ước mà quy trình đọc, không phải file mà DSH kiểm tra.
 
 ```jsonc
 {
@@ -147,6 +149,7 @@ Tạo `.zla-flow/coder.json` trong dự án. Nút **Copy coder.json template** c
 | `anthropic` | Nhà cung cấp nói API messages của Anthropic, trực tiếp hoặc qua proxy. | `base_url`, `api_key_env`, `model`, `models` |
 | `openai` | Nhà cung cấp nói API chat của OpenAI: API được lưu trữ, gateway, vLLM, Ollama, LM Studio. | `base_url`, `api_key_env`, `model`, `models`, `temperature`, `max_tokens` |
 | `command` | Bất kỳ CLI nào trên máy: CLI của nhà cung cấp, CLI agent, hoặc script của bạn. | `command`, `env`, `model`, `models`, `timeout_seconds` |
+| `host` | Provider mà app đã có sẵn, do `--setup` ghi: không có `base_url` và không có khóa. | `provider`, `model`, `models`, `generated` |
 
 Các placeholder của profile `command` là `{model}`, `{prompt_file}`, `{workdir}` và `{branch}`. Lệnh phải sửa file trong `{workdir}` và thoát với mã 0 khi thành công.
 
@@ -248,10 +251,11 @@ Khi `adopt.require_clean_tree` là true (mặc định) và cây làm việc có
 
 | Flag | Meaning |
 |---|---|
+| `--setup` | Ghi hoặc làm mới `coder.json` từ provider và model của app. |
+| `--approve-all` | Duyệt trước GATE 1, 2 và 3. Vẫn dừng khi có part lỗi, review chưa OK, model chưa resolve hoặc BRD chưa rõ. Không bao giờ commit hay push: bạn nói khi nào commit. |
 | `--planner <use>` | Ai viết plan. |
 | `--reviewer <use>` | Ai review. |
-| `--coder <profile>` | Coder profile cho lần chạy này. |
-| `--model <alias>` | Alias model trong profile đó. |
+| `--coder model:<profile>[/<alias>]` | Coder profile cho lần chạy này, kèm alias model của profile đó nếu cần. |
 | `--adopt [path]` | Tiếp quản một dự án đã có plan, BRD hoặc code. |
 | `--resume <task-id>` | Tiếp tục một lần chạy bị gián đoạn từ file trạng thái của nó. |
 | `--from <brd\|plan\|execute\|review>` | Bắt đầu từ phase đó khi các artifact trước đó đã có. |
@@ -262,16 +266,16 @@ Khi `adopt.require_clean_tree` là true (mặc định) và cây làm việc có
 
 | Symptom | Check |
 |---|---|
-| Mục ở thanh bên bị mất | Settings → Plugins: bundle `@zealagent/plugin-flow-deepseek-harness` đã được bật. Sau khi bundle thay đổi, hãy tải lại trang. |
+| Mục ở thanh bên bị mất | Settings → Plugins: bundle `@zealamic/agent-plugin-flow-dsh` đã được bật. Sau khi bundle thay đổi, hãy tải lại trang. |
 | `/zla-flow` không được đề xuất | Nửa Host nạp cùng tiến trình; hãy bật/tắt dòng plugin hoặc khởi động lại DSH, rồi bắt đầu một session mới. |
 | Start không mở session nào | Trang mở workspace của session đang hiển thị, nếu không thì workspace gần nhất. Hãy mở một workspace trước. |
 | Phase 3 dừng ngay lập tức | Không có coder lane: hãy kết nối một MCP coder, hoặc đặt một profile `coders.<name>` và trỏ `active` vào nó. |
-| Model của profile bị từ chối | Alias `--model` phải là một khóa trong map `models` của profile đó. |
+| Model của profile bị từ chối | Alias trong `--coder model:<profile>/<alias>` phải là một khóa trong map `models` của profile đó. |
 
 ## Package layout
 
 ```text
-packages/deepseek-harness/
+packages/dsh/
 ├── package.json            bundle manifest (dsh.bundle.patch + dsh.client)
 ├── cordis.patch.yml        inserts the zla-flow row
 ├── index.js                Host half: the /zla-flow command
@@ -284,7 +288,7 @@ packages/deepseek-harness/
 └── README.md               this document
 ```
 
-`protocol.js`, `config/coder.example.json`, `icon.svg` và khối `CODER_TEMPLATE` trong `client.js` được sinh ra từ [`packages/core`](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md): hãy sửa chúng ở đó rồi chạy `pnpm sync` ở thư mục gốc repository.
+`protocol.js`, `config/coder.example.json`, `icon.svg` và khối `CODER_TEMPLATE` trong `client.js` được sinh ra từ [`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md): hãy sửa chúng ở đó rồi chạy `pnpm sync` ở thư mục gốc repository.
 
 `pnpm check` xác nhận các file được sinh ra còn mới, mẫu `coder.json` nhúng khớp với `config/coder.example.json`, từ điển EN và VI có cùng các khóa, trang hiển thị được, và trình xử lý lệnh hoạt động đúng. Hãy chạy nó sau mọi chỉnh sửa.
 
@@ -298,6 +302,6 @@ packages/deepseek-harness/
 
 ## License
 
-MIT © Zealagent. Viết bởi nqhed - Huy Ed. Nguyen.
+MIT © Zealamic. Viết bởi nqhed - Huy Ed. Nguyen.
 
 Quy trình này giống hệt quy trình mà plugin Claude Code chạy; gói này là bản chuyển sang DeepSeek Harness. Trang có từ điển tiếng Anh và tiếng Việt (`locale/en.json`, `locale/vi.json`, và các từ điển của Client), vì plugin DSH theo ngôn ngữ đang hoạt động của người đọc.

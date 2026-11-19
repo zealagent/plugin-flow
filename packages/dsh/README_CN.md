@@ -1,8 +1,8 @@
 # zla-flow for DeepSeek Harness
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 每一步都有人工审批关卡的 PM/Reviewer 构建工作流，以左侧边栏页面加 `/zla-flow` 命令的形式引入 DSH。Plan 和 Review 可以在当前会话中运行，也可以委派给更便宜或不同的模型；coder 可以是此 profile 能访问的任何提供商、任何模型或任何 CLI。没有任何内容绑定到特定供应商。
 
@@ -18,7 +18,7 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 
 ## Install
 
-在 Settings → Plugins 中启用 `@zealagent/plugin-flow-deepseek-harness` bundle，然后刷新页面。之后 `/zla-flow` 命令和侧边栏入口就会出现。
+在 Settings → Plugins 中启用 `@zealamic/agent-plugin-flow-dsh` bundle，然后刷新页面。之后 `/zla-flow` 命令和侧边栏入口就会出现。
 
 ## What it adds
 
@@ -50,7 +50,7 @@ approve review, commit
 reject <reason>
 ```
 
-直接输入命令是等价的：`/zla-flow --coder default --model fast Add pagination to GET /orders`。
+直接输入命令是等价的：`/zla-flow --coder model:default/fast Add pagination to GET /orders`。
 
 ## Phases and gates
 
@@ -98,7 +98,7 @@ Plan 和 Review 是成本最高的步骤。每个角色先取 flag，再取 `cod
 | `self` | 由本会话完成。默认值，成本最高。 |
 | `subagent` | 使用该 profile 默认模型的只读 subagent。 |
 | `subagent:<provider>/<model>` | 使用明确指定的提供商和模型的只读 subagent，例如 `subagent:openai/gpt-5.1` 或 `subagent:deepseek/deepseek-chat`。该 profile 拥有的任何提供商都可以使用。 |
-| `coder:<profile>[/<alias>]` | 使用某个 `coder.json` profile 的提供商和模型的只读 subagent，可附带别名。只限 `anthropic` 或 `openai` profile：`command` profile 会编辑文件，因此不能担任角色。 |
+| `model:<profile>[/<alias>]` | 使用某个 `coder.json` profile 的提供商和模型的只读 subagent，可附带别名。只限 `anthropic`、`openai` 或 `host` profile：`command` profile 会编辑文件，因此不能担任角色。 |
 
 被委派的角色是只读的：不得编辑文件、写 git 或提交。planner 和 reviewer 会在 GATE 1 点名，reviewer 在 GATE 2 再次点名，以便你在产生任何成本之前更改。
 
@@ -114,11 +114,13 @@ Phase 3 把一个计划部分交给 coder 并等待。工作流使用该 profile
 
 ## Coder configuration
 
-`coder.json` 是可选的。没有它，也没有 `--coder` 或 `--model` 时，coder 是会话默认值：本会话默认模型上一个能编辑文件的 subagent，否则是已连接的 MCP coder。CLI coder 总是需要一个 profile。
+`coder.json` 是可选的。没有它，也没有 `--coder` 时，coder 是会话默认值：本会话默认模型上一个能编辑文件的 subagent，否则是已连接的 MCP coder。CLI coder 总是需要一个 profile。
+
+若要使用本应用已有的提供商，而不必填写端点或密钥，请在安装后运行一次 `/zla-flow --setup`。它会读取应用的提供商和模型，直接写入 `.zla-flow/coder.json`，无需批准，并且不会删除任何 profile。若 `.zla-flow/` 尚未被忽略，它还会将其加入项目的 `.gitignore`，使工作流文件不会进入你的提交。每个提供商会新增一个 `host` profile；你自己写的 profile，以及 `roles`、`workspace` 和 `limits` 都不会被改动。新增提供商后再次运行即可；当应用有 `coder.json` 中没有的提供商时，GATE 1 也会提示。
 
 无法解析的 coder（缺少 profile 或别名、`extends` 链断裂）绝不会阻塞 BRD 或 Plan：GATE 1 和 GATE 2 会把它显示为“unresolved”并说明原因，以便你及时修复。只有 Phase 3 会因它而停止。
 
-在项目中创建 `.zla-flow/coder.json`。页面上的 **Copy coder.json template** 按钮会复制一个起始文件；同一个文件以 [`config/coder.example.json`](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/config/coder.example.json) 的形式发布。它是工作流读取的约定，而不是 DSH 会校验的文件。
+在项目中创建 `.zla-flow/coder.json`。页面上的 **Copy coder.json template** 按钮会复制一个起始文件；同一个文件以 [`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json) 的形式发布。它是工作流读取的约定，而不是 DSH 会校验的文件。
 
 ```jsonc
 {
@@ -147,6 +149,7 @@ Phase 3 把一个计划部分交给 coder 并等待。工作流使用该 profile
 | `anthropic` | 提供商使用 Anthropic messages API，无论是直接使用还是通过代理。 | `base_url`, `api_key_env`, `model`, `models` |
 | `openai` | 提供商使用 OpenAI 聊天 API：托管 API、网关、vLLM、Ollama、LM Studio。 | `base_url`, `api_key_env`, `model`, `models`, `temperature`, `max_tokens` |
 | `command` | 机器上的任何 CLI：供应商 CLI、agent CLI，或你自己的脚本。 | `command`, `env`, `model`, `models`, `timeout_seconds` |
+| `host` | 本应用已有的提供商，由 `--setup` 写入：没有 `base_url`，也没有密钥。 | `provider`, `model`, `models`, `generated` |
 
 `command` profile 的占位符是 `{model}`、`{prompt_file}`、`{workdir}` 和 `{branch}`。该命令必须编辑 `{workdir}` 中的文件，成功时以 0 退出。
 
@@ -248,10 +251,11 @@ Phase 3 把一个计划部分交给 coder 并等待。工作流使用该 profile
 
 | Flag | Meaning |
 |---|---|
+| `--setup` | 根据应用的提供商和模型写入或刷新 `coder.json`。 |
+| `--approve-all` | 预先批准 GATE 1、2 和 3。遇到失败的部分、未通过的 review、未解析的模型或不清楚的 BRD 时仍会停止。它从不 commit 或 push：由你决定何时 commit。 |
 | `--planner <use>` | 由谁编写计划。 |
 | `--reviewer <use>` | 由谁 review。 |
-| `--coder <profile>` | 本次运行使用的 coder profile。 |
-| `--model <alias>` | 该 profile 内的模型别名。 |
+| `--coder model:<profile>[/<alias>]` | 本次运行使用的 coder profile，可附带该 profile 内的模型别名。 |
 | `--adopt [path]` | 接管一个已经有计划、BRD 或代码的项目。 |
 | `--resume <task-id>` | 从状态文件继续一次被中断的运行。 |
 | `--from <brd\|plan\|execute\|review>` | 在之前的产物已存在时，从该阶段开始。 |
@@ -262,16 +266,16 @@ Phase 3 把一个计划部分交给 coder 并等待。工作流使用该 profile
 
 | Symptom | Check |
 |---|---|
-| 侧边栏入口不见了 | Settings → Plugins：`@zealagent/plugin-flow-deepseek-harness` bundle 已启用。bundle 变更后，请刷新页面。 |
+| 侧边栏入口不见了 | Settings → Plugins：`@zealamic/agent-plugin-flow-dsh` bundle 已启用。bundle 变更后，请刷新页面。 |
 | 没有提供 `/zla-flow` | Host 部分随进程加载；请切换该插件行的开关或重启 DSH，然后开始一个新会话。 |
 | Start 没有打开会话 | 页面会打开当前显示会话的工作区，否则打开最近的工作区。请先打开一个工作区。 |
 | Phase 3 立即停止 | 没有 coder lane：请连接一个 MCP coder，或设置一个 `coders.<name>` profile 并把 `active` 指向它。 |
-| profile 的模型被拒绝 | `--model` 别名必须是该 profile 的 `models` 映射中的一个键。 |
+| profile 的模型被拒绝 | `--coder model:<profile>/<alias>` 中的别名必须是该 profile 的 `models` 映射中的一个键。 |
 
 ## Package layout
 
 ```text
-packages/deepseek-harness/
+packages/dsh/
 ├── package.json            bundle manifest (dsh.bundle.patch + dsh.client)
 ├── cordis.patch.yml        inserts the zla-flow row
 ├── index.js                Host half: the /zla-flow command
@@ -284,7 +288,7 @@ packages/deepseek-harness/
 └── README.md               this document
 ```
 
-`protocol.js`、`config/coder.example.json`、`icon.svg` 以及 `client.js` 中的 `CODER_TEMPLATE` 块由 [`packages/core`](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md) 生成：请在那里修改它们，然后在仓库根目录运行 `pnpm sync`。
+`protocol.js`、`config/coder.example.json`、`icon.svg` 以及 `client.js` 中的 `CODER_TEMPLATE` 块由 [`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) 生成：请在那里修改它们，然后在仓库根目录运行 `pnpm sync`。
 
 `pnpm check` 会确认生成的文件是最新的、内嵌的 `coder.json` 模板与 `config/coder.example.json` 一致、EN 和 VI 词典的键一致、页面可以渲染，以及命令处理器行为正确。每次修改后都请运行它。
 
@@ -298,6 +302,6 @@ packages/deepseek-harness/
 
 ## License
 
-MIT © Zealagent。作者：nqhed - Huy Ed. Nguyen。
+MIT © Zealamic。作者：nqhed - Huy Ed. Nguyen。
 
 该工作流与 Claude Code 插件运行的是同一个；本包是它的 DeepSeek Harness 移植版。页面提供英文和越南文词典（`locale/en.json`、`locale/vi.json` 以及 Client 词典），因为 DSH 插件会跟随读者当前使用的语言。

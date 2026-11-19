@@ -11,7 +11,7 @@
  * host theme tokens only.
  */
 /** @type {any} */ (window).__ModuleLoader__.load({
-  id: "@zealagent/plugin-flow-deepseek-harness",
+  id: "@zealamic/agent-plugin-flow-dsh",
   factory(/** @type {(name: string) => any} */ moduleRequire) {
     const React = moduleRequire("react");
     const h = React.createElement;
@@ -26,14 +26,15 @@
       ["r0", "self"],
       ["r1", "subagent"],
       ["r2", "subagent:<provider>/<model>"],
-      ["r3", "coder:<profile>[/<alias>]"],
+      ["r3", "model:<profile>[/<alias>]"],
     ];
     /** Command flags: syntax is literal, meaning is translated. */
     const FLAG_ROWS = [
+      ["f7", "--setup"],
+      ["f8", "--approve-all"],
       ["f0", "--planner <use>"],
       ["f1", "--reviewer <use>"],
-      ["f2", "--coder <profile>"],
-      ["f3", "--model <alias>"],
+      ["f2", "--coder model:<profile>[/<alias>]"],
       ["f4", "--adopt [path]"],
       ["f5", "--resume <task-id>"],
       ["f6", "--from <phase>"],
@@ -43,6 +44,7 @@
       ["pt0", "anthropic"],
       ["pt1", "openai"],
       ["pt2", "command"],
+      ["pt3", "host"],
     ];
     /** Size and runtime limits with their defaults. */
     const LIMIT_ROWS = [
@@ -77,7 +79,7 @@
      */
     // @generated-start coder-template: packages/core/config/coder.example.json, run pnpm sync
     const CODER_TEMPLATE = `{
-  "_readme": "Save as <project>/.zla-flow/coder.json. 'active' is the default coder profile; override per run with --coder <profile> --model <alias>. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and a profile may 'extends' another and override only what differs.",
+  "_readme": "Save as <project>/.zla-flow/coder.json. 'active' is the default coder profile; override per run with --coder model:<profile>[/<alias>]. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and protocol 'host' names a provider the host app already holds (written by /zla-flow --setup, no base_url or key). A profile may 'extends' another and override only what differs.",
   "version": 6,
   "active": "default",
   "fallback": [],
@@ -163,7 +165,7 @@
       "start.unavailable": "This window cannot open a new session.",
       "start.failed": "Could not copy or start.",
       "start.invalidField":
-        "Coder profile and model alias must be a single word: no spaces or quotes, and not starting with a dash.",
+        "Coder profile and model alias must be a single word: no spaces or quotes, and not starting with a dash. A model alias needs a profile.",
 
       "phases.heading": "Phases and gates",
       "phases.phase": "Phase",
@@ -207,18 +209,21 @@
       "r2.meaning":
         "A read-only subagent on an explicit provider and model, e.g. subagent:openai/gpt-5.1 or subagent:deepseek/deepseek-chat.",
       "r3.meaning":
-        "A read-only subagent on the model of a coder.json profile, optionally with an alias. Anthropic or OpenAI profiles only: a command profile edits files, so it cannot hold a role.",
+        "A read-only subagent on the model of a coder.json profile, optionally with an alias. Anthropic, OpenAI or host profiles only: a command profile edits files, so it cannot hold a role.",
       "roles.note":
         "A delegated role is read-only: no file edits, no git writes, no commits. Name the planner and reviewer at GATE 1 so they can be changed before anything is spent.",
 
       "flags.heading": "Flags",
       "flags.flag": "Flag",
       "flags.meaning": "Meaning",
+      "f7.meaning":
+        "Write or refresh coder.json from the providers and models this app already has. Run it once after install and again when you add a provider; it writes the file straight away, needs no approval, and never deletes a profile.",
+      "f8.meaning":
+        "Approve GATE 1, 2 and 3 up front for this run. It still stops on a failed part, a review that is not OK, an unresolved model, or an unclear BRD. It never commits or pushes: you say when to commit.",
       "f0.meaning": "Who writes the plan.",
       "f1.meaning": "Who reviews.",
       "f2.meaning":
-        "Coder profile for this run, overriding the config default.",
-      "f3.meaning": "Model alias inside that profile, overriding its default.",
+        "Coder profile, optionally with a model alias, for this run; overrides the config default.",
       "f4.meaning":
         "Take over a project that already has plans, a BRD or code.",
       "f5.meaning": "Continue an interrupted run from its state file.",
@@ -235,6 +240,8 @@
         "The provider speaks the OpenAI chat API: hosted APIs, gateways, vLLM, Ollama, LM Studio.",
       "pt2.meaning":
         "Any CLI on the machine: a vendor CLI, an agent CLI, or your own script. Placeholders: {model} {prompt_file} {workdir} {branch}.",
+      "pt3.meaning":
+        "A provider this app already holds, written by --setup: no base_url and no key, the app keeps the credentials.",
       "config.keys":
         "Only environment variable names go in the file (api_key_env). Never write a key, and never pass one through a prompt or a plan.",
       "config.extends":
@@ -306,7 +313,7 @@
       "start.unavailable": "Cửa sổ này không mở được phiên mới.",
       "start.failed": "Không sao chép hoặc mở được.",
       "start.invalidField":
-        "Profile coder và model alias phải là một từ: không có khoảng trắng hay dấu nháy, và không bắt đầu bằng dấu gạch ngang.",
+        "Profile coder và model alias phải là một từ: không có khoảng trắng hay dấu nháy, và không bắt đầu bằng dấu gạch ngang. Model alias cần có profile.",
 
       "phases.heading": "Các phase và cổng",
       "phases.phase": "Phase",
@@ -348,17 +355,21 @@
       "r2.meaning":
         "Subagent chỉ đọc trên provider và model chỉ định, ví dụ subagent:openai/gpt-5.1 hay subagent:deepseek/deepseek-chat.",
       "r3.meaning":
-        "Subagent chỉ đọc chạy bằng model của một profile trong coder.json, kèm alias nếu cần. Chỉ profile anthropic hoặc openai: profile command sửa file nên không giữ vai được.",
+        "Subagent chỉ đọc chạy bằng model của một profile trong coder.json, kèm alias nếu cần. Chỉ profile anthropic, openai hoặc host: profile command sửa file nên không giữ vai được.",
       "roles.note":
         "Vai được giao chỉ có quyền đọc: không sửa file, không ghi git, không commit. Nêu planner và reviewer ngay ở GATE 1 để còn đổi trước khi tốn chi phí.",
 
       "flags.heading": "Cờ",
       "flags.flag": "Cờ",
       "flags.meaning": "Ý nghĩa",
+      "f7.meaning":
+        "Ghi hoặc làm mới coder.json từ các provider và model mà app đã có. Chạy một lần sau khi cài và chạy lại khi thêm provider; lệnh ghi file ngay, không cần duyệt và không bao giờ xóa profile.",
+      "f8.meaning":
+        "Duyệt trước GATE 1, 2 và 3 cho lần chạy này. Vẫn dừng khi có part lỗi, review chưa OK, model chưa resolve hoặc BRD chưa rõ. Không bao giờ commit hay push: bạn nói khi nào commit.",
       "f0.meaning": "Ai viết plan.",
       "f1.meaning": "Ai review.",
-      "f2.meaning": "Profile coder cho lần chạy này, thay giá trị mặc định.",
-      "f3.meaning": "Model alias trong profile đó, thay giá trị mặc định.",
+      "f2.meaning":
+        "Profile coder, có thể kèm model alias, cho lần chạy này; thay giá trị mặc định.",
       "f4.meaning": "Tiếp nhận project đã có plan, BRD hoặc code.",
       "f5.meaning": "Chạy tiếp một lần chạy bị ngắt từ file trạng thái.",
       "f6.meaning": "Bắt đầu ở brd, plan, execute hoặc review.",
@@ -374,6 +385,8 @@
         "Provider nói giao thức OpenAI chat: API hosted, gateway, vLLM, Ollama, LM Studio.",
       "pt2.meaning":
         "Bất kỳ CLI nào trên máy: CLI của hãng, CLI agent, hay script của bạn. Placeholder: {model} {prompt_file} {workdir} {branch}.",
+      "pt3.meaning":
+        "Provider mà app đã có sẵn, do --setup ghi: không có base_url và không có khóa, app giữ thông tin xác thực.",
       "config.keys":
         "Trong file chỉ ghi tên biến môi trường (api_key_env). Không ghi khóa, và không đưa khóa vào prompt hay plan.",
       "config.extends":
@@ -523,8 +536,12 @@
       const parts = ["/zla-flow"];
       const profile = coder.trim();
       const alias = model.trim();
-      if (profile.length > 0) parts.push("--coder", profile);
-      if (alias.length > 0) parts.push("--model", alias);
+      if (profile.length > 0) {
+        parts.push(
+          "--coder",
+          `model:${profile}${alias.length > 0 ? `/${alias}` : ""}`,
+        );
+      }
       const body = task.trim();
       if (body.length > 0) parts.push(body);
       return parts.join(" ");
@@ -583,7 +600,10 @@
       const hasTask = task.trim().length > 0;
       const profileOk = isToken(profile);
       const aliasOk = isToken(alias);
-      const fieldsOk = profileOk && aliasOk;
+      const fieldsOk =
+        profileOk &&
+        aliasOk &&
+        (alias.trim().length === 0 || profile.trim().length > 0);
       const canRun = hasTask && fieldsOk;
 
       /** Copy one payload and flash which button succeeded. */

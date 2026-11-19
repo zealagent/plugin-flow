@@ -17,7 +17,7 @@ const version = JSON.parse(readFileSync(`${root}package.json`, "utf8")).version;
 rmSync(artifacts, { recursive: true, force: true });
 mkdirSync(artifacts, { recursive: true });
 
-const claudeFile = `${artifacts}/zealagent-plugin-flow-claude-${version}.tgz`;
+const claudeFile = `${artifacts}/zealamic-agent-plugin-flow-claude-${version}.tgz`;
 execFileSync(
   "tar",
   [
@@ -34,6 +34,6 @@ execFileSync(
 console.log(`packed ${claudeFile}`);
 
 execFileSync("pnpm", ["pack", "--pack-destination", artifacts], {
-  cwd: `${root}packages/deepseek-harness`,
+  cwd: `${root}packages/dsh`,
   stdio: "inherit",
 });

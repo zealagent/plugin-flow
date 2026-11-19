@@ -5,8 +5,8 @@
   "author": {
     "name": "nqhed - Huy Ed. Nguyen"
   },
-  "homepage": "https://github.com/zealagent/plugin-flow/tree/main/packages/claude",
-  "repository": "https://github.com/zealagent/plugin-flow",
+  "homepage": "https://github.com/zealamic/agent-plugin-flow/tree/main/packages/claude",
+  "repository": "https://github.com/zealamic/agent-plugin-flow",
   "license": "MIT",
   "keywords": [
     "workflow",

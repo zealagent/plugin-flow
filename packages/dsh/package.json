@@ -1,17 +1,16 @@
 {
-  "name": "@zealagent/plugin-flow-deepseek-harness",
+  "name": "@zealamic/agent-plugin-flow-dsh",
   "version": "1.0.0-beta.1",
-  "private": true,
   "type": "module",
   "description": "PM/Reviewer build workflow with approval gates, launched from a left-sidebar page or the /zla-flow command.",
   "author": "nqhed - Huy Ed. Nguyen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zealagent/plugin-flow.git",
-    "directory": "packages/deepseek-harness"
+    "url": "git+https://github.com/zealamic/agent-plugin-flow.git",
+    "directory": "packages/dsh"
   },
-  "homepage": "https://github.com/zealagent/plugin-flow/tree/main/packages/deepseek-harness",
+  "homepage": "https://github.com/zealamic/agent-plugin-flow/tree/main/packages/dsh",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -29,7 +28,10 @@
     "config/coder.example.json",
     "locale/*.json",
     "icon.svg",
-    "README.md"
+    "README.md",
+    "README_VI.md",
+    "README_CN.md",
+    "LICENSE"
   ],
   "dsh": {
     "bundle": {
@@ -42,5 +44,11 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "bugs": {
+    "url": "https://github.com/zealamic/agent-plugin-flow/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

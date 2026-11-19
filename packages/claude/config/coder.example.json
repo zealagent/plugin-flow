@@ -1,5 +1,5 @@
 {
-  "_readme": "Save as <project>/.zla-flow/coder.json. 'active' is the default coder profile; override per run with --coder <profile> --model <alias>. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and a profile may 'extends' another and override only what differs.",
+  "_readme": "Save as <project>/.zla-flow/coder.json. 'active' is the default coder profile; override per run with --coder model:<profile>[/<alias>]. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and protocol 'host' names a provider the host app already holds (written by /zla-flow --setup, no base_url or key). A profile may 'extends' another and override only what differs.",
   "version": 6,
   "active": "default",
   "fallback": [],

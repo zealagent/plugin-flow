@@ -1,0 +1,1 @@
+the host's providers and models are listed under HOST PROVIDERS at the end of THIS RUN'S INPUT, read from the app itself. Use only that list; never guess a provider or a model id. If it is missing or empty, say so and stop: the app has no provider this plugin can read.

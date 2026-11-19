@@ -5,7 +5,7 @@
  *   node scripts/check-parity.mjs
  *
  * The shipped protocols are `packages/claude/skills/zla-flow/SKILL.md` and the
- * `PROTOCOL` constant of `packages/deepseek-harness/protocol.js`.
+ * `PROTOCOL` constant of `packages/dsh/protocol.js`.
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -26,13 +26,13 @@ export function gateLines(text) {
 
 /** Load every shipped protocol, keyed by platform. */
 export async function shippedProtocols() {
-  const harness = await import(`${root}packages/deepseek-harness/protocol.js`);
+  const harness = await import(`${root}packages/dsh/protocol.js`);
   return {
     claude: readFileSync(
       `${root}packages/claude/skills/zla-flow/SKILL.md`,
       "utf8",
     ),
-    "deepseek-harness": harness.PROTOCOL,
+    dsh: harness.PROTOCOL,
   };
 }
 

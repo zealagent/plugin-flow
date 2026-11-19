@@ -1,8 +1,8 @@
-# Zealagent Plugin Flow
+# Zealamic Plugin Flow
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 A PM/Reviewer build workflow with a human approval gate at every step, for the agent platforms you already use: BRD, Plan, delegated coding, Review, Commit.
 
@@ -21,19 +21,19 @@ Plugin Flow never skips a gate, never writes code itself, and never stores an AP
 
 | Platform | Package | Documentation |
 | --- | --- | --- |
-| Claude Code | `@zealagent/plugin-flow-claude` (plugin `zla-flow`) | [README](https://github.com/zealagent/plugin-flow/blob/main/packages/claude/README.md) |
-| DeepSeek Harness | `@zealagent/plugin-flow-deepseek-harness` | [README](https://github.com/zealagent/plugin-flow/blob/main/packages/deepseek-harness/README.md) |
+| Claude Code | `@zealamic/agent-plugin-flow-claude` (plugin `zla-flow`) | [README](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README.md) |
+| DeepSeek Harness | `@zealamic/agent-plugin-flow-dsh` | [README](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) |
 
 Each platform plugin is self-contained and installs on its own. Both are run as `/zla-flow`.
 
 ## Installation
 
 ```text
-Claude Code:      /plugin marketplace add zealagent/plugin-flow
-                  /plugin install zla-flow@zealagent
-DeepSeek Harness: enable @zealagent/plugin-flow-deepseek-harness in Settings → Plugins
+Claude Code:      /plugin marketplace add zealamic/agent-plugin-flow
+                  /plugin install zla-flow@zealamic
+DeepSeek Harness: enable @zealamic/agent-plugin-flow-dsh in Settings → Plugins
 ```
 
 ## License
 
-MIT © Zealagent
+MIT © Zealamic

@@ -4,13 +4,15 @@
     "allowJs": true,
     "checkJs": true,
     "noImplicitAny": false,
-    "types": ["node"]
+    "types": ["node"],
+    "allowImportingTsExtensions": true
   },
   "include": [
     "scripts/**/*.mjs",
+    "scripts/**/*.ts",
     "packages/*/scripts/**/*.mjs",
     "packages/*/tests/**/*.mjs",
-    "packages/deepseek-harness/index.js",
-    "packages/deepseek-harness/client.js"
+    "packages/dsh/index.js",
+    "packages/dsh/client.js"
   ]
 }

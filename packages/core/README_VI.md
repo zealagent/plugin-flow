@@ -1,8 +1,8 @@
 # Plugin Flow Core
 
-[English](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealagent/plugin-flow/blob/main/packages/core/README_CN.md)
+[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_CN.md)
 
-![Zealagent Plugin Flow cover](https://github.com/zealagent/plugin-flow/blob/main/assets/images/plugin-flow-cover.jpg?raw=true)
+![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 Nguồn duy nhất cho mọi thứ mà các nền tảng zla-flow dùng chung. Không có gì ở đây được phát hành: mỗi plugin nền tảng phải tự chứa đủ khi cài đặt, nên `pnpm sync` ghi các bản sao được sinh ra vào thư mục từng nền tảng, và `pnpm check` thất bại khi có bản sao nào đã cũ.
 
@@ -15,12 +15,12 @@ Nguồn duy nhất cho mọi thứ mà các nền tảng zla-flow dùng chung. K
 
 | Source | Generated into |
 |---|---|
-| `protocol/protocol.md`: giao thức quy trình (phase, cổng, file trạng thái, cách chọn coder, flag, quy tắc cứng) | `packages/claude/skills/zla-flow/SKILL.md` (kèm frontmatter của skill và `$ARGUMENTS`), `packages/deepseek-harness/protocol.js` (`PROTOCOL`) |
-| `protocol/usage.txt`: dòng usage duy nhất | Cả hai giao thức, `argument-hint` của skill, và `USAGE` trong `packages/deepseek-harness/protocol.js` |
+| `protocol/protocol.md`: giao thức quy trình (phase, cổng, file trạng thái, cách chọn coder, flag, quy tắc cứng) | `packages/claude/skills/zla-flow/SKILL.md` (kèm frontmatter của skill và `$ARGUMENTS`), `packages/dsh/protocol.js` (`PROTOCOL`) |
+| `protocol/usage.txt`: dòng usage duy nhất | Cả hai giao thức, `argument-hint` của skill, và `USAGE` trong `packages/dsh/protocol.js` |
 | `platforms/<platform>/*.md`: phần khác nhau theo từng nền tảng | Được ghép vào giao thức của nền tảng đó |
 | `platforms/claude/skill-header.md`: frontmatter của skill | Đầu file `SKILL.md` |
-| `config/coder.example.json`: mẫu `coder.json` | `packages/claude/config/`, `packages/deepseek-harness/config/`, và khối `CODER_TEMPLATE` trong `packages/deepseek-harness/client.js` |
-| `icon.svg`: biểu tượng | `packages/deepseek-harness/icon.svg` |
+| `config/coder.example.json`: mẫu `coder.json` | `packages/claude/config/`, `packages/dsh/config/`, và khối `CODER_TEMPLATE` trong `packages/dsh/client.js` |
+| `icon.svg`: biểu tượng | `packages/dsh/icon.svg` |
 
 ## Placeholders
 
@@ -54,4 +54,4 @@ Nguồn duy nhất cho mọi thứ mà các nền tảng zla-flow dùng chung. K
 
 ## License
 
-MIT © Zealagent
+MIT © Zealamic
