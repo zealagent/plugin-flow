@@ -4,7 +4,7 @@
  *
  * - The coder.json template embedded in client.js is byte-identical to
  *   config/coder.example.json, and both parse as JSON.
- * - The Client EN and VI dictionaries have the same keys.
+ * - The Client EN, VI and ZH dictionaries have the same keys.
  * - The Panel renders with stub React and every t() key it asks for exists.
  * - The /zlak-flow command handler returns usage, refuses without a session,
  *   and queues the protocol plus the run's input.
@@ -78,7 +78,7 @@ factory.apply({
 assert.ok(styles.includes(".zlak-page"), "styles injected");
 
 const source = read("client.js");
-const { en, vi } = dictionaries["zlak-flow"];
+const { en, vi, zh } = dictionaries["zlak-flow"];
 const asked = new Set();
 const t = (key) => {
   asked.add(key);
@@ -110,8 +110,24 @@ test("the embedded coder template matches config/coder.example.json", () => {
   JSON.parse(template);
 });
 
-test("EN and VI dictionaries have the same keys", () => {
+test("EN, VI and ZH dictionaries have the same keys", () => {
   assert.deepEqual(Object.keys(vi).sort(), Object.keys(en).sort());
+  assert.deepEqual(Object.keys(zh).sort(), Object.keys(en).sort());
+});
+
+test("every locale file has a title and description", () => {
+  for (const id of ["en", "vi", "zh"]) {
+    const { meta } = JSON.parse(read(`locale/${id}.json`));
+    assert.equal(meta.title, "zlak-flow", id);
+    assert.ok(meta.description.length > 100, id);
+  }
+});
+
+test("the primary button text uses the host's on-color token", () => {
+  assert.match(
+    source,
+    /\.zlak-primary\{[^}]*color:var\(--dsw-alias-label-on-color/,
+  );
 });
 
 test("the panel renders and every key it asks for exists", () => {

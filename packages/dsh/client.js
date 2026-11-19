@@ -433,6 +433,141 @@
       "footer.author": "Tạo bởi nqhed - Huy Ed. Nguyen",
     };
 
+    const ZH = {
+      panel: "zlak-flow",
+      subtitle:
+        "PM/Reviewer 工作流：BRD、Plan、Execute、Review、Commit。运行会在每个关卡停下，等待你的决定。",
+
+      "start.heading": "开始一次运行",
+      "start.task": "Task",
+      "start.taskPlaceholder":
+        "例如：为 GET /orders 添加分页，最多 100 行，并编写单元测试。",
+      "start.coder": "Coder profile（可选）",
+      "start.coderPlaceholder": "default",
+      "start.model": "Model alias（可选）",
+      "start.modelPlaceholder": "default",
+      "start.primary": "在新会话中开始",
+      "start.copy": "复制命令",
+      "start.copied": "已复制",
+      "start.template": "复制 coder.json 模板",
+      "start.hint":
+        "命令会在新会话中打开；在那里按 Enter 开始。任何参数也可以直接输入到 task 框中。",
+      "start.unavailable": "此窗口无法打开新会话。",
+      "start.failed": "无法复制或启动。",
+      "start.invalidField":
+        "Coder profile 和 model alias 必须是单个词：不能有空格或引号，也不能以连字符开头。填写 model alias 时必须同时填写 profile。",
+
+      "phases.heading": "各 Phase 与关卡",
+      "phases.phase": "Phase",
+      "phases.work": "做什么",
+      "phases.gate": "关卡",
+      "phases.note":
+        "本页只用于启动和查阅。进度、plan 各部分和审批都在对话中进行。",
+      "p0.name": "Adopt",
+      "p0.work":
+        "扫描现有的 plan、BRD 和代码；为每个部分标注证据。在 .zlak-flow/ 之外只读。",
+      "p0.gate": "⏸ GATE 0",
+      "p1.name": "BRD",
+      "p1.work": "目标、范围、范围之外、需求、验收标准、风险。",
+      "p1.gate": "⏸ GATE 1",
+      "p2.name": "Plan",
+      "p2.work": "编号的 plan 文件，每个都小到足够一次 coder 运行完成。",
+      "p2.gate": "⏸ GATE 2",
+      "p3.name": "Execute",
+      "p3.work": "按索引顺序一次一个部分；遇到第一次失败就停止。不提交。",
+      "p3.gate": "⏸ 仅在失败时",
+      "p4.name": "Review",
+      "p4.work": "阅读真实的 diff，每个部分一遍，每条发现都附上文件和行号。",
+      "p4.gate": "⏸ GATE 3",
+      "p5.name": "Commit",
+      "p5.work": "一次带清晰说明的 git commit；报告哈希。绝不 push。",
+      "p5.gate": "GATE 3 之后",
+
+      "roles.heading": "角色与成本",
+      "roles.intro":
+        "Plan 和 Review 可以在这里运行，也可以委派给更便宜或不同的模型。没有任何内容绑定到特定供应商：工作流使用此 profile 提供的任何 provider。",
+      "roles.value": "取值",
+      "roles.meaning": "含义",
+      "r0.meaning": "由本会话完成。默认值，成本最高。",
+      "r1.meaning": "使用此 profile 默认模型的只读 subagent。",
+      "r2.meaning":
+        "使用明确 provider 和模型的只读 subagent，例如 subagent:openai/gpt-5.1 或 subagent:deepseek/deepseek-chat。",
+      "r3.meaning":
+        "使用某个 coder.json profile 的模型（可带别名）的只读 subagent。仅限 Anthropic、OpenAI 或 host profile：command profile 会编辑文件，因此不能担任角色。",
+      "roles.note":
+        "被委派的角色是只读的：不编辑文件、不写 git、不提交。请在 GATE 1 指定 planner 和 reviewer，以便在花费任何成本之前修改。",
+
+      "flags.heading": "参数",
+      "flags.flag": "参数",
+      "flags.meaning": "含义",
+      "f7.meaning":
+        "根据本应用已有的 provider 和模型写入或刷新 coder.json。安装后运行一次，添加 provider 后再运行；它会立即写入文件，无需批准，也从不删除 profile。",
+      "f8.meaning":
+        "为本次运行预先批准 GATE 1、2 和 3。遇到失败的部分、未通过的 review、未解析的模型或不清楚的 BRD 时仍会停止。它从不提交或 push：何时提交由你决定。",
+      "f0.meaning": "谁来写 plan。",
+      "f1.meaning": "谁来 review。",
+      "f2.meaning":
+        "本次运行的 coder profile，可带 model alias；覆盖配置中的默认值。",
+      "f4.meaning": "接手已经有 plan、BRD 或代码的项目。",
+      "f5.meaning": "从状态文件继续被中断的运行。",
+      "f6.meaning": "从 brd、plan、execute 或 review 开始。",
+
+      "config.heading": "项目配置",
+      "config.intro":
+        "运行时会在 .zlak-flow/coder.json 存在时读取它。这是本工作流遵循的约定，不是 DSH 校验的文件；请复制下面的模板，并填写端点、模型和环境变量名称。",
+      "config.protocol": "Protocol",
+      "config.when": "适用场景",
+      "pt0.meaning":
+        "provider 使用 Anthropic messages API，直接使用或经由代理。",
+      "pt1.meaning":
+        "provider 使用 OpenAI chat API：托管 API、网关、vLLM、Ollama、LM Studio。",
+      "pt2.meaning":
+        "机器上的任何 CLI：厂商 CLI、agent CLI 或你自己的脚本。占位符：{model} {prompt_file} {workdir} {branch}。",
+      "pt3.meaning":
+        "本应用已持有的 provider，由 --setup 写入：没有 base_url 也没有 key，凭据由应用保管。",
+      "config.keys":
+        "文件中只写环境变量的名称（api_key_env）。绝不写入 key，也绝不通过 prompt 或 plan 传递 key。",
+      "config.extends":
+        "一个 profile 可以扩展另一个并只覆盖不同之处，因此同一 provider 的两个套餐除 key 或模型外共享一切。",
+      "config.fallback":
+        "fallback 列表是菜单，而不是自动切换：运行会报告失败并等你选择。",
+
+      "limits.heading": "大小与运行限制",
+      "limits.field": "字段",
+      "limits.default": "默认值",
+      "limits.note":
+        "工作流会拆分 plan 以保持在这些限制之内；内存和任务数的运行时强制执行由宿主负责，而不是本页。",
+
+      "files.heading": "文件位置",
+      "files.path": "路径",
+      "files.purpose": "用途",
+      "fl0.meaning": "Coder profile、角色、限制和 adopt 路径。",
+      "fl1.meaning": "Plan：00-index.md 加上每个工作单元一个文件。",
+      "fl2.meaning": "当前运行的进度，使 --resume 可以继续。",
+
+      "adopt.heading": "接手现有项目",
+      "adopt.intro":
+        "使用 --adopt 时，运行会先梳理已有的内容。你的原始文件绝不会被编辑、移动、重命名或删除：派生文件只写在 .zlak-flow/ 下，保留你的编号，并把每个原始文件标明为来源。",
+      "adopt.label": "标签",
+      "adopt.meaning": "含义",
+      "ad0.meaning": "已完成，仓库中有证据。",
+      "ad1.meaning": "部分完成；报告会说明缺少什么。",
+      "ad2.meaning": "尚未开始。",
+      "ad3.meaning": "plan 与代码不再一致；需要你来决定。",
+      "ad4.meaning": "信息不足，无法判断；需要你来决定。",
+      "adopt.note":
+        "复选框不被接受为证据。接手从不批准 BRD、plan 或 review：这些关卡保持关闭，除非你在 GATE 0 明确说明。",
+
+      "rules.heading": "硬性规则",
+      "rl0.meaning": "reject 会让运行停在该 phase，直到你给出新的指示。",
+      "rl1.meaning": "只有对该关卡的明确批准才算数；含糊的“好”会被再次询问。",
+      "rl2.meaning": "失败后绝不悄悄回退到另一个 coder、profile 或模型。",
+      "rl3.meaning": "在 Phase 5 之前不提交也不 push。",
+      "rl4.meaning":
+        "被委派的角色保持只读，API key 绝不出现在 prompt、plan 或 commit 中。",
+      "footer.author": "作者 nqhed - Huy Ed. Nguyen",
+    };
+
     const CSS = `
 .zlak-page{display:flex;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;color:var(--dsw-alias-label-primary);background:var(--dsw-alias-bg-base);font-size:14px;line-height:1.6}
 .zlak-scroll{flex:1;min-height:0;overflow:auto;scrollbar-gutter:stable}
@@ -455,7 +590,7 @@
 .zlak-half{flex:1;min-width:0}
 .zlak-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .zlak-primary,.zlak-ghost{height:32px;padding:0 14px;border-radius:16px;font-family:inherit;font-size:13px;line-height:20px;cursor:pointer}
-.zlak-primary{border:0;background:var(--dsw-alias-brand-primary);color:#fff}
+.zlak-primary{border:0;background:var(--dsw-alias-brand-primary);color:var(--dsw-alias-label-on-color,#fff)}
 .zlak-primary:disabled{opacity:.45;cursor:not-allowed}
 .zlak-ghost{border:0.5px solid var(--dsw-alias-border-l2);background:transparent;color:var(--dsw-alias-label-primary)}
 .zlak-ghost:hover:not(:disabled){border-color:var(--dsw-alias-border-l1)}
@@ -960,7 +1095,7 @@
         }, "zlak-flow: styles");
 
         ctx.effect(
-          () => ctx.locale.register(NS, { en: EN, vi: VI }),
+          () => ctx.locale.register(NS, { en: EN, vi: VI, zh: ZH }),
           "zlak-flow: dictionaries",
         );
 

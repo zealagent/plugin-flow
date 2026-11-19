@@ -282,7 +282,7 @@ packages/dsh/
 ├── protocol.js             the protocol and usage line (generated from packages/core)
 ├── client.js               Client half: sidebar entry, page, styles
 ├── config/coder.example.json   starter project configuration (generated)
-├── locale/en.json, locale/vi.json   Plugin Manager title and description
+├── locale/{en,vi,zh}.json           Plugin Manager title and description
 ├── icon.svg                bundle icon (generated)
 ├── tests/bundle.test.mjs   offline checks (pnpm test), not shipped
 └── README.md               this document
@@ -304,4 +304,4 @@ packages/dsh/
 
 MIT © Zealakit。作者：nqhed - Huy Ed. Nguyen。
 
-该工作流与 Claude Code 插件运行的是同一个；本包是它的 DeepSeek Harness 移植版。页面提供英文和越南文词典（`locale/en.json`、`locale/vi.json` 以及 Client 词典），因为 DSH 插件会跟随读者当前使用的语言。
+该工作流与 Claude Code 插件运行的是同一个；本包是它的 DeepSeek Harness 移植版。页面提供英文、越南文和中文词典（`locale/en.json`、`locale/vi.json`、`locale/zh.json` 以及 Client 词典），因为 DSH 插件会跟随读者当前使用的语言。

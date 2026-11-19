@@ -165,6 +165,7 @@ const PACKAGES: PackageMeta[] = [
       "config/coder.example.json",
       "locale/en.json",
       "locale/vi.json",
+      "locale/zh.json",
       "README.md",
       "LICENSE",
       "package.json",

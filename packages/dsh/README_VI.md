@@ -282,7 +282,7 @@ packages/dsh/
 ├── protocol.js             the protocol and usage line (generated from packages/core)
 ├── client.js               Client half: sidebar entry, page, styles
 ├── config/coder.example.json   starter project configuration (generated)
-├── locale/en.json, locale/vi.json   Plugin Manager title and description
+├── locale/{en,vi,zh}.json           Plugin Manager title and description
 ├── icon.svg                bundle icon (generated)
 ├── tests/bundle.test.mjs   offline checks (pnpm test), not shipped
 └── README.md               this document
@@ -304,4 +304,4 @@ packages/dsh/
 
 MIT © Zealakit. Viết bởi nqhed - Huy Ed. Nguyen.
 
-Quy trình này giống hệt quy trình mà plugin Claude Code chạy; gói này là bản chuyển sang DeepSeek Harness. Trang có từ điển tiếng Anh và tiếng Việt (`locale/en.json`, `locale/vi.json`, và các từ điển của Client), vì plugin DSH theo ngôn ngữ đang hoạt động của người đọc.
+Quy trình này giống hệt quy trình mà plugin Claude Code chạy; gói này là bản chuyển sang DeepSeek Harness. Trang có từ điển tiếng Anh, tiếng Việt và tiếng Trung (`locale/en.json`, `locale/vi.json`, `locale/zh.json`, và các từ điển của Client), vì plugin DSH theo ngôn ngữ đang hoạt động của người đọc.

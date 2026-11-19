@@ -340,7 +340,7 @@ packages/dsh/
 ├── protocol.js             the protocol and usage line (generated from packages/core)
 ├── client.js               Client half: sidebar entry, page, styles
 ├── config/coder.example.json   starter project configuration (generated)
-├── locale/en.json, locale/vi.json   Plugin Manager title and description
+├── locale/{en,vi,zh}.json           Plugin Manager title and description
 ├── icon.svg                bundle icon (generated)
 ├── tests/bundle.test.mjs   offline checks (pnpm test), not shipped
 └── README.md               this document
@@ -372,4 +372,4 @@ behaves. Run it after any edit.
 
 MIT © Zealakit. Written by nqhed - Huy Ed. Nguyen.
 
-The workflow is the same one the Claude Code plugin runs; this package is its DeepSeek Harness port. The page ships English and Vietnamese dictionaries (`locale/en.json`, `locale/vi.json`, and the Client dictionaries), because a DSH plugin follows the reader's active language.
+The workflow is the same one the Claude Code plugin runs; this package is its DeepSeek Harness port. The page ships English, Vietnamese and Chinese dictionaries (`locale/en.json`, `locale/vi.json`, `locale/zh.json`, and the Client dictionaries), because a DSH plugin follows the reader's active language.
