@@ -929,9 +929,9 @@
           PHASES.map((key) => ({
             key,
             cells: [
-              { text: t(key + ".name") },
-              { text: t(key + ".work") },
-              { text: t(key + ".gate"), mono: true },
+              { text: t(`${key}.name`) },
+              { text: t(`${key}.work`) },
+              { text: t(`${key}.gate`), mono: true },
             ],
           })),
         ),
@@ -949,7 +949,7 @@
             key,
             cells: [
               { text: syntax, mono: true },
-              { text: t(key + ".meaning") },
+              { text: t(`${key}.meaning`) },
             ],
           })),
         ),
@@ -966,7 +966,7 @@
             key,
             cells: [
               { text: syntax, mono: true },
-              { text: t(key + ".meaning") },
+              { text: t(`${key}.meaning`) },
             ],
           })),
         ),
@@ -983,7 +983,7 @@
             key,
             cells: [
               { text: syntax, mono: true },
-              { text: t(key + ".meaning") },
+              { text: t(`${key}.meaning`) },
             ],
           })),
         ),
@@ -1017,7 +1017,7 @@
           [t("files.path"), t("files.purpose")],
           FILE_ROWS.map(([key, path]) => ({
             key,
-            cells: [{ text: path, mono: true }, { text: t(key + ".meaning") }],
+            cells: [{ text: path, mono: true }, { text: t(`${key}.meaning`) }],
           })),
         ),
       );
@@ -1031,7 +1031,7 @@
           [t("adopt.label"), t("adopt.meaning")],
           ADOPT_ROWS.map(([key, label]) => ({
             key,
-            cells: [{ text: label, mono: true }, { text: t(key + ".meaning") }],
+            cells: [{ text: label, mono: true }, { text: t(`${key}.meaning`) }],
           })),
         ),
         note("adopt.note"),
@@ -1043,7 +1043,7 @@
         h(
           "ul",
           { key: "list", className: "zlak-list" },
-          RULES.map((key) => h("li", { key }, t(key + ".meaning"))),
+          RULES.map((key) => h("li", { key }, t(`${key}.meaning`))),
         ),
       );
 

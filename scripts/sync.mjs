@@ -48,7 +48,7 @@ export function renderProtocol(platform) {
 const jsString = (text) =>
   JSON.stringify(text).replace(
     /[\u007f-￿]/g,
-    (c) => "\\u" + c.charCodeAt(0).toString(16).padStart(4, "0"),
+    (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}`,
   );
 
 /** A template-literal body that evaluates back to `text`. */
@@ -92,7 +92,7 @@ const formats = {
       `// packages/core/platforms/${platform.id}, then run pnpm sync.`,
       "",
       "/** The usage line shown for an empty or invalid /zlak-flow. */",
-      `export const USAGE = ${jsString("Usage: " + USAGE)}`,
+      `export const USAGE = ${jsString(`Usage: ${USAGE}`)}`,
       "",
       "/** The workflow protocol the /zlak-flow command hands to the model. */",
       `export const PROTOCOL = ${jsString(renderProtocol(platform.id))}`,
@@ -145,7 +145,7 @@ function main(check) {
 
   if (check && stale.length > 0) {
     console.error(
-      `Stale generated files (run pnpm sync):\n${stale.map((p) => "  " + p).join("\n")}`,
+      `Stale generated files (run pnpm sync):\n${stale.map((p) => `  ${p}`).join("\n")}`,
     );
     process.exit(1);
   }
