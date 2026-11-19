@@ -38,6 +38,7 @@ Load the agent-plugin-flow skill before code, test, docs, or release work.
 | Cursor plugin: command + readonly subagents (`/zlak-flow`) | `packages/cursor/` | `@zealakit/agent-plugin-flow-cursor` |
 | Claude Code marketplace | `.claude-plugin/marketplace.json` | — |
 | Generator and policy scripts | `scripts/` (`sync`, `check-parity`, `check-readmes`, `set-version`, `pack-packages`, `npm-publish.ts`, `lib/semver`, `lib/platforms`); each platform is described by `packages/core/platforms/<id>/platform.json` | — |
+| Dependency monitor (local dashboard, `pnpm monitor`) | `monitor/` | — |
 | Cover image | `assets/images/agent-plugin-flow-cover.jpg` | — |
 | Script tests | `scripts/tests/` | — |
 | Package tests | `packages/*/tests/*.test.mjs` | — |
@@ -57,6 +58,7 @@ pnpm lint:fix           # Biome with fixes (the formatter's house style: double 
 pnpm check:parity       # every shipped protocol has the same five ⏸ gate lines
 pnpm check              # sync:check + typecheck + test + lint + check:parity
 pnpm set-version <v>    # one version in the root, every package and plugin.json (refuses a lower one)
+pnpm monitor            # local dependency dashboard at http://127.0.0.1:4177 (root + packages/*)
 pnpm pack:packages      # Claude plugin tarball + Harness tarball into artifacts/ (git-ignored)
 pnpm readme:check       # README structure: EN/VI/CN parity, absolute links, H1 = unit name
 pnpm release:check      # check + readme:check + pack:packages (no publish)

@@ -34,6 +34,7 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "check": "pnpm sync:check && pnpm typecheck && pnpm test && pnpm lint && pnpm check:parity",
+    "monitor": "node --strip-types monitor/server.ts",
     "check:parity": "node scripts/check-parity.mjs",
     "set-version": "node scripts/set-version.mjs",
     "pack:packages": "node scripts/pack-packages.mjs",
