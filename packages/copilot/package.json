@@ -1,0 +1,44 @@
+{
+  "name": "@zealakit/agent-plugin-flow-copilot",
+  "version": "1.0.0-beta.1",
+  "type": "module",
+  "description": "zlak-flow for GitHub Copilot: the PM/Reviewer workflow with approval gates, as the /zlak-flow skill and a read-only custom agent.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git",
+    "directory": "packages/copilot"
+  },
+  "homepage": "https://github.com/zealakit/agent-plugin-flow/tree/main/packages/copilot",
+  "bin": {
+    "zlak-flow-copilot-install": "install.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
+  },
+  "keywords": [
+    "github-copilot",
+    "copilot-skill",
+    "workflow",
+    "human-in-the-loop",
+    "approval-gates",
+    "zealakit"
+  ],
+  "files": [
+    "skills",
+    "agents",
+    "config",
+    "install.mjs",
+    "README.md",
+    "README_VI.md",
+    "README_CN.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

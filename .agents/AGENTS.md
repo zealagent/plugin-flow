@@ -34,6 +34,8 @@ Load the agent-plugin-flow skill before code, test, docs, or release work.
 | Codex CLI skill (`$zlak-flow`) | `packages/codex/` | `@zealakit/agent-plugin-flow-codex` |
 | Gemini CLI extension (`/zlak-flow` command, TOML) | `packages/gemini/` | `@zealakit/agent-plugin-flow-gemini` |
 | OpenCode command + subagents (`/zlak-flow`) | `packages/opencode/` | `@zealakit/agent-plugin-flow-opencode` |
+| GitHub Copilot skill + read-only agent (`/zlak-flow`) | `packages/copilot/` | `@zealakit/agent-plugin-flow-copilot` |
+| Cursor plugin: command + readonly subagents (`/zlak-flow`) | `packages/cursor/` | `@zealakit/agent-plugin-flow-cursor` |
 | Claude Code marketplace | `.claude-plugin/marketplace.json` | — |
 | Generator and policy scripts | `scripts/` (`sync`, `check-parity`, `check-readmes`, `set-version`, `pack-packages`, `npm-publish.ts`, `lib/semver`, `lib/platforms`); each platform is described by `packages/core/platforms/<id>/platform.json` | — |
 | Cover image | `assets/images/agent-plugin-flow-cover.jpg` | — |

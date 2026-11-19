@@ -30,8 +30,8 @@ them when porting. Rules later reference the keys, not the literal values.
 | Cover image | `<base>/assets/images/agent-plugin-flow-cover.jpg?raw=true` | Root + unit READMEs |
 | License line | `MIT © Zealakit` | Last section |
 | Languages | EN `README.md`, VI `README_VI.md`, CN `README_CN.md` | Switcher, parity |
-| Units | root + `packages/{core,claude,codex,dsh,gemini,opencode}` | File set, checker |
-| Layouts | claude, codex, dsh, gemini, opencode → plugin; core → maintainer | Section 3 |
+| Units | root + `packages/{core,claude,codex,copilot,cursor,dsh,gemini,opencode}` | File set, checker |
+| Layouts | claude, codex, copilot, cursor, dsh, gemini, opencode → plugin; core → maintainer | Section 3 |
 | Package READMEs excluded | `plans/`, `scripts/` | File structure |
 | Internal agent skills | `.agents/skills/{agent-plugin-flow,readme-system}/SKILL.md` | Never linked from user-facing READMEs |
 | User-facing integration skills | none (the plugin is the skill) | Root has no `## Agent Skills` section |
@@ -101,7 +101,7 @@ Pick one layout per unit in the profile and keep its section order. Every layout
 H1 equal to the unit name listed in `scripts/check-readmes.mjs`, language switcher + cover (reuse the root image), canonical
 Note, `## License`, and (except the maintainer layout) `## Install`.
 
-### plugin layout (`claude`, `codex`, `dsh`, `gemini`, `opencode`)
+### plugin layout (`claude`, `codex`, `copilot`, `cursor`, `dsh`, `gemini`, `opencode`)
 
 1. `# zlak-flow for <platform>` (for example `zlak-flow for Claude Code`)
 2. Language switcher + cover.

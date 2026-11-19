@@ -24,6 +24,8 @@ test("parity: every platform shares the five gate lines", async () => {
   assert.deepEqual(platforms.sort(), [
     "claude",
     "codex",
+    "copilot",
+    "cursor",
     "dsh",
     "gemini",
     "opencode",
@@ -41,7 +43,7 @@ test("set-version: writes every file and refuses a lower version", () => {
     cpSync(`${root}${entry}`, `${copy}/${entry}`, { recursive: true });
   }
   const files = setVersion("1.0.0-beta.2", `${copy}/`);
-  assert.equal(files.length, 9);
+  assert.equal(files.length, 12);
   for (const file of files) {
     assert.match(readFileSync(file, "utf8"), /"version": "1\.0\.0-beta\.2"/);
   }

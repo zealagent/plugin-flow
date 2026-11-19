@@ -1,0 +1,1 @@
+In GitHub Copilot this is the `/zlak-flow` skill; the user's message is THIS RUN'S INPUT. Copilot asks the user to approve tool calls such as terminal commands and file edits. That approval is not a gate approval: a gate is approved only by the user's reply in the chat to a ⏸ line. If THIS RUN'S INPUT at the end is empty, show the usage line and stop.

@@ -44,6 +44,8 @@
     "npm:publish:codex": "node --strip-types scripts/npm-publish.ts codex",
     "npm:publish:gemini": "node --strip-types scripts/npm-publish.ts gemini",
     "npm:publish:opencode": "node --strip-types scripts/npm-publish.ts opencode",
+    "npm:publish:copilot": "node --strip-types scripts/npm-publish.ts copilot",
+    "npm:publish:cursor": "node --strip-types scripts/npm-publish.ts cursor",
     "npm:publish:dsh": "node --strip-types scripts/npm-publish.ts dsh",
     "npm:publish:all": "node --strip-types scripts/npm-publish.ts all"
   },

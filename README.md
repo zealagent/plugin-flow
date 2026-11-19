@@ -23,11 +23,13 @@ Plugin Flow never skips a gate, never writes code itself, and never stores an AP
 | --- | --- | --- |
 | Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
 | DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| GitHub Copilot | `@zealakit/agent-plugin-flow-copilot` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/copilot/README.md) |
+| Cursor | `@zealakit/agent-plugin-flow-cursor` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/cursor/README.md) |
 | OpenCode | `@zealakit/agent-plugin-flow-opencode` (command `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/opencode/README.md) |
 | Gemini CLI | `@zealakit/agent-plugin-flow-gemini` (extension `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/gemini/README.md) |
 | Codex CLI | `@zealakit/agent-plugin-flow-codex` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/codex/README.md) |
 
-Each platform plugin is self-contained and installs on its own. Claude Code, DeepSeek Harness, Gemini CLI and OpenCode run it as `/zlak-flow`; Codex CLI runs it as `$zlak-flow`.
+Each platform plugin is self-contained and installs on its own. Every platform runs it as `/zlak-flow`, except Codex CLI, which runs it as `$zlak-flow`.
 
 ## Installation
 
@@ -38,6 +40,8 @@ DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
 Codex CLI:        cd packages/codex && ./install.sh
 Gemini CLI:       gemini extensions install ./packages/gemini
 OpenCode:         cd packages/opencode && node install.mjs
+GitHub Copilot:   cd packages/copilot && node install.mjs
+Cursor:           cd packages/cursor && node install.mjs
 ```
 
 ## License
