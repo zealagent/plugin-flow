@@ -1,5 +1,5 @@
 {
-  "name": "@zealamic/agent-plugin-flow",
+  "name": "@zealakit/agent-plugin-flow",
   "version": "1.0.0-beta.1",
   "private": true,
   "description": "PM/Reviewer build workflow with a human approval gate at every step (BRD, Plan, delegated coding, Review, Commit): shared sources in packages/core, one plugin per platform.",
@@ -7,11 +7,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zealamic/agent-plugin-flow.git"
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git"
   },
-  "homepage": "https://github.com/zealamic/agent-plugin-flow#readme",
+  "homepage": "https://github.com/zealakit/agent-plugin-flow#readme",
   "bugs": {
-    "url": "https://github.com/zealamic/agent-plugin-flow/issues"
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
   },
   "keywords": [
     "workflow",
@@ -21,7 +21,7 @@
     "approval-gates",
     "claude-code",
     "plugin",
-    "zealamic"
+    "zealakit"
   ],
   "type": "module",
   "packageManager": "pnpm@12.18.0",

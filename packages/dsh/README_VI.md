@@ -1,10 +1,10 @@
-# zla-flow for DeepSeek Harness
+# zlak-flow for DeepSeek Harness
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
-Quy trình xây dựng PM/Reviewer với cổng phê duyệt của con người ở mọi bước, được đưa vào DSH dưới dạng một trang ở thanh bên trái cùng lệnh `/zla-flow`. Plan và Review có thể chạy trong session hiện tại hoặc giao cho một model rẻ hơn hay khác; coder có thể là bất kỳ nhà cung cấp, model hay CLI nào mà profile này truy cập được. Không có gì bị gắn cứng với một nhà cung cấp.
+Quy trình xây dựng PM/Reviewer với cổng phê duyệt của con người ở mọi bước, được đưa vào DSH dưới dạng một trang ở thanh bên trái cùng lệnh `/zlak-flow`. Plan và Review có thể chạy trong session hiện tại hoặc giao cho một model rẻ hơn hay khác; coder có thể là bất kỳ nhà cung cấp, model hay CLI nào mà profile này truy cập được. Không có gì bị gắn cứng với một nhà cung cấp.
 
 ```text
 Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan ─▶ GATE 2
@@ -14,32 +14,32 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 > **Note**
 > Plugin Flow chạy quy trình PM/Reviewer với cổng phê duyệt của con người ở mọi bước: BRD, Plan, giao việc viết code, Review, Commit. Nó không bao giờ bỏ qua cổng và không lưu API key; nó chỉ ghi tên biến môi trường chứa key.
 >
-> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zla-flow/coder.json`.
+> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zlak-flow/coder.json`.
 
 ## Install
 
-Bật bundle `@zealamic/agent-plugin-flow-dsh` trong Settings → Plugins, rồi tải lại trang. Lệnh `/zla-flow` và mục ở thanh bên sẽ xuất hiện sau đó.
+Bật bundle `@zealakit/agent-plugin-flow-dsh` trong Settings → Plugins, rồi tải lại trang. Lệnh `/zlak-flow` và mục ở thanh bên sẽ xuất hiện sau đó.
 
 ## What it adds
 
-- **Một mục ở thanh bên trái** tên `zla-flow`, mở một trang đầy đủ ở cột chính.
+- **Một mục ở thanh bên trái** tên `zlak-flow`, mở một trang đầy đủ ở cột chính.
 - **Trang này**: ô nhập task kèm coder profile và alias model tùy chọn, một nút đưa lệnh vào một session mới, một dòng lệnh có thể sao chép, một mẫu `coder.json` có thể sao chép, và phần tham chiếu về phase, cổng, vai trò, flag, giới hạn và cấu trúc file.
-- **Lệnh `/zla-flow`**: mở rộng toàn bộ giao thức vào cuộc trò chuyện và bắt đầu một lượt, nên mọi cổng sau đó là một tin nhắn bình thường bạn trả lời.
+- **Lệnh `/zlak-flow`**: mở rộng toàn bộ giao thức vào cuộc trò chuyện và bắt đầu một lượt, nên mọi cổng sau đó là một tin nhắn bình thường bạn trả lời.
 
 ## Where it appears
 
 | Surface | What it is |
 |---|---|
-| Sidebar | Biểu tượng `zla-flow`, sau Plugins và Schedules. Nhấp vào sẽ mở trang. |
-| Main column | Trang `zla-flow`, khóa `zla-flow`: các nút khởi chạy ở trên, phần tham chiếu ở dưới. |
-| Composer | `/zla-flow [flags] <task>`, trong bất kỳ session nào. |
+| Sidebar | Biểu tượng `zlak-flow`, sau Plugins và Schedules. Nhấp vào sẽ mở trang. |
+| Main column | Trang `zlak-flow`, khóa `zlak-flow`: các nút khởi chạy ở trên, phần tham chiếu ở dưới. |
+| Composer | `/zlak-flow [flags] <task>`, trong bất kỳ session nào. |
 
 ## Use it
 
-1. Nhấp `zla-flow` ở thanh bên trái.
+1. Nhấp `zlak-flow` ở thanh bên trái.
 2. Nhập task, ví dụ `Add pagination to GET /orders, 100 rows max, with unit tests.`
 3. Tùy chọn đặt coder profile và alias model chỉ cho lần chạy này.
-4. Nhấn **Start in a new session**. Một session mới mở ra với `/zla-flow <flag của bạn> <task của bạn>` đã nằm sẵn trong ô soạn.
+4. Nhấn **Start in a new session**. Một session mới mở ra với `/zlak-flow <flag của bạn> <task của bạn>` đã nằm sẵn trong ô soạn.
 5. Nhấn Enter ở đó. Phase 1 (BRD) chạy và dừng ở GATE 1.
 6. Trả lời từng cổng trong cuộc trò chuyện:
 
@@ -50,13 +50,13 @@ approve review, commit
 reject <reason>
 ```
 
-Gõ lệnh trực tiếp cũng tương đương: `/zla-flow --coder model:default/fast Add pagination to GET /orders`.
+Gõ lệnh trực tiếp cũng tương đương: `/zlak-flow --coder model:default/fast Add pagination to GET /orders`.
 
 ## Phases and gates
 
 | Phase | What happens | Gate |
 |---|---|---|
-| 0. Adopt | Quét plan, BRD và code hiện có; gắn nhãn cho từng phần kèm bằng chứng. Chỉ đọc bên ngoài `.zla-flow/`. | ⏸ GATE 0 |
+| 0. Adopt | Quét plan, BRD và code hiện có; gắn nhãn cho từng phần kèm bằng chứng. Chỉ đọc bên ngoài `.zlak-flow/`. | ⏸ GATE 0 |
 | 1. BRD | Mục tiêu, phạm vi, ngoài phạm vi, yêu cầu, tiêu chí nghiệm thu, rủi ro. | ⏸ GATE 1 |
 | 2. Plan | Các file plan được đánh số, mỗi file đủ nhỏ cho một lượt chạy của coder. | ⏸ GATE 2 |
 | 3. Execute | Từng phần một, theo thứ tự trong index; dừng ở lỗi đầu tiên. Không commit. | ⏸ PART FAILED, chỉ khi có lỗi |
@@ -116,11 +116,11 @@ Nó không bao giờ tự thay cơ chế này bằng cơ chế khác sau một l
 
 `coder.json` là tùy chọn. Khi không có nó, cũng không có `--coder`, coder là mặc định của session: một subagent biết sửa file trên model mặc định của session này, nếu không thì một MCP coder đang kết nối. Một CLI coder luôn cần một profile.
 
-Để dùng các provider mà app đã có mà không phải ghi endpoint hay khóa, hãy chạy `/zla-flow --setup` một lần sau khi cài. Lệnh đọc provider và model của app, ghi `.zla-flow/coder.json` ngay, không có bước duyệt, và không bao giờ xóa profile. Lệnh cũng thêm `.zla-flow/` vào `.gitignore` của project nếu chưa được bỏ qua, để các file của workflow không lọt vào commit của bạn. Mỗi provider được thêm thành một profile `host`; profile bạn tự viết, cùng `roles`, `workspace` và `limits`, không bị đụng tới. Chạy lại khi thêm provider; GATE 1 cũng báo khi app có provider mà `coder.json` chưa có.
+Để dùng các provider mà app đã có mà không phải ghi endpoint hay khóa, hãy chạy `/zlak-flow --setup` một lần sau khi cài. Lệnh đọc provider và model của app, ghi `.zlak-flow/coder.json` ngay, không có bước duyệt, và không bao giờ xóa profile. Lệnh cũng thêm `.zlak-flow/` vào `.gitignore` của project nếu chưa được bỏ qua, để các file của workflow không lọt vào commit của bạn. Mỗi provider được thêm thành một profile `host`; profile bạn tự viết, cùng `roles`, `workspace` và `limits`, không bị đụng tới. Chạy lại khi thêm provider; GATE 1 cũng báo khi app có provider mà `coder.json` chưa có.
 
 Một coder không chọn được (thiếu profile hoặc alias, chuỗi `extends` bị hỏng) không bao giờ chặn BRD hay Plan: GATE 1 và GATE 2 hiển thị nó là "unresolved" kèm lý do, để bạn sửa kịp thời. Chỉ Phase 3 mới dừng vì nó.
 
-Tạo `.zla-flow/coder.json` trong dự án. Nút **Copy coder.json template** của trang sao chép một file khởi tạo; cùng file đó được phát hành dưới dạng [`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json). Đây là một quy ước mà quy trình đọc, không phải file mà DSH kiểm tra.
+Tạo `.zlak-flow/coder.json` trong dự án. Nút **Copy coder.json template** của trang sao chép một file khởi tạo; cùng file đó được phát hành dưới dạng [`config/coder.example.json`](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json). Đây là một quy ước mà quy trình đọc, không phải file mà DSH kiểm tra.
 
 ```jsonc
 {
@@ -153,7 +153,7 @@ Tạo `.zla-flow/coder.json` trong dự án. Nút **Copy coder.json template** c
 
 Các placeholder của profile `command` là `{model}`, `{prompt_file}`, `{workdir}` và `{branch}`. Lệnh phải sửa file trong `{workdir}` và thoát với mã 0 khi thành công.
 
-Lệnh chạy từ thư mục gốc dự án với `env` của profile. Một file prompt được ghi trong `.zla-flow/state/`, và `timeout_seconds` giới hạn thời gian chạy.
+Lệnh chạy từ thư mục gốc dự án với `env` của profile. Một file prompt được ghi trong `.zlak-flow/state/`, và `timeout_seconds` giới hạn thời gian chạy.
 
 ### Profile inheritance
 
@@ -199,11 +199,11 @@ Một file plan vượt giới hạn được tách thành `NN-<slug>-01.md`, `N
 
 | Path | Purpose |
 |---|---|
-| `.zla-flow/coder.json` | Profile, vai trò, giới hạn, đường dẫn tiếp quản. |
-| `.zla-flow/plans/<task-id>/` | `00-index.md` cùng một file cho mỗi đơn vị công việc. |
-| `.zla-flow/state/<task-id>.json` | Tiến độ của lần chạy hiện tại, để `--resume` có thể tiếp tục. |
+| `.zlak-flow/coder.json` | Profile, vai trò, giới hạn, đường dẫn tiếp quản. |
+| `.zlak-flow/plans/<task-id>/` | `00-index.md` cùng một file cho mỗi đơn vị công việc. |
+| `.zlak-flow/state/<task-id>.json` | Tiến độ của lần chạy hiện tại, để `--resume` có thể tiếp tục. |
 
-Quy trình không bao giờ sửa, di chuyển, đổi tên hay xóa bất cứ thứ gì của bạn; các file dẫn xuất nằm trong `.zla-flow/`.
+Quy trình không bao giờ sửa, di chuyển, đổi tên hay xóa bất cứ thứ gì của bạn; các file dẫn xuất nằm trong `.zlak-flow/`.
 
 `<task-id>` là `YYYYMMDD-<slug>`, được suy ra một lần từ task và nêu trong câu trả lời đầu tiên. File trạng thái có hình dạng cố định:
 
@@ -229,7 +229,7 @@ Một cổng chỉ được liệt kê trong `approved_gates` sau khi bạn duy�
 `--adopt [path]` bắt đầu ở Phase 0. Lần chạy lập bản đồ những gì đã có thay vì làm lại:
 
 1. **Khám phá** các plan, BRD, tài liệu thiết kế và code đã có cho task, cùng hướng dẫn và cấu hình build/test của dự án, trạng thái git, nhánh và lịch sử gần đây.
-2. **Nhập mà không sửa**: các artifact dẫn xuất nằm trong `.zla-flow/`, giữ nguyên cách đánh số của bạn và ghi mỗi bản gốc làm nguồn của nó.
+2. **Nhập mà không sửa**: các artifact dẫn xuất nằm trong `.zlak-flow/`, giữ nguyên cách đánh số của bạn và ghi mỗi bản gốc làm nguồn của nó.
 3. **Đánh giá kèm bằng chứng**, một nhãn cho mỗi phần:
 
 | Label | Meaning |
@@ -266,8 +266,8 @@ Khi `adopt.require_clean_tree` là true (mặc định) và cây làm việc có
 
 | Symptom | Check |
 |---|---|
-| Mục ở thanh bên bị mất | Settings → Plugins: bundle `@zealamic/agent-plugin-flow-dsh` đã được bật. Sau khi bundle thay đổi, hãy tải lại trang. |
-| `/zla-flow` không được đề xuất | Nửa Host nạp cùng tiến trình; hãy bật/tắt dòng plugin hoặc khởi động lại DSH, rồi bắt đầu một session mới. |
+| Mục ở thanh bên bị mất | Settings → Plugins: bundle `@zealakit/agent-plugin-flow-dsh` đã được bật. Sau khi bundle thay đổi, hãy tải lại trang. |
+| `/zlak-flow` không được đề xuất | Nửa Host nạp cùng tiến trình; hãy bật/tắt dòng plugin hoặc khởi động lại DSH, rồi bắt đầu một session mới. |
 | Start không mở session nào | Trang mở workspace của session đang hiển thị, nếu không thì workspace gần nhất. Hãy mở một workspace trước. |
 | Phase 3 dừng ngay lập tức | Không có coder lane: hãy kết nối một MCP coder, hoặc đặt một profile `coders.<name>` và trỏ `active` vào nó. |
 | Model của profile bị từ chối | Alias trong `--coder model:<profile>/<alias>` phải là một khóa trong map `models` của profile đó. |
@@ -277,8 +277,8 @@ Khi `adopt.require_clean_tree` là true (mặc định) và cây làm việc có
 ```text
 packages/dsh/
 ├── package.json            bundle manifest (dsh.bundle.patch + dsh.client)
-├── cordis.patch.yml        inserts the zla-flow row
-├── index.js                Host half: the /zla-flow command
+├── cordis.patch.yml        inserts the zlak-flow row
+├── index.js                Host half: the /zlak-flow command
 ├── protocol.js             the protocol and usage line (generated from packages/core)
 ├── client.js               Client half: sidebar entry, page, styles
 ├── config/coder.example.json   starter project configuration (generated)
@@ -288,13 +288,13 @@ packages/dsh/
 └── README.md               this document
 ```
 
-`protocol.js`, `config/coder.example.json`, `icon.svg` và khối `CODER_TEMPLATE` trong `client.js` được sinh ra từ [`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md): hãy sửa chúng ở đó rồi chạy `pnpm sync` ở thư mục gốc repository.
+`protocol.js`, `config/coder.example.json`, `icon.svg` và khối `CODER_TEMPLATE` trong `client.js` được sinh ra từ [`packages/core`](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README.md): hãy sửa chúng ở đó rồi chạy `pnpm sync` ở thư mục gốc repository.
 
 `pnpm check` xác nhận các file được sinh ra còn mới, mẫu `coder.json` nhúng khớp với `config/coder.example.json`, từ điển EN và VI có cùng các khóa, trang hiển thị được, và trình xử lý lệnh hoạt động đúng. Hãy chạy nó sau mọi chỉnh sửa.
 
 ## Limitations
 
-- Trang này khởi chạy và ghi tài liệu cho lần chạy; nó không đọc các file trạng thái `.zla-flow`, nên tiến độ và các phê duyệt đang chờ nằm trong cuộc trò chuyện.
+- Trang này khởi chạy và ghi tài liệu cho lần chạy; nó không đọc các file trạng thái `.zlak-flow`, nên tiến độ và các phê duyệt đang chờ nằm trong cuộc trò chuyện.
 - Các cổng có hiệu lực vì model tuân theo giao thức. Không có hook nào ép buộc, nên hãy coi các dòng cổng là hợp đồng và từ chối một cách rõ ràng.
 - Phase 3 cần một trong ba cơ chế coder ở trên. Khi không có, lần chạy dừng ở Phase 3 và nêu tên cơ chế còn thiếu; nó không bao giờ tự viết code.
 - `coder.json` là một quy ước, không phải schema được kiểm tra. Gõ sai sẽ hiện ra như một lỗi của coder, không phải lỗi xác thực.
@@ -302,6 +302,6 @@ packages/dsh/
 
 ## License
 
-MIT © Zealamic. Viết bởi nqhed - Huy Ed. Nguyen.
+MIT © Zealakit. Viết bởi nqhed - Huy Ed. Nguyen.
 
 Quy trình này giống hệt quy trình mà plugin Claude Code chạy; gói này là bản chuyển sang DeepSeek Harness. Trang có từ điển tiếng Anh và tiếng Việt (`locale/en.json`, `locale/vi.json`, và các từ điển của Client), vì plugin DSH theo ngôn ngữ đang hoạt động của người đọc.

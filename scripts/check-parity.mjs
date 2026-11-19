@@ -4,7 +4,7 @@
  *
  *   node scripts/check-parity.mjs
  *
- * The shipped protocols are `packages/claude/skills/zla-flow/SKILL.md` and the
+ * The shipped protocols are `packages/claude/skills/zlak-flow/SKILL.md` and the
  * `PROTOCOL` constant of `packages/dsh/protocol.js`.
  */
 import assert from "node:assert/strict";
@@ -29,7 +29,7 @@ export async function shippedProtocols() {
   const harness = await import(`${root}packages/dsh/protocol.js`);
   return {
     claude: readFileSync(
-      `${root}packages/claude/skills/zla-flow/SKILL.md`,
+      `${root}packages/claude/skills/zlak-flow/SKILL.md`,
       "utf8",
     ),
     dsh: harness.PROTOCOL,

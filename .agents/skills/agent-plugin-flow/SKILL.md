@@ -1,12 +1,12 @@
 ---
 name: agent-plugin-flow-architecture
 description: >-
-  Use for any Zealamic Plugin Flow code, test, documentation, or release work:
+  Use for any Zealakit Agent Plugin Flow code, test, documentation, or release work:
   deciding where a change belongs (core source vs. generated copy vs. platform),
   keeping platforms in parity, validating behavior, and packaging releases.
 ---
 
-# Zealamic Plugin Flow
+# Zealakit Agent Plugin Flow
 
 Read `.agents/AGENTS.md` first, then the plan for the work (`plans/`). This file is compact and
 holds no protocol text: the workflow itself lives in `packages/core/protocol/protocol.md`, and
@@ -22,7 +22,7 @@ packages/core  (private source, never shipped)
   config/coder.example.json   the coder.json template
   icon.svg
         │  pnpm sync  (scripts/sync.mjs)
-        ├──> packages/claude            Claude Code plugin: skills/zla-flow/SKILL.md, config/
+        ├──> packages/claude            Claude Code plugin: skills/zlak-flow/SKILL.md, config/
         └──> packages/dsh  Harness bundle: protocol.js, client.js template block, config/, icon.svg
 .claude-plugin/marketplace.json  ->  packages/claude
 ```
@@ -36,7 +36,7 @@ packages/core  (private source, never shipped)
 
 | Source | Generated into |
 | --- | --- |
-| `protocol/protocol.md` + `platforms/claude/*.md` + `usage.txt` | `packages/claude/skills/zla-flow/SKILL.md` |
+| `protocol/protocol.md` + `platforms/claude/*.md` + `usage.txt` | `packages/claude/skills/zlak-flow/SKILL.md` |
 | `protocol/protocol.md` + `platforms/dsh/*.md` + `usage.txt` | `packages/dsh/protocol.js` (`USAGE`, `PROTOCOL`) |
 | `config/coder.example.json` | `packages/claude/config/`, `packages/dsh/config/`, and the `CODER_TEMPLATE` block in `packages/dsh/client.js` |
 | `icon.svg` | `packages/dsh/icon.svg` (the Claude `icon.png` is rendered by hand) |
@@ -88,12 +88,12 @@ language but keeps these lines in English.
 - `pnpm typecheck` covers scripts, tests, `index.js` and `client.js` with `checkJs`; give new
   functions a JSDoc type when a caller could misuse them.
 - A change to the protocol is verified by reading the rendered output
-  (`packages/claude/skills/zla-flow/SKILL.md`, `PROTOCOL` in `protocol.js`), not only by tests.
+  (`packages/claude/skills/zlak-flow/SKILL.md`, `PROTOCOL` in `protocol.js`), not only by tests.
 
 ## Adding a platform
 
 1. Create `packages/core/platforms/<platform>/` with one `.md` per placeholder the protocol uses.
-2. Create `packages/<platform>/` with its own `package.json` (`@zealamic/agent-plugin-flow-<platform>`,
+2. Create `packages/<platform>/` with its own `package.json` (`@zealakit/agent-plugin-flow-<platform>`,
    the shared version, a `test` script) and `tests/`.
 3. Add its outputs to the `outputs` list in `scripts/sync.mjs` and its protocol to
    `shippedProtocols()` in `scripts/check-parity.mjs`.
@@ -115,7 +115,7 @@ Manual. Agents prepare and verify; the maintainer publishes.
 1. `pnpm set-version <v>`, `pnpm sync`.
 2. `pnpm release:check`.
 3. Maintainer only: tag, push, publish the Harness bundle, and let `/plugin marketplace add
-   zealamic/agent-plugin-flow` pick up the Claude plugin from the repository.
+   zealakit/agent-plugin-flow` pick up the Claude plugin from the repository.
 
 Agents never tag, push a tag, publish, or create a release. Say which of these steps were not
 run.

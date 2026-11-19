@@ -1,1 +1,1 @@
-/zla-flow [--setup] [--approve-all] [--planner <use>] [--reviewer <use>] [--coder model:<profile>[/<alias>]] [--adopt [path]] [--resume <task-id>] [--from <brd|plan|execute|review>] [<task>]
+/zlak-flow [--setup] [--approve-all] [--planner <use>] [--reviewer <use>] [--coder model:<profile>[/<alias>]] [--adopt [path]] [--resume <task-id>] [--from <brd|plan|execute|review>] [<task>]

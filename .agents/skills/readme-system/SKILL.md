@@ -24,11 +24,11 @@ them when porting. Rules later reference the keys, not the literal values.
 
 | Key | Current value | Used by |
 | --- | --- | --- |
-| Project name | `Zealamic Plugin Flow` | Root H1, cover alt text |
-| Org / repo | `zealamic/agent-plugin-flow` | Absolute links |
-| Absolute base | `https://github.com/zealamic/agent-plugin-flow/blob/main` | Every cross-link |
+| Project name | `Zealakit Agent Plugin Flow` | Root H1, cover alt text |
+| Org / repo | `zealakit/agent-plugin-flow` | Absolute links |
+| Absolute base | `https://github.com/zealakit/agent-plugin-flow/blob/main` | Every cross-link |
 | Cover image | `<base>/assets/images/agent-plugin-flow-cover.jpg?raw=true` | Root + unit READMEs |
-| License line | `MIT © Zealamic` | Last section |
+| License line | `MIT © Zealakit` | Last section |
 | Languages | EN `README.md`, VI `README_VI.md`, CN `README_CN.md` | Switcher, parity |
 | Units | root + `packages/{core,claude,dsh}` | File set, checker |
 | Layouts | claude, dsh → plugin; core → maintainer | Section 3 |
@@ -44,7 +44,7 @@ Canonical `> **Note**` text (the same wording in every README and language):
 > **Note**
 > Plugin Flow runs a PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding, Review, Commit. It never skips a gate and never stores an API key; it names the environment variable that holds one.
 >
-> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zla-flow/coder.json`.
+> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zlak-flow/coder.json`.
 ```
 
 Each release updates the Note in all three languages and in every README at once;
@@ -103,7 +103,7 @@ Note, `## License`, and (except the maintainer layout) `## Install`.
 
 ### plugin layout (`claude`, `dsh`)
 
-1. `# zla-flow for <platform>` (for example `zla-flow for Claude Code`)
+1. `# zlak-flow for <platform>` (for example `zlak-flow for Claude Code`)
 2. Language switcher + cover.
 3. Lead: what the plugin adds to the platform, in two or three sentences.
 4. Canonical Note.
@@ -112,7 +112,7 @@ Note, `## License`, and (except the maintainer layout) `## Install`.
 6. `## Use it`: the command, its flags (one table), and a first run.
 7. `## Phases and gates`: the five ⏸ lines and what the user answers at each.
 8. `## Roles`: who plans, reviews, and codes, and which can be delegated.
-9. `## Coder configuration`: `.zla-flow/coder.json` fields, profiles, `extends`, API-key
+9. `## Coder configuration`: `.zlak-flow/coder.json` fields, profiles, `extends`, API-key
    environment variables. Point to `packages/core` sources only through the repository URL.
 10. Platform-specific sections (for the Harness: where it appears, locale, troubleshooting).
 11. `## Package layout`: a tree of the shipped files, marking generated ones.

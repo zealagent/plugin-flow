@@ -5,7 +5,7 @@
  *   pnpm npm:publish:claude | npm:publish:dsh
  *   pnpm npm:publish:all
  *
- * Only the platform packages are published. `@zealamic/agent-plugin-flow-core` is private and
+ * Only the platform packages are published. `@zealakit/agent-plugin-flow-core` is private and
  * internal: `pnpm sync` copies what the platforms need into them, so core never needs to
  * exist on npm and must never be uploaded. Every package is validated, checked, packed and
  * inspected before any upload. A prerelease version is published under the `next` dist-tag,
@@ -21,7 +21,7 @@ const PROJECT_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
-const CORE_NAME = "@zealamic/agent-plugin-flow-core";
+const CORE_NAME = "@zealakit/agent-plugin-flow-core";
 
 type PackageId = "claude" | "dsh";
 type Command = "check" | PackageId | "all";
@@ -61,11 +61,11 @@ const PACKAGES: PackageMeta[] = [
   {
     id: "claude",
     label: "Claude Code",
-    expectedName: "@zealamic/agent-plugin-flow-claude",
+    expectedName: "@zealakit/agent-plugin-flow-claude",
     required: [
       ".claude-plugin/plugin.json",
       ".claude-plugin/icon.png",
-      "skills/zla-flow/SKILL.md",
+      "skills/zlak-flow/SKILL.md",
       "config/coder.example.json",
       "README.md",
       "LICENSE",
@@ -75,7 +75,7 @@ const PACKAGES: PackageMeta[] = [
   {
     id: "dsh",
     label: "DeepSeek Harness",
-    expectedName: "@zealamic/agent-plugin-flow-dsh",
+    expectedName: "@zealakit/agent-plugin-flow-dsh",
     required: [
       "index.js",
       "client.js",
@@ -113,11 +113,11 @@ Or:
   node --strip-types scripts/npm-publish.ts <check|claude|dsh|all>
 
 check             Run every pre-publish check for all packages (no publish)
-claude            Validate, check, pack and publish @zealamic/agent-plugin-flow-claude
-dsh  Validate, check, pack and publish @zealamic/agent-plugin-flow-dsh
+claude            Validate, check, pack and publish @zealakit/agent-plugin-flow-claude
+dsh  Validate, check, pack and publish @zealakit/agent-plugin-flow-dsh
 all               Publish claude → dsh sequentially (stops on first failure)
 
-Core (@zealamic/agent-plugin-flow-core) is internal and is never published.
+Core (@zealakit/agent-plugin-flow-core) is internal and is never published.
 `);
 }
 

@@ -1,8 +1,8 @@
-# Zealamic Plugin Flow
+# Zealakit Agent Plugin Flow
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
 Quy trình xây dựng PM/Reviewer với cổng phê duyệt của con người ở mọi bước, dành cho các nền tảng agent bạn đang dùng: BRD, Plan, giao việc viết code, Review, Commit.
 
@@ -15,25 +15,25 @@ Plugin Flow không bao giờ bỏ qua cổng, không tự viết code và không
 > **Note**
 > Plugin Flow chạy quy trình PM/Reviewer với cổng phê duyệt của con người ở mọi bước: BRD, Plan, giao việc viết code, Review, Commit. Nó không bao giờ bỏ qua cổng và không lưu API key; nó chỉ ghi tên biến môi trường chứa key.
 >
-> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zla-flow/coder.json`.
+> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zlak-flow/coder.json`.
 
 ## Platforms
 
 | Platform | Package | Documentation |
 | --- | --- | --- |
-| Claude Code | `@zealamic/agent-plugin-flow-claude` (plugin `zla-flow`) | [README](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README.md) |
-| DeepSeek Harness | `@zealamic/agent-plugin-flow-dsh` | [README](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
+| DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
 
-Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Cả hai đều chạy bằng `/zla-flow`.
+Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Cả hai đều chạy bằng `/zlak-flow`.
 
 ## Installation
 
 ```text
-Claude Code:      /plugin marketplace add zealamic/agent-plugin-flow
-                  /plugin install zla-flow@zealamic
-DeepSeek Harness: enable @zealamic/agent-plugin-flow-dsh in Settings → Plugins
+Claude Code:      /plugin marketplace add zealakit/agent-plugin-flow
+                  /plugin install zlak-flow@zealakit
+DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
 ```
 
 ## License
 
-MIT © Zealamic
+MIT © Zealakit

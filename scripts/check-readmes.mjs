@@ -5,13 +5,13 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const base = "https://github.com/zealamic/agent-plugin-flow/blob/main";
+const base = "https://github.com/zealakit/agent-plugin-flow/blob/main";
 const files = ["README.md", "README_VI.md", "README_CN.md"];
 const units = [
-  { dir: "", name: "Zealamic Plugin Flow" },
+  { dir: "", name: "Zealakit Agent Plugin Flow" },
   { dir: "packages/core", name: "Plugin Flow Core" },
-  { dir: "packages/claude", name: "zla-flow for Claude Code" },
-  { dir: "packages/dsh", name: "zla-flow for DeepSeek Harness" },
+  { dir: "packages/claude", name: "zlak-flow for Claude Code" },
+  { dir: "packages/dsh", name: "zlak-flow for DeepSeek Harness" },
 ];
 
 const errors = [];
@@ -65,7 +65,7 @@ for (const { dir, name } of units) {
       fail(`${where}: image must use an absolute URL`);
     }
     if (
-      /\]\(https:\/\/github\.com\/zealamic\/agent-plugin-flow\/blob\/main[^)]*\.(png|jpe?g|gif|svg)(?!\?raw=true)/.test(
+      /\]\(https:\/\/github\.com\/zealakit\/agent-plugin-flow\/blob\/main[^)]*\.(png|jpe?g|gif|svg)(?!\?raw=true)/.test(
         prose,
       )
     ) {

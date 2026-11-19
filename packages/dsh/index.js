@@ -1,5 +1,5 @@
 /**
- * Host half of the zla-flow bundle: the `/zla-flow` command.
+ * Host half of the zlak-flow bundle: the `/zlak-flow` command.
  *
  * The command expands into the PM/Reviewer protocol and starts one model turn
  * with it, so every later gate lives in the conversation. The protocol names no
@@ -7,13 +7,13 @@
  * planner, or reviewer. The Client half renders the sidebar entry and the page
  * that seeds this command. The protocol itself is generated from packages/core
  * into protocol.js; edit it there and run `pnpm sync`.
- * @module @zealamic/agent-plugin-flow-dsh
+ * @module @zealakit/agent-plugin-flow-dsh
  */
 
 import { randomUUID } from "node:crypto";
 import { USAGE, PROTOCOL } from "./protocol.js";
 
-export const name = "zla-flow";
+export const name = "zlak-flow";
 
 export const inject = ["commands", "llm"];
 
@@ -80,7 +80,7 @@ function hostBlock(providers) {
 
 /**
  * Join the protocol and this run's input into one model-facing message.
- * @param input - everything the user typed after `/zla-flow`.
+ * @param input - everything the user typed after `/zlak-flow`.
  * @param providers - the host's providers, possibly none.
  * @returns the prompt text for the turn.
  */
@@ -106,20 +106,40 @@ function makeCommand(llm) {
       if (typeof agent?.followup !== "function") {
         return {
           kind: "error",
-          text: "zla-flow needs a live session to start the workflow.",
+          text: "zlak-flow needs a live session to start the workflow.",
         };
       }
-      // Queue the protocol as the next user turn: the model then drives Phase 1
-      // and stops at the first gate, exactly like the original slash command.
-      agent.followup({
-        id: randomUUID(),
-        role: "user",
-        source: { kind: "user" },
-        content: [{ type: "text", text: buildPrompt(input, readHost(llm)) }],
-      });
+      const providers = readHost(llm);
+      if (typeof agent.inject === "function") {
+        // The long protocol rides as injected context, which the app shows as a
+        // collapsed `zlak-flow` skill chip and which never wakes the agent. Only
+        // the short input below is the visible user turn that starts the run.
+        agent.inject({
+          id: randomUUID(),
+          role: "user",
+          source: { kind: "skill-invocation", name, form: "instructions" },
+          content: [
+            { type: "text", text: `${PROTOCOL}${hostBlock(providers)}` },
+          ],
+        });
+        agent.followup({
+          id: randomUUID(),
+          role: "user",
+          source: { kind: "user" },
+          content: [{ type: "text", text: `THIS RUN'S INPUT\n${input}` }],
+        });
+      } else {
+        // A host without `inject`: queue everything as one user turn.
+        agent.followup({
+          id: randomUUID(),
+          role: "user",
+          source: { kind: "user" },
+          content: [{ type: "text", text: buildPrompt(input, providers) }],
+        });
+      }
       return {
         kind: "success",
-        text: "zla-flow started. Approve or reject at each \u23f8 gate; the run stops there until you answer.",
+        text: "zlak-flow started. Approve or reject at each \u23f8 gate; the run stops there until you answer.",
       };
     },
   };
@@ -133,6 +153,6 @@ export function apply(ctx) {
   readHost(ctx.llm);
   ctx.effect(
     () => ctx.commands.register(makeCommand(ctx.llm)),
-    "zla-flow: /zla-flow command",
+    "zlak-flow: /zlak-flow command",
   );
 }

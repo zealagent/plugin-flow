@@ -1,12 +1,12 @@
 // @ts-nocheck: the bundle runs against stub React and DOM globals.
 /**
- * Offline checks for the zla-flow bundle.
+ * Offline checks for the zlak-flow bundle.
  *
  * - The coder.json template embedded in client.js is byte-identical to
  *   config/coder.example.json, and both parse as JSON.
  * - The Client EN and VI dictionaries have the same keys.
  * - The Panel renders with stub React and every t() key it asks for exists.
- * - The /zla-flow command handler returns usage, refuses without a session,
+ * - The /zlak-flow command handler returns usage, refuses without a session,
  *   and queues the protocol plus the run's input.
  */
 import { readFileSync } from "node:fs";
@@ -75,10 +75,10 @@ factory.apply({
     },
   },
 });
-assert.ok(styles.includes(".zla-page"), "styles injected");
+assert.ok(styles.includes(".zlak-page"), "styles injected");
 
 const source = read("client.js");
-const { en, vi } = dictionaries["zla-flow"];
+const { en, vi } = dictionaries["zlak-flow"];
 const asked = new Set();
 const t = (key) => {
   asked.add(key);
@@ -94,7 +94,7 @@ const find = (node, pred, out = []) => {
 };
 const render = (task, profile, alias) => {
   seed = [task, profile, alias, "", ""];
-  const node = Panel({ zlaT: t, zlaStart: () => true });
+  const node = Panel({ zlakT: t, zlakStart: () => true });
   return {
     buttons: find(node, (n) => n.type === "button"),
     invalid:
@@ -116,7 +116,7 @@ test("EN and VI dictionaries have the same keys", () => {
 
 test("the panel renders and every key it asks for exists", () => {
   seed = [];
-  const tree = Panel({ zlaT: t, zlaStart: () => true });
+  const tree = Panel({ zlakT: t, zlakStart: () => true });
   assert.deepEqual(
     [...asked].filter((key) => !(key in en)),
     [],
@@ -155,7 +155,7 @@ test("the panel validates the profile and alias fields", () => {
   assert.equal(view.invalid, false, "provider/model style values accepted");
 });
 
-test("the /zla-flow command", async () => {
+test("the /zlak-flow command", async () => {
   const host = await import(`${root}index.js`);
   const commands = {};
   host.apply({
@@ -166,8 +166,8 @@ test("the /zla-flow command", async () => {
       },
     },
   });
-  assert.deepEqual(Object.keys(commands), ["zla-flow"]);
-  const command = commands["zla-flow"];
+  assert.deepEqual(Object.keys(commands), ["zlak-flow"]);
+  const command = commands["zlak-flow"];
   assert.equal(command.handler({ rawInput: "   " }).kind, "error");
   assert.equal(command.handler({ rawInput: "x", agent: {} }).kind, "error");
   assert.equal(
@@ -202,6 +202,40 @@ test("the /zla-flow command", async () => {
   }
 });
 
+test("the protocol is injected as hidden context and only the input is visible", async () => {
+  const host = await import(`${root}index.js`);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: { register: (c) => (commands[c.name] = c) },
+  });
+  const calls = [];
+  const agent = {
+    inject: (m) => calls.push(["inject", m]),
+    followup: (m) => calls.push(["followup", m]),
+  };
+  const result = commands["zlak-flow"].handler({
+    rawInput: "Add tests",
+    agent,
+  });
+  assert.equal(result.kind, "success");
+  assert.deepEqual(
+    calls.map(([kind]) => kind),
+    ["inject", "followup"],
+    "context is queued before the turn that wakes the agent",
+  );
+  const [, context] = calls[0];
+  assert.deepEqual(context.source, {
+    kind: "skill-invocation",
+    name: "zlak-flow",
+    form: "instructions",
+  });
+  assert.ok(context.content[0].text.includes("⏸ GATE 1"));
+  const [, visible] = calls[1];
+  assert.equal(visible.source.kind, "user");
+  assert.equal(visible.content[0].text, "THIS RUN'S INPUT\nAdd tests");
+});
+
 test("a rejected start promise surfaces as a failure on the page", async () => {
   seed = ["Add x", "", "", "", ""];
   let failureSet;
@@ -220,8 +254,8 @@ test("a rejected start promise surfaces as a failure on the page", async () => {
     ];
   };
   const started = Panel({
-    zlaT: t,
-    zlaStart: () => Promise.reject(new Error("no")),
+    zlakT: t,
+    zlakStart: () => Promise.reject(new Error("no")),
   });
   React.useState = realUseState;
   find(started, (n) => n.type === "button")[0].props.onClick();
@@ -252,7 +286,7 @@ test("the command reads the host's providers and models", async () => {
   await new Promise((resolve) => setTimeout(resolve, 0));
   let queued;
   const agent = { followup: (m) => (queued = m) };
-  commands["zla-flow"].handler({ rawInput: "--setup", agent });
+  commands["zlak-flow"].handler({ rawInput: "--setup", agent });
   const text = queued.content[0].text;
   assert.ok(
     text.includes("THIS RUN'S INPUT\n--setup\n\nHOST PROVIDERS"),
@@ -276,7 +310,7 @@ test("the command still runs when the host has no llm service", async () => {
     },
   });
   let queued;
-  commands["zla-flow"].handler({
+  commands["zlak-flow"].handler({
     rawInput: "x",
     agent: { followup: (m) => (queued = m) },
   });

@@ -1,21 +1,21 @@
 # Plugin Flow Core
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
-Nguồn duy nhất cho mọi thứ mà các nền tảng zla-flow dùng chung. Không có gì ở đây được phát hành: mỗi plugin nền tảng phải tự chứa đủ khi cài đặt, nên `pnpm sync` ghi các bản sao được sinh ra vào thư mục từng nền tảng, và `pnpm check` thất bại khi có bản sao nào đã cũ.
+Nguồn duy nhất cho mọi thứ mà các nền tảng zlak-flow dùng chung. Không có gì ở đây được phát hành: mỗi plugin nền tảng phải tự chứa đủ khi cài đặt, nên `pnpm sync` ghi các bản sao được sinh ra vào thư mục từng nền tảng, và `pnpm check` thất bại khi có bản sao nào đã cũ.
 
 > **Note**
 > Plugin Flow chạy quy trình PM/Reviewer với cổng phê duyệt của con người ở mọi bước: BRD, Plan, giao việc viết code, Review, Commit. Nó không bao giờ bỏ qua cổng và không lưu API key; nó chỉ ghi tên biến môi trường chứa key.
 >
-> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zla-flow/coder.json`.
+> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zlak-flow/coder.json`.
 
 ## What lives here
 
 | Source | Generated into |
 |---|---|
-| `protocol/protocol.md`: giao thức quy trình (phase, cổng, file trạng thái, cách chọn coder, flag, quy tắc cứng) | `packages/claude/skills/zla-flow/SKILL.md` (kèm frontmatter của skill và `$ARGUMENTS`), `packages/dsh/protocol.js` (`PROTOCOL`) |
+| `protocol/protocol.md`: giao thức quy trình (phase, cổng, file trạng thái, cách chọn coder, flag, quy tắc cứng) | `packages/claude/skills/zlak-flow/SKILL.md` (kèm frontmatter của skill và `$ARGUMENTS`), `packages/dsh/protocol.js` (`PROTOCOL`) |
 | `protocol/usage.txt`: dòng usage duy nhất | Cả hai giao thức, `argument-hint` của skill, và `USAGE` trong `packages/dsh/protocol.js` |
 | `platforms/<platform>/*.md`: phần khác nhau theo từng nền tảng | Được ghép vào giao thức của nền tảng đó |
 | `platforms/claude/skill-header.md`: frontmatter của skill | Đầu file `SKILL.md` |
@@ -54,4 +54,4 @@ Nguồn duy nhất cho mọi thứ mà các nền tảng zla-flow dùng chung. K
 
 ## License
 
-MIT © Zealamic
+MIT © Zealakit

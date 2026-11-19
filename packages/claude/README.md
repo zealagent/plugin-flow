@@ -1,10 +1,10 @@
-# zla-flow for Claude Code
+# zlak-flow for Claude Code
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
-A PM/Reviewer build workflow with a human approval gate at every step, as a Claude Code plugin: the `/zla-flow` skill. Plan and Review can run in the current session or on a cheaper Claude model.
+A PM/Reviewer build workflow with a human approval gate at every step, as a Claude Code plugin: the `/zlak-flow` skill. Plan and Review can run in the current session or on a cheaper Claude model.
 
 The coder can be a subagent of this session, a Harness MCP server, any Anthropic-compatible endpoint, or any CLI. Nothing is pinned to a vendor.
 
@@ -16,15 +16,15 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 > **Note**
 > Plugin Flow runs a PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding, Review, Commit. It never skips a gate and never stores an API key; it names the environment variable that holds one.
 >
-> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zla-flow/coder.json`.
+> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zlak-flow/coder.json`.
 
 ## Install
 
 From the marketplace in this repository:
 
 ```text
-/plugin marketplace add zealamic/agent-plugin-flow
-/plugin install zla-flow@zealamic
+/plugin marketplace add zealakit/agent-plugin-flow
+/plugin install zlak-flow@zealakit
 ```
 
 Or load it straight from a checkout for one session:
@@ -36,7 +36,7 @@ claude --plugin-dir packages/claude
 ## Use it
 
 ```text
-/zla-flow Add pagination to GET /orders, 100 rows max, with unit tests.
+/zlak-flow Add pagination to GET /orders, 100 rows max, with unit tests.
 ```
 
 Phase 1 writes the BRD and stops at GATE 1. Answer each gate in the conversation:
@@ -50,7 +50,7 @@ reject <reason>
 
 | Flag | Argument | Default | Description |
 | --- | --- | --- | --- |
-| `--setup` | — | — | Write or refresh `coder.json`. It asks you for each provider's protocol, endpoint and key variable name, and writes it straight away. It also adds `.zla-flow/` to your `.gitignore` when it isn't ignored yet. |
+| `--setup` | — | — | Write or refresh `coder.json`. It asks you for each provider's protocol, endpoint and key variable name, and writes it straight away. It also adds `.zlak-flow/` to your `.gitignore` when it isn't ignored yet. |
 | `--approve-all` | — | — | Approve GATE 1, 2 and 3 up front. It still stops on a failed part, a review that is not OK, an unresolved model or an unclear BRD. It never commits or pushes: you say when to commit. |
 | `--planner` | `<use>` | `roles.planner.use`, else `self` | Who writes the plan. |
 | `--reviewer` | `<use>` | `roles.reviewer.use`, else `self` | Who reviews. |
@@ -59,15 +59,15 @@ reject <reason>
 | `--resume` | `<task-id>` | — | Continue an interrupted run from its state file. |
 | `--from` | `<brd\|plan\|execute\|review>` | — | Start at that phase when the earlier artifacts exist. |
 
-`--from` never skips an approval: `plan` needs GATE 1, `execute` needs GATE 1 and 2, and `review` also needs executed parts. A gate that isn't recorded in the state file `.zla-flow/state/<task-id>.json` is presented again, and the run stops there. `--resume` counts a part left `running` as failed and continues at the first part that isn't done.
+`--from` never skips an approval: `plan` needs GATE 1, `execute` needs GATE 1 and 2, and `review` also needs executed parts. A gate that isn't recorded in the state file `.zlak-flow/state/<task-id>.json` is presented again, and the run stops there. `--resume` counts a part left `running` as failed and continues at the first part that isn't done.
 
 ## Phases and gates
 
 | Phase | What happens | Gate |
 | --- | --- | --- |
-| 0. Adopt | Scan existing plans, BRD and code; label every part with evidence. Read-only outside `.zla-flow/`. | ⏸ GATE 0 |
+| 0. Adopt | Scan existing plans, BRD and code; label every part with evidence. Read-only outside `.zlak-flow/`. | ⏸ GATE 0 |
 | 1. BRD | Goals, scope, requirements, acceptance criteria, risks; names the planner, reviewer and coder. | ⏸ GATE 1 |
-| 2. Plan | Numbered plan files under `.zla-flow/plans/<task-id>/`, each small enough for one coder run. | ⏸ GATE 2 |
+| 2. Plan | Numbered plan files under `.zlak-flow/plans/<task-id>/`, each small enough for one coder run. | ⏸ GATE 2 |
 | 3. Execute | One part at a time, tests after each; no commits. | ⏸ PART FAILED, only on a failure |
 | 4. Review | The real diff, one pass per part, every finding with file and line. | ⏸ GATE 3 |
 | 5. Commit | One commit of this run's files. Never a push. | after GATE 3 |
@@ -76,7 +76,7 @@ A gate is approved only by a clear approval for that gate. An ambiguous "ok" is 
 
 ## Roles
 
-Plan and Review resolve from `--planner` / `--reviewer`, then `roles.<role>.use` in `.zla-flow/coder.json`, then `self`.
+Plan and Review resolve from `--planner` / `--reviewer`, then `roles.<role>.use` in `.zlak-flow/coder.json`, then `self`.
 
 | Value | Meaning |
 | --- | --- |
@@ -89,7 +89,7 @@ A delegated planner returns the plan text and this session writes the files. A r
 
 ## Coder configuration
 
-`coder.json` is optional. To configure a coder, copy [`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/claude/config/coder.example.json) to `.zla-flow/coder.json` in your project and fill in the endpoint, model and the **name** of the environment variable that holds the key. The file is the same for every platform of zla-flow. With no `coder.json` at all, the coder is a file-editing subagent of the current session.
+`coder.json` is optional. To configure a coder, copy [`config/coder.example.json`](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/config/coder.example.json) to `.zlak-flow/coder.json` in your project and fill in the endpoint, model and the **name** of the environment variable that holds the key. The file is the same for every platform of zlak-flow. With no `coder.json` at all, the coder is a file-editing subagent of the current session.
 
 | Situation | Lane |
 | --- | --- |
@@ -103,7 +103,7 @@ The workflow never switches lanes, profiles or models on its own after a failure
 
 ### Adding a coder
 
-No plugin or skill change is needed: edit `.zla-flow/coder.json` only.
+No plugin or skill change is needed: edit `.zlak-flow/coder.json` only.
 
 A new plan tier of an existing provider is a profile that `extends` the existing one and overrides only what differs:
 
@@ -111,9 +111,9 @@ A new plan tier of an existing provider is a profile that `extends` the existing
 "provider-pro": { "extends": "provider-lite", "api_key_env": "PROVIDER_PRO_API_KEY" }
 ```
 
-A new model under an existing provider is an alias in that profile's `models` map, used as `/zla-flow --coder model:<profile>/<alias> <task>`. A new provider is a profile with a `protocol`:
+A new model under an existing provider is an alias in that profile's `models` map, used as `/zlak-flow --coder model:<profile>/<alias> <task>`. A new provider is a profile with a `protocol`:
 
-| Protocol | Use when | How zla-flow runs it without a Harness |
+| Protocol | Use when | How zlak-flow runs it without a Harness |
 | --- | --- | --- |
 | `anthropic` | The endpoint speaks the Anthropic messages API. | Headless `claude -p` with `ANTHROPIC_BASE_URL`, `ANTHROPIC_AUTH_TOKEN` (from `api_key_env`) and `ANTHROPIC_MODEL`. |
 | `openai` | An OpenAI-compatible chat endpoint. | It doesn't: this lane needs a Harness that runs its own tool loop. |
@@ -121,7 +121,7 @@ A new model under an existing provider is an alias in that profile's `models` ma
 
 ### Harness contract
 
-A Harness is an MCP server that runs coder jobs for any profile. When one is connected, zla-flow uses it first. An adapter must satisfy:
+A Harness is an MCP server that runs coder jobs for any profile. When one is connected, zlak-flow uses it first. An adapter must satisfy:
 
 - `submit_task(plan_file, coder, model_alias, context_summary)` runs one plan part and returns a `job_id`; work happens on branch `<branch_prefix><task-id>`. It refuses a new job while another runs (`limits.max_concurrent_jobs`, default 1) and refuses prompts above `limits.job_prompt_max_chars`.
 - It enforces `limits.job_memory_limit_mb` and `timeout_seconds` on the coder process, kills the job on breach and reports `failed` with reason `memory_limit` or a timeout.
@@ -137,13 +137,13 @@ For adopted work, `submit_task` receives in `context_summary` the status of the 
 ```text
 packages/claude/
 ├── .claude-plugin/plugin.json   plugin manifest (icon.png beside it)
-├── skills/zla-flow/SKILL.md     the workflow protocol (/zla-flow, generated)
+├── skills/zlak-flow/SKILL.md     the workflow protocol (/zlak-flow, generated)
 ├── config/coder.example.json    starter project configuration (generated)
 ├── tests/plugin.test.mjs        offline checks (pnpm test), not shipped
 └── README.md                    this document
 ```
 
-`SKILL.md` and `config/coder.example.json` are generated from [`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md): edit the protocol and the Claude fragments there and run `pnpm sync` at the repository root. `pnpm check` confirms the generated files are current, the manifest and skill are well formed, and the root marketplace points here.
+`SKILL.md` and `config/coder.example.json` are generated from [`packages/core`](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README.md): edit the protocol and the Claude fragments there and run `pnpm sync` at the repository root. `pnpm check` confirms the generated files are current, the manifest and skill are well formed, and the root marketplace points here.
 
 ## Limitations
 
@@ -154,4 +154,4 @@ packages/claude/
 
 ## License
 
-MIT © Zealamic. Written by nqhed - Huy Ed. Nguyen.
+MIT © Zealakit. Written by nqhed - Huy Ed. Nguyen.

@@ -1,21 +1,21 @@
 # Plugin Flow Core
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
-zla-flow 各平台共用内容的唯一来源。这里的任何内容都不会发布：每个平台插件在安装后都必须自包含，因此 `pnpm sync` 会把生成的副本写入各平台目录，而 `pnpm check` 会在任何副本过期时失败。
+zlak-flow 各平台共用内容的唯一来源。这里的任何内容都不会发布：每个平台插件在安装后都必须自包含，因此 `pnpm sync` 会把生成的副本写入各平台目录，而 `pnpm check` 会在任何副本过期时失败。
 
 > **Note**
 > Plugin Flow 运行 PM/Reviewer 工作流，每一步都有人工审批关卡：BRD、Plan、委派编码、Review、Commit。它从不跳过关卡，也从不保存 API key；它只记录存放 key 的环境变量名称。
 >
-> 它不是编码模型，也不是 agent 运行时。coder 是你在 `.zla-flow/coder.json` 中配置的模型或 CLI。
+> 它不是编码模型，也不是 agent 运行时。coder 是你在 `.zlak-flow/coder.json` 中配置的模型或 CLI。
 
 ## What lives here
 
 | Source | Generated into |
 |---|---|
-| `protocol/protocol.md`：工作流协议（阶段、关卡、状态文件、coder 解析、flag、硬性规则） | `packages/claude/skills/zla-flow/SKILL.md`（含 skill frontmatter 与 `$ARGUMENTS`）、`packages/dsh/protocol.js`（`PROTOCOL`） |
+| `protocol/protocol.md`：工作流协议（阶段、关卡、状态文件、coder 解析、flag、硬性规则） | `packages/claude/skills/zlak-flow/SKILL.md`（含 skill frontmatter 与 `$ARGUMENTS`）、`packages/dsh/protocol.js`（`PROTOCOL`） |
 | `protocol/usage.txt`：唯一的 usage 行 | 两个协议、skill 的 `argument-hint`，以及 `packages/dsh/protocol.js` 中的 `USAGE` |
 | `platforms/<platform>/*.md`：各平台不同的部分 | 拼接进该平台的协议 |
 | `platforms/claude/skill-header.md`：skill 的 frontmatter | `SKILL.md` 的开头 |
@@ -54,4 +54,4 @@ zla-flow 各平台共用内容的唯一来源。这里的任何内容都不会�
 
 ## License
 
-MIT © Zealamic
+MIT © Zealakit

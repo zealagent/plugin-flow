@@ -1,10 +1,10 @@
-# zla-flow for DeepSeek Harness
+# zlak-flow for DeepSeek Harness
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
-A PM/Reviewer build workflow with a human approval gate at every step, brought into DSH as a left-sidebar page plus a `/zla-flow` command. Plan and Review can run in the current session or be delegated to a cheaper or different model; the coder can be any provider, any model, or any CLI this profile can reach. Nothing is pinned to a vendor.
+A PM/Reviewer build workflow with a human approval gate at every step, brought into DSH as a left-sidebar page plus a `/zlak-flow` command. Plan and Review can run in the current session or be delegated to a cheaper or different model; the coder can be any provider, any model, or any CLI this profile can reach. Nothing is pinned to a vendor.
 
 ```text
 Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan ─▶ GATE 2
@@ -14,39 +14,39 @@ Phase 0 Adopt ─▶ GATE 0 ─▶ Phase 1 BRD ─▶ GATE 1 ─▶ Phase 2 Plan
 > **Note**
 > Plugin Flow runs a PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding, Review, Commit. It never skips a gate and never stores an API key; it names the environment variable that holds one.
 >
-> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zla-flow/coder.json`.
+> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zlak-flow/coder.json`.
 
 ## Install
 
-Enable the `@zealamic/agent-plugin-flow-dsh` bundle in Settings → Plugins, then refresh the page. The `/zla-flow` command and the sidebar entry appear after that.
+Enable the `@zealakit/agent-plugin-flow-dsh` bundle in Settings → Plugins, then refresh the page. The `/zlak-flow` command and the sidebar entry appear after that.
 
 ## What it adds
 
-- **A left-sidebar entry** named `zla-flow`, opening a full page in the main
+- **A left-sidebar entry** named `zlak-flow`, opening a full page in the main
   column.
 - **The page**: a task box with optional coder profile and model alias, a
   button that seeds the command into a new session, a copyable command line, a
   copyable `coder.json` template, and a reference for phases, gates, roles,
   flags, limits and file layout.
-- **The `/zla-flow` command**: expands the full protocol into the conversation
+- **The `/zlak-flow` command**: expands the full protocol into the conversation
   and starts one turn, so every later gate is an ordinary message you answer.
 
 ## Where it appears
 
 | Surface | What it is |
 |---|---|
-| Sidebar | `zla-flow` icon, after Plugins and Schedules. Clicking it opens the page. |
-| Main column | The `zla-flow` page, keyed `zla-flow`: launch controls first, reference below. |
-| Composer | `/zla-flow [flags] <task>`, in any session. |
+| Sidebar | `zlak-flow` icon, after Plugins and Schedules. Clicking it opens the page. |
+| Main column | The `zlak-flow` page, keyed `zlak-flow`: launch controls first, reference below. |
+| Composer | `/zlak-flow [flags] <task>`, in any session. |
 
 ## Use it
 
-1. Click `zla-flow` in the left sidebar.
+1. Click `zlak-flow` in the left sidebar.
 2. Type the task, for example `Add pagination to GET /orders, 100 rows max,
    with unit tests.`
 3. Optionally set a coder profile and model alias for this run only.
 4. Press **Start in a new session**. A new session opens with
-   `/zla-flow <your flags> <your task>` already in the composer.
+   `/zlak-flow <your flags> <your task>` already in the composer.
 5. Press Enter there. Phase 1 (BRD) runs and stops at GATE 1.
 6. Answer each gate in the conversation:
 
@@ -58,13 +58,13 @@ reject <reason>
 ```
 
 Typing the command directly is equivalent:
-`/zla-flow --coder model:default/fast Add pagination to GET /orders`.
+`/zlak-flow --coder model:default/fast Add pagination to GET /orders`.
 
 ## Phases and gates
 
 | Phase | What happens | Gate |
 |---|---|---|
-| 0. Adopt | Scan existing plans, BRD and code; label every part with evidence. Read-only outside `.zla-flow/`. | ⏸ GATE 0 |
+| 0. Adopt | Scan existing plans, BRD and code; label every part with evidence. Read-only outside `.zlak-flow/`. | ⏸ GATE 0 |
 | 1. BRD | Goals, scope, out of scope, requirements, acceptance criteria, risks. | ⏸ GATE 1 |
 | 2. Plan | Numbered plan files, each small enough for one coder run. | ⏸ GATE 2 |
 | 3. Execute | One part at a time, in index order; stop at the first failure. No commits. | ⏸ PART FAILED, only on a failure |
@@ -140,9 +140,9 @@ coder is the session default: a file-editing subagent on this session's default
 model, else a connected MCP coder. A CLI coder always needs a profile.
 
 To use the providers this app already holds without writing endpoints or keys,
-run `/zla-flow --setup` once after install. It reads the app's providers and
-models and writes `.zla-flow/coder.json` straight away, with no approval step. It adds one `host` profile per provider and never touches profiles you
-wrote, nor `roles`, `workspace` or `limits`, and it never deletes a profile. It also adds `.zla-flow/` to the project's `.gitignore` when it isn't ignored yet, so the workflow files stay out of your commits. Run it again after you add a
+run `/zlak-flow --setup` once after install. It reads the app's providers and
+models and writes `.zlak-flow/coder.json` straight away, with no approval step. It adds one `host` profile per provider and never touches profiles you
+wrote, nor `roles`, `workspace` or `limits`, and it never deletes a profile. It also adds `.zlak-flow/` to the project's `.gitignore` when it isn't ignored yet, so the workflow files stay out of your commits. Run it again after you add a
 provider; GATE 1 also tells you when the app has a provider `coder.json` lacks.
 
 A coder that cannot be resolved (a missing profile or alias, a broken
@@ -150,9 +150,9 @@ A coder that cannot be resolved (a missing profile or alias, a broken
 "unresolved" with the reason, so you can fix it in time. Only Phase 3 stops on
 it.
 
-Create `.zla-flow/coder.json` in the project. The page's **Copy coder.json
+Create `.zlak-flow/coder.json` in the project. The page's **Copy coder.json
 template** button copies a starter file; the same file ships as
-[`config/coder.example.json`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json). It is a convention the
+[`config/coder.example.json`](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/config/coder.example.json). It is a convention the
 workflow reads, not a file DSH validates.
 
 ```jsonc
@@ -188,7 +188,7 @@ A `command` profile's placeholders are `{model}`, `{prompt_file}`, `{workdir}`
 and `{branch}`. The command must edit files in `{workdir}` and exit 0 on success.
 
 The command runs from the project root with the profile's `env`. A prompt file
-is written under `.zla-flow/state/`, and `timeout_seconds` caps the run time.
+is written under `.zlak-flow/state/`, and `timeout_seconds` caps the run time.
 
 ### Profile inheritance
 
@@ -242,12 +242,12 @@ middle of a step, and every part is listed in the index.
 
 | Path | Purpose |
 |---|---|
-| `.zla-flow/coder.json` | Profiles, roles, limits, adoption paths. |
-| `.zla-flow/plans/<task-id>/` | `00-index.md` plus one file per unit of work. |
-| `.zla-flow/state/<task-id>.json` | Progress of the current run, so `--resume` can continue it. |
+| `.zlak-flow/coder.json` | Profiles, roles, limits, adoption paths. |
+| `.zlak-flow/plans/<task-id>/` | `00-index.md` plus one file per unit of work. |
+| `.zlak-flow/state/<task-id>.json` | Progress of the current run, so `--resume` can continue it. |
 
 Nothing of yours is edited, moved, renamed or deleted by the workflow; derived
-files stay under `.zla-flow/`.
+files stay under `.zlak-flow/`.
 
 `<task-id>` is `YYYYMMDD-<slug>`, derived once from the task and stated in the
 first reply. The state file has a fixed shape:
@@ -278,7 +278,7 @@ redoing it:
 1. **Discover** the plans, BRDs, design docs and code that exist for the task,
    plus the project's guidance and build/test configuration, git status, branch
    and recent history.
-2. **Import without modifying**: derived artifacts go under `.zla-flow/`, keeping
+2. **Import without modifying**: derived artifacts go under `.zlak-flow/`, keeping
    your numbering and naming each original as its source.
 3. **Assess with evidence**, one label per part:
 
@@ -324,8 +324,8 @@ failed, and continues at the first part that isn't done.
 
 | Symptom | Check |
 |---|---|
-| The sidebar entry is missing | Settings → Plugins: the `@zealamic/agent-plugin-flow-dsh` bundle is enabled. After a bundle change, refresh the page. |
-| `/zla-flow` is not offered | The Host half loads with the process; toggle the plugin row or restart DSH, then start a new session. |
+| The sidebar entry is missing | Settings → Plugins: the `@zealakit/agent-plugin-flow-dsh` bundle is enabled. After a bundle change, refresh the page. |
+| `/zlak-flow` is not offered | The Host half loads with the process; toggle the plugin row or restart DSH, then start a new session. |
 | Start opens no session | The page opens the workspace of the session on screen, else the most recent workspace. Open a workspace first. |
 | Phase 3 stops immediately | No coder lane: connect an MCP coder, or set a `coders.<name>` profile and point `active` at it. |
 | A profile's model is rejected | The alias in `--coder model:<profile>/<alias>` must be a key of that profile's `models` map. |
@@ -335,8 +335,8 @@ failed, and continues at the first part that isn't done.
 ```text
 packages/dsh/
 ├── package.json            bundle manifest (dsh.bundle.patch + dsh.client)
-├── cordis.patch.yml        inserts the zla-flow row
-├── index.js                Host half: the /zla-flow command
+├── cordis.patch.yml        inserts the zlak-flow row
+├── index.js                Host half: the /zlak-flow command
 ├── protocol.js             the protocol and usage line (generated from packages/core)
 ├── client.js               Client half: sidebar entry, page, styles
 ├── config/coder.example.json   starter project configuration (generated)
@@ -348,7 +348,7 @@ packages/dsh/
 
 `protocol.js`, `config/coder.example.json`, `icon.svg` and the
 `CODER_TEMPLATE` block in `client.js` are generated from
-[`packages/core`](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md): edit them there and run `pnpm sync` at the
+[`packages/core`](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README.md): edit them there and run `pnpm sync` at the
 repository root.
 
 `pnpm check` confirms the generated files are current, the embedded
@@ -358,7 +358,7 @@ behaves. Run it after any edit.
 
 ## Limitations
 
-- The page launches and documents the run; it does not read `.zla-flow` state
+- The page launches and documents the run; it does not read `.zlak-flow` state
   files, so progress and pending approvals live in the conversation.
 - Gates hold because the model follows the protocol. No hook enforces them, so
   read the gate lines as the contract and reject explicitly.
@@ -370,6 +370,6 @@ behaves. Run it after any edit.
 
 ## License
 
-MIT © Zealamic. Written by nqhed - Huy Ed. Nguyen.
+MIT © Zealakit. Written by nqhed - Huy Ed. Nguyen.
 
 The workflow is the same one the Claude Code plugin runs; this package is its DeepSeek Harness port. The page ships English and Vietnamese dictionaries (`locale/en.json`, `locale/vi.json`, and the Client dictionaries), because a DSH plugin follows the reader's active language.

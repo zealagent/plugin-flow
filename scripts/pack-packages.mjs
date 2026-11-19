@@ -17,7 +17,7 @@ const version = JSON.parse(readFileSync(`${root}package.json`, "utf8")).version;
 rmSync(artifacts, { recursive: true, force: true });
 mkdirSync(artifacts, { recursive: true });
 
-const claudeFile = `${artifacts}/zealamic-agent-plugin-flow-claude-${version}.tgz`;
+const claudeFile = `${artifacts}/zealakit-agent-plugin-flow-claude-${version}.tgz`;
 execFileSync(
   "tar",
   [

@@ -1,16 +1,16 @@
 {
-  "name": "@zealamic/agent-plugin-flow-dsh",
+  "name": "@zealakit/agent-plugin-flow-dsh",
   "version": "1.0.0-beta.1",
   "type": "module",
-  "description": "PM/Reviewer build workflow with approval gates, launched from a left-sidebar page or the /zla-flow command.",
+  "description": "PM/Reviewer build workflow with approval gates, launched from a left-sidebar page or the /zlak-flow command.",
   "author": "nqhed - Huy Ed. Nguyen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zealamic/agent-plugin-flow.git",
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git",
     "directory": "packages/dsh"
   },
-  "homepage": "https://github.com/zealamic/agent-plugin-flow/tree/main/packages/dsh",
+  "homepage": "https://github.com/zealakit/agent-plugin-flow/tree/main/packages/dsh",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -46,7 +46,7 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/zealamic/agent-plugin-flow/issues"
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
   },
   "publishConfig": {
     "access": "public"

@@ -1,8 +1,8 @@
 /**
- * Client half of the zla-flow bundle.
+ * Client half of the zlak-flow bundle.
  *
  * Registers one entry in the left sidebar (`sidebar.panellist`) and the page it
- * opens (`main`), keyed by the same id. The page seeds `/zla-flow` into a new
+ * opens (`main`), keyed by the same id. The page seeds `/zlak-flow` into a new
  * Session and documents the workflow: vendor-neutral roles, coder lanes, flags,
  * limits and file layout.
  *
@@ -11,13 +11,13 @@
  * host theme tokens only.
  */
 /** @type {any} */ (window).__ModuleLoader__.load({
-  id: "@zealamic/agent-plugin-flow-dsh",
+  id: "@zealakit/agent-plugin-flow-dsh",
   factory(/** @type {(name: string) => any} */ moduleRequire) {
     const React = moduleRequire("react");
     const h = React.createElement;
 
-    const NS = "zla-flow";
-    const PANEL_ID = "zla-flow";
+    const NS = "zlak-flow";
+    const PANEL_ID = "zlak-flow";
 
     /** The six phases, in order. Names are shared across locales. */
     const PHASES = ["p0", "p1", "p2", "p3", "p4", "p5"];
@@ -58,9 +58,9 @@
     ];
     /** Where the run keeps its files. */
     const FILE_ROWS = [
-      ["fl0", ".zla-flow/coder.json"],
-      ["fl1", ".zla-flow/plans/<task-id>/"],
-      ["fl2", ".zla-flow/state/<task-id>.json"],
+      ["fl0", ".zlak-flow/coder.json"],
+      ["fl1", ".zlak-flow/plans/<task-id>/"],
+      ["fl2", ".zlak-flow/state/<task-id>.json"],
     ];
     /** Adoption evidence labels. */
     const ADOPT_ROWS = [
@@ -73,13 +73,13 @@
     const RULES = ["rl0", "rl1", "rl2", "rl3", "rl4"];
 
     /**
-     * Starter `.zla-flow/coder.json`. Vendor-neutral: each lane names a
+     * Starter `.zlak-flow/coder.json`. Vendor-neutral: each lane names a
      * protocol and asks for the endpoint and model the user actually has.
      * Generated from packages/core/config/coder.example.json.
      */
     // @generated-start coder-template: packages/core/config/coder.example.json, run pnpm sync
     const CODER_TEMPLATE = `{
-  "_readme": "Save as <project>/.zla-flow/coder.json. 'active' is the default coder profile; override per run with --coder model:<profile>[/<alias>]. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and protocol 'host' names a provider the host app already holds (written by /zla-flow --setup, no base_url or key). A profile may 'extends' another and override only what differs.",
+  "_readme": "Save as <project>/.zlak-flow/coder.json. 'active' is the default coder profile; override per run with --coder model:<profile>[/<alias>]. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and protocol 'host' names a provider the host app already holds (written by /zlak-flow --setup, no base_url or key). A profile may 'extends' another and override only what differs.",
   "version": 6,
   "active": "default",
   "fallback": [],
@@ -144,7 +144,7 @@
     // @generated-end coder-template
 
     const EN = {
-      panel: "zla-flow",
+      panel: "zlak-flow",
       subtitle:
         "PM/Reviewer workflow: BRD, Plan, Execute, Review, Commit. The run stops at every gate and waits for you.",
 
@@ -175,7 +175,7 @@
         "This page is a launcher and a reference. Progress, plan parts and approvals live in the conversation.",
       "p0.name": "Adopt",
       "p0.work":
-        "Scan existing plans, BRD and code; label every part with evidence. Read-only outside .zla-flow/.",
+        "Scan existing plans, BRD and code; label every part with evidence. Read-only outside .zlak-flow/.",
       "p0.gate": "\u23f8 GATE 0",
       "p1.name": "BRD",
       "p1.work":
@@ -231,7 +231,7 @@
 
       "config.heading": "Project configuration",
       "config.intro":
-        "The run reads .zla-flow/coder.json when it exists. It is a convention this workflow follows, not a file DSH validates; copy the template below and fill in the endpoint, model and environment variable name.",
+        "The run reads .zlak-flow/coder.json when it exists. It is a convention this workflow follows, not a file DSH validates; copy the template below and fill in the endpoint, model and environment variable name.",
       "config.protocol": "Protocol",
       "config.when": "Use it when",
       "pt0.meaning":
@@ -265,7 +265,7 @@
 
       "adopt.heading": "Adopting an existing project",
       "adopt.intro":
-        "With --adopt, the run first maps what already exists. Your originals are never edited, moved, renamed or deleted: derived files are written only under .zla-flow/, keeping your numbering and naming each original as a source.",
+        "With --adopt, the run first maps what already exists. Your originals are never edited, moved, renamed or deleted: derived files are written only under .zlak-flow/, keeping your numbering and naming each original as a source.",
       "adopt.label": "Label",
       "adopt.meaning": "Meaning",
       "ad0.meaning": "Done, with evidence in the repository.",
@@ -292,7 +292,7 @@
     };
 
     const VI = {
-      panel: "zla-flow",
+      panel: "zlak-flow",
       subtitle:
         "Quy trình PM/Reviewer: BRD, Plan, Execute, Review, Commit. Mỗi cổng đều dừng lại chờ bạn.",
 
@@ -323,7 +323,7 @@
         "Trang này chỉ để khởi chạy và tra cứu. Tiến độ, các phần plan và việc duyệt nằm trong hội thoại.",
       "p0.name": "Adopt",
       "p0.work":
-        "Quét plan, BRD và code có sẵn; gắn nhãn từng phần kèm bằng chứng. Chỉ đọc ngoài .zla-flow/.",
+        "Quét plan, BRD và code có sẵn; gắn nhãn từng phần kèm bằng chứng. Chỉ đọc ngoài .zlak-flow/.",
       "p0.gate": "\u23f8 GATE 0",
       "p1.name": "BRD",
       "p1.work": "Mục tiêu, phạm vi, yêu cầu, tiêu chí nghiệm thu, rủi ro.",
@@ -376,7 +376,7 @@
 
       "config.heading": "Cấu hình project",
       "config.intro":
-        "Lần chạy đọc .zla-flow/coder.json khi file đó có. Đây là quy ước của quy trình, không phải file DSH kiểm tra; hãy sao chép mẫu bên dưới rồi điền endpoint, model và tên biến môi trường.",
+        "Lần chạy đọc .zlak-flow/coder.json khi file đó có. Đây là quy ước của quy trình, không phải file DSH kiểm tra; hãy sao chép mẫu bên dưới rồi điền endpoint, model và tên biến môi trường.",
       "config.protocol": "Protocol",
       "config.when": "Dùng khi",
       "pt0.meaning":
@@ -410,7 +410,7 @@
 
       "adopt.heading": "Tiếp nhận project có sẵn",
       "adopt.intro":
-        "Với --adopt, lần chạy lập bản đồ những gì đã có trước. File gốc của bạn không bị sửa, di chuyển, đổi tên hay xóa: file dẫn xuất chỉ ghi trong .zla-flow/, giữ nguyên số thứ tự và ghi rõ nguồn.",
+        "Với --adopt, lần chạy lập bản đồ những gì đã có trước. File gốc của bạn không bị sửa, di chuyển, đổi tên hay xóa: file dẫn xuất chỉ ghi trong .zlak-flow/, giữ nguyên số thứ tự và ghi rõ nguồn.",
       "adopt.label": "Nhãn",
       "adopt.meaning": "Ý nghĩa",
       "ad0.meaning": "Đã xong, có bằng chứng trong repo.",
@@ -434,46 +434,46 @@
     };
 
     const CSS = `
-.zla-page{display:flex;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;color:var(--dsw-alias-label-primary);background:var(--dsw-alias-bg-base);font-size:14px;line-height:1.6}
-.zla-scroll{flex:1;min-height:0;overflow:auto;scrollbar-gutter:stable}
-.zla-content{max-width:960px;margin:0 auto;padding:0 clamp(20px,4vw,40px) 48px;box-sizing:border-box}
-.zla-head{padding-top:28px;margin-bottom:20px}
-.zla-head h1{margin:0;font-size:20px;line-height:28px;font-weight:500}
-.zla-sub{margin:6px 0 0;color:var(--dsw-alias-label-secondary);font-size:13px;line-height:20px}
-.zla-card{margin-top:16px;padding:16px 18px;border:0.5px solid var(--dsw-alias-border-l1);border-radius:12px;background:var(--dsw-alias-bg-layer-1)}
-.zla-card h2{margin:0 0 12px;font-size:14px;line-height:22px;font-weight:600}
-.zla-card p{margin:0 0 10px;font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)}
-.zla-card p:last-child{margin-bottom:0}
-.zla-field{display:grid;gap:6px;font-size:13px;min-width:0}
-.zla-field>span{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
-.zla-field textarea,.zla-field input{width:100%;box-sizing:border-box;padding:8px 10px;border:0.5px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-base);color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px}
-.zla-field textarea{resize:vertical;min-height:64px}
-.zla-field textarea::placeholder,.zla-field input::placeholder{color:var(--dsw-alias-label-secondary)}
-.zla-field textarea:focus,.zla-field input:focus{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:1px}
-.zla-field input[aria-invalid="true"]{border-color:var(--dsw-alias-state-error-primary)}
-.zla-row{display:flex;gap:12px;margin-top:12px}
-.zla-half{flex:1;min-width:0}
-.zla-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.zla-primary,.zla-ghost{height:32px;padding:0 14px;border-radius:16px;font-family:inherit;font-size:13px;line-height:20px;cursor:pointer}
-.zla-primary{border:0;background:var(--dsw-alias-brand-primary);color:#fff}
-.zla-primary:disabled{opacity:.45;cursor:not-allowed}
-.zla-ghost{border:0.5px solid var(--dsw-alias-border-l2);background:transparent;color:var(--dsw-alias-label-primary)}
-.zla-ghost:hover:not(:disabled){border-color:var(--dsw-alias-border-l1)}
-.zla-ghost:disabled{opacity:.45;cursor:not-allowed}
-.zla-warn{margin:10px 0 0;color:var(--dsw-alias-state-error-primary);font-size:12px;line-height:18px}
-.zla-table{width:100%;border-collapse:collapse;font-size:13px;line-height:20px}
-.zla-table th{text-align:left;font-weight:500;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px;padding:0 12px 6px 0;border-bottom:0.5px solid var(--dsw-alias-border-l1);white-space:nowrap}
-.zla-table td{padding:8px 12px 8px 0;vertical-align:top;border-bottom:0.5px solid var(--dsw-alias-border-l1);color:var(--dsw-alias-label-secondary)}
-.zla-table tbody tr:last-child td{border-bottom:0;padding-bottom:0}
-.zla-table td:first-child{color:var(--dsw-alias-label-primary)}
-.zla-table td:last-child,.zla-table th:last-child{padding-right:0}
-.zla-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;white-space:nowrap}
-.zla-hint{margin:10px 0 0;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}
-.zla-list{margin:0;padding-left:18px;font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)}
-.zla-list li+li{margin-top:4px}
-.zla-note{margin-top:10px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}
-.zla-foot{margin:20px 0 0;text-align:center;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}
-@media (max-width:640px){.zla-row{flex-direction:column}.zla-table td,.zla-table th{padding-right:8px}.zla-mono{white-space:normal;overflow-wrap:anywhere}}
+.zlak-page{display:flex;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;color:var(--dsw-alias-label-primary);background:var(--dsw-alias-bg-base);font-size:14px;line-height:1.6}
+.zlak-scroll{flex:1;min-height:0;overflow:auto;scrollbar-gutter:stable}
+.zlak-content{max-width:960px;margin:0 auto;padding:0 clamp(20px,4vw,40px) 48px;box-sizing:border-box}
+.zlak-head{padding-top:28px;margin-bottom:20px}
+.zlak-head h1{margin:0;font-size:20px;line-height:28px;font-weight:500}
+.zlak-sub{margin:6px 0 0;color:var(--dsw-alias-label-secondary);font-size:13px;line-height:20px}
+.zlak-card{margin-top:16px;padding:16px 18px;border:0.5px solid var(--dsw-alias-border-l1);border-radius:12px;background:var(--dsw-alias-bg-layer-1)}
+.zlak-card h2{margin:0 0 12px;font-size:14px;line-height:22px;font-weight:600}
+.zlak-card p{margin:0 0 10px;font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)}
+.zlak-card p:last-child{margin-bottom:0}
+.zlak-field{display:grid;gap:6px;font-size:13px;min-width:0}
+.zlak-field>span{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
+.zlak-field textarea,.zlak-field input{width:100%;box-sizing:border-box;padding:8px 10px;border:0.5px solid var(--dsw-alias-border-l2);border-radius:8px;background:var(--dsw-alias-bg-base);color:var(--dsw-alias-label-primary);font-family:inherit;font-size:13px;line-height:20px}
+.zlak-field textarea{resize:vertical;min-height:64px}
+.zlak-field textarea::placeholder,.zlak-field input::placeholder{color:var(--dsw-alias-label-secondary)}
+.zlak-field textarea:focus,.zlak-field input:focus{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:1px}
+.zlak-field input[aria-invalid="true"]{border-color:var(--dsw-alias-state-error-primary)}
+.zlak-row{display:flex;gap:12px;margin-top:12px}
+.zlak-half{flex:1;min-width:0}
+.zlak-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.zlak-primary,.zlak-ghost{height:32px;padding:0 14px;border-radius:16px;font-family:inherit;font-size:13px;line-height:20px;cursor:pointer}
+.zlak-primary{border:0;background:var(--dsw-alias-brand-primary);color:#fff}
+.zlak-primary:disabled{opacity:.45;cursor:not-allowed}
+.zlak-ghost{border:0.5px solid var(--dsw-alias-border-l2);background:transparent;color:var(--dsw-alias-label-primary)}
+.zlak-ghost:hover:not(:disabled){border-color:var(--dsw-alias-border-l1)}
+.zlak-ghost:disabled{opacity:.45;cursor:not-allowed}
+.zlak-warn{margin:10px 0 0;color:var(--dsw-alias-state-error-primary);font-size:12px;line-height:18px}
+.zlak-table{width:100%;border-collapse:collapse;font-size:13px;line-height:20px}
+.zlak-table th{text-align:left;font-weight:500;color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px;padding:0 12px 6px 0;border-bottom:0.5px solid var(--dsw-alias-border-l1);white-space:nowrap}
+.zlak-table td{padding:8px 12px 8px 0;vertical-align:top;border-bottom:0.5px solid var(--dsw-alias-border-l1);color:var(--dsw-alias-label-secondary)}
+.zlak-table tbody tr:last-child td{border-bottom:0;padding-bottom:0}
+.zlak-table td:first-child{color:var(--dsw-alias-label-primary)}
+.zlak-table td:last-child,.zlak-table th:last-child{padding-right:0}
+.zlak-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;white-space:nowrap}
+.zlak-hint{margin:10px 0 0;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}
+.zlak-list{margin:0;padding-left:18px;font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)}
+.zlak-list li+li{margin-top:4px}
+.zlak-note{margin-top:10px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}
+.zlak-foot{margin:20px 0 0;text-align:center;font-size:12px;line-height:18px;color:var(--dsw-alias-label-secondary)}
+@media (max-width:640px){.zlak-row{flex-direction:column}.zlak-table td,.zlak-table th{padding-right:8px}.zlak-mono{white-space:normal;overflow-wrap:anywhere}}
 `;
 
     /**
@@ -530,10 +530,10 @@
      * @param task - the task text.
      * @param coder - optional coder profile.
      * @param model - optional model alias.
-     * @returns the complete `/zla-flow` line.
+     * @returns the complete `/zlak-flow` line.
      */
     function commandLine(task, coder, model) {
-      const parts = ["/zla-flow"];
+      const parts = ["/zlak-flow"];
       const profile = coder.trim();
       const alias = model.trim();
       if (profile.length > 0) {
@@ -567,13 +567,13 @@
     }
 
     /**
-     * The zla-flow page: seed a run, then read the workflow it will follow.
+     * The zlak-flow page: seed a run, then read the workflow it will follow.
      * @param props - slot props, plus this plugin's injected translate and start face.
      * @returns the page.
      */
     function Panel(props) {
-      const t = typeof props.t === "function" ? props.t : props.zlaT;
-      const start = props.zlaStart;
+      const t = typeof props.t === "function" ? props.t : props.zlakT;
+      const start = props.zlakStart;
       const taskState = React.useState("");
       const task = taskState[0];
       const setTask = taskState[1];
@@ -643,7 +643,7 @@
       const card = (key, title, ...body) =>
         h(
           "section",
-          { key, className: "zla-card" },
+          { key, className: "zlak-card" },
           h("h2", null, title),
           ...body,
         );
@@ -651,7 +651,7 @@
       const table = (key, headers, rows) =>
         h(
           "table",
-          { key, className: "zla-table" },
+          { key, className: "zlak-table" },
           h(
             "thead",
             null,
@@ -675,7 +675,7 @@
                     "td",
                     {
                       key: index,
-                      className: cell.mono === true ? "zla-mono" : undefined,
+                      className: cell.mono === true ? "zlak-mono" : undefined,
                     },
                     cell.text,
                   ),
@@ -686,14 +686,14 @@
         );
 
       const sentence = (key) => h("p", { key }, t(key));
-      const note = (key) => h("p", { key, className: "zla-note" }, t(key));
+      const note = (key) => h("p", { key, className: "zlak-note" }, t(key));
 
       const launch = card(
         "launch",
         t("start.heading"),
         h(
           "label",
-          { key: "task", className: "zla-field" },
+          { key: "task", className: "zlak-field" },
           h("span", null, t("start.task")),
           h("textarea", {
             value: task,
@@ -704,10 +704,10 @@
         ),
         h(
           "div",
-          { key: "row", className: "zla-row" },
+          { key: "row", className: "zlak-row" },
           h(
             "label",
-            { key: "coder", className: "zla-field zla-half" },
+            { key: "coder", className: "zlak-field zlak-half" },
             h("span", null, t("start.coder")),
             h("input", {
               type: "text",
@@ -720,7 +720,7 @@
           ),
           h(
             "label",
-            { key: "model", className: "zla-field zla-half" },
+            { key: "model", className: "zlak-field zlak-half" },
             h("span", null, t("start.model")),
             h("input", {
               type: "text",
@@ -734,12 +734,12 @@
         ),
         h(
           "div",
-          { key: "actions", className: "zla-actions" },
+          { key: "actions", className: "zlak-actions" },
           h(
             "button",
             {
               key: "start",
-              className: "zla-primary",
+              className: "zlak-primary",
               type: "button",
               disabled: !canRun,
               onClick: onStart,
@@ -750,7 +750,7 @@
             "button",
             {
               key: "copy",
-              className: "zla-ghost",
+              className: "zlak-ghost",
               type: "button",
               disabled: !canRun,
               onClick: () => copy("command", line),
@@ -761,26 +761,26 @@
             "button",
             {
               key: "template",
-              className: "zla-ghost",
+              className: "zlak-ghost",
               type: "button",
               onClick: () => copy("template", CODER_TEMPLATE),
             },
             copied === "template" ? t("start.copied") : t("start.template"),
           ),
         ),
-        h("p", { key: "hint", className: "zla-hint" }, t("start.hint")),
+        h("p", { key: "hint", className: "zlak-hint" }, t("start.hint")),
         fieldsOk
           ? null
           : h(
               "p",
-              { key: "invalid", className: "zla-warn", role: "alert" },
+              { key: "invalid", className: "zlak-warn", role: "alert" },
               t("start.invalidField"),
             ),
         failure.length === 0
           ? null
           : h(
               "p",
-              { key: "failure", className: "zla-warn", role: "alert" },
+              { key: "failure", className: "zlak-warn", role: "alert" },
               failure,
             ),
       );
@@ -907,25 +907,25 @@
         t("rules.heading"),
         h(
           "ul",
-          { key: "list", className: "zla-list" },
+          { key: "list", className: "zlak-list" },
           RULES.map((key) => h("li", { key }, t(key + ".meaning"))),
         ),
       );
 
       return h(
         "div",
-        { className: "zla-page" },
+        { className: "zlak-page" },
         h(
           "div",
-          { className: "zla-scroll" },
+          { className: "zlak-scroll" },
           h(
             "div",
-            { className: "zla-content" },
+            { className: "zlak-content" },
             h(
               "header",
-              { className: "zla-head" },
+              { className: "zlak-head" },
               h("h1", null, t("panel")),
-              h("p", { className: "zla-sub" }, t("subtitle")),
+              h("p", { className: "zlak-sub" }, t("subtitle")),
             ),
             launch,
             phases,
@@ -938,7 +938,7 @@
             rules,
             h(
               "p",
-              { key: "author", className: "zla-foot" },
+              { key: "author", className: "zlak-foot" },
               t("footer.author"),
             ),
           ),
@@ -951,17 +951,17 @@
       apply(ctx) {
         ctx.effect(() => {
           const element = document.createElement("style");
-          element.dataset.zlaFlow = "";
+          element.dataset.zlakFlow = "";
           element.textContent = CSS;
           document.head.appendChild(element);
           return () => {
             element.remove();
           };
-        }, "zla-flow: styles");
+        }, "zlak-flow: styles");
 
         ctx.effect(
           () => ctx.locale.register(NS, { en: EN, vi: VI }),
-          "zla-flow: dictionaries",
+          "zlak-flow: dictionaries",
         );
 
         const t = ctx.locale.bind(NS);
@@ -997,12 +997,12 @@
                   name: "main",
                   key: PANEL_ID,
                   locale: NS,
-                  inject: () => ({ zlaT: t, zlaStart: start }),
+                  inject: () => ({ zlakT: t, zlakStart: start }),
                 },
                 Panel,
               ),
             ),
-          "zla-flow: main panel",
+          "zlak-flow: main panel",
         );
 
         ctx.effect(
@@ -1019,7 +1019,7 @@
                 PanelIcon,
               ),
             ),
-          "zla-flow: sidebar entry",
+          "zlak-flow: sidebar entry",
         );
       },
     };

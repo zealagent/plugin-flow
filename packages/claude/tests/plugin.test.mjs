@@ -1,7 +1,7 @@
 /**
- * Offline checks for the zla-flow Claude Code plugin.
+ * Offline checks for the zlak-flow Claude Code plugin.
  *
- * - plugin.json parses, is named zla-flow, and its version matches package.json.
+ * - plugin.json parses, is named zlak-flow, and its version matches package.json.
  * - SKILL.md has frontmatter and takes $ARGUMENTS.
  * - SKILL.md and the config template are the generated copies from packages/core.
  * - The repository marketplace lists this plugin at this path.
@@ -29,15 +29,15 @@ const frontmatter = (text) => {
 
 const manifest = JSON.parse(read(".claude-plugin/plugin.json"));
 const pkg = JSON.parse(read("package.json"));
-const skill = frontmatter(read("skills/zla-flow/SKILL.md"));
+const skill = frontmatter(read("skills/zlak-flow/SKILL.md"));
 
-test("manifest is named zla-flow and matches package.json", () => {
-  assert.equal(manifest.name, "zla-flow");
+test("manifest is named zlak-flow and matches package.json", () => {
+  assert.equal(manifest.name, "zlak-flow");
   assert.equal(manifest.version, pkg.version);
 });
 
 test("skill has frontmatter and ends with the run input", () => {
-  assert.equal(skill.fields.name, "zla-flow");
+  assert.equal(skill.fields.name, "zlak-flow");
   assert.ok(skill.fields.description.length > 40);
   assert.ok(skill.body.trimEnd().endsWith("$ARGUMENTS"));
 });
@@ -52,7 +52,7 @@ test("the marketplace lists this plugin at this path", () => {
     readFileSync(`${repo}.claude-plugin/marketplace.json`, "utf8"),
   );
   const entry = marketplace.plugins.find((p) => p.name === manifest.name);
-  assert.ok(entry, "marketplace lists zla-flow");
+  assert.ok(entry, "marketplace lists zlak-flow");
   assert.equal(entry.source, "./packages/claude");
   assert.ok(
     existsSync(`${repo}${entry.source.slice(2)}/.claude-plugin/plugin.json`),

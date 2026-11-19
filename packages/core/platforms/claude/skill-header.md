@@ -1,6 +1,6 @@
 ---
-name: zla-flow
-description: Runs the zla-flow PM/Reviewer workflow (BRD, Plan, delegated coding, Review, Commit) with a human approval gate at every step. Use when the user invokes /zla-flow, or asks to run zla-flow on a task.
+name: zlak-flow
+description: Runs the zlak-flow PM/Reviewer workflow (BRD, Plan, delegated coding, Review, Commit) with a human approval gate at every step. Use when the user invokes /zlak-flow, or asks to run zlak-flow on a task.
 argument-hint: "{{usage-args}}"
 ---
 

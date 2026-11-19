@@ -1,10 +1,10 @@
 # Plugin Flow Core
 
-[English](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealamic/agent-plugin-flow/blob/main/packages/core/README_CN.md)
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/core/README_CN.md)
 
-![Zealamic Plugin Flow cover](https://github.com/zealamic/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
 
-The single source for everything the zla-flow platforms share. Nothing here
+The single source for everything the zlak-flow platforms share. Nothing here
 ships: each platform plugin must stay self-contained when installed, so
 `pnpm sync` writes generated copies into the platform folders, and
 `pnpm check` fails when any copy is stale.
@@ -12,13 +12,13 @@ ships: each platform plugin must stay self-contained when installed, so
 > **Note**
 > Plugin Flow runs a PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding, Review, Commit. It never skips a gate and never stores an API key; it names the environment variable that holds one.
 >
-> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zla-flow/coder.json`.
+> It is not a coding model or an agent runtime. The coder is whatever model or CLI you configure in `.zlak-flow/coder.json`.
 
 ## What lives here
 
 | Source | Generated into |
 |---|---|
-| `protocol/protocol.md`: the workflow protocol (phases, gates, state file, coder resolution, flags, hard rules) | `packages/claude/skills/zla-flow/SKILL.md` (with the skill frontmatter and `$ARGUMENTS`), `packages/dsh/protocol.js` (`PROTOCOL`) |
+| `protocol/protocol.md`: the workflow protocol (phases, gates, state file, coder resolution, flags, hard rules) | `packages/claude/skills/zlak-flow/SKILL.md` (with the skill frontmatter and `$ARGUMENTS`), `packages/dsh/protocol.js` (`PROTOCOL`) |
 | `protocol/usage.txt`: the one usage line | Both protocols, the skill's `argument-hint`, and `USAGE` in `packages/dsh/protocol.js` |
 | `platforms/<platform>/*.md`: what differs per platform | Spliced into that platform's protocol |
 | `platforms/claude/skill-header.md`: the skill frontmatter | The top of `SKILL.md` |
@@ -65,4 +65,4 @@ and removes the placeholder.
 
 ## License
 
-MIT © Zealamic
+MIT © Zealakit
