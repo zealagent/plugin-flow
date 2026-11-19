@@ -1,0 +1,44 @@
+{
+  "name": "@zealakit/agent-plugin-flow-opencode",
+  "version": "1.0.0-beta.1",
+  "type": "module",
+  "description": "zlak-flow for OpenCode: the PM/Reviewer workflow with approval gates, as the /zlak-flow command and three subagents.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git",
+    "directory": "packages/opencode"
+  },
+  "homepage": "https://github.com/zealakit/agent-plugin-flow/tree/main/packages/opencode",
+  "bin": {
+    "zlak-flow-opencode-install": "install.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-command",
+    "workflow",
+    "human-in-the-loop",
+    "approval-gates",
+    "zealakit"
+  ],
+  "files": [
+    "commands",
+    "agents",
+    "config",
+    "install.mjs",
+    "README.md",
+    "README_VI.md",
+    "README_CN.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

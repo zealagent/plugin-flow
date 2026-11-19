@@ -1,0 +1,334 @@
+// @ts-nocheck: the bundle runs against stub React and DOM globals.
+/**
+ * Offline checks for the zlak-flow bundle.
+ *
+ * - The coder.json template embedded in client.js is byte-identical to
+ *   config/coder.example.json, and both parse as JSON.
+ * - The Client EN, VI and ZH dictionaries have the same keys.
+ * - The Panel renders with stub React and every t() key it asks for exists.
+ * - The /zlak-flow command handler returns usage, refuses without a session,
+ *   and queues the protocol plus the run's input.
+ */
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import assert from "node:assert/strict";
+import { test } from "node:test";
+
+const root = fileURLToPath(new URL("..", import.meta.url));
+const read = (path) => readFileSync(root + path, "utf8");
+
+// Load client.js through a stub module loader and stub React.
+let module;
+globalThis.window = {
+  __ModuleLoader__: {
+    load(def) {
+      module = def;
+    },
+  },
+};
+const element = (type, props, ...children) => ({
+  type,
+  props: props ?? {},
+  children: children.flat(),
+});
+// Panel state, in useState call order: task, profile, alias, copied, failure.
+let seed = [];
+const React = {
+  createElement: element,
+  useState: (init) => [seed.length > 0 ? seed.shift() : init, () => {}],
+  useRef: (init) => ({ current: init }),
+  useEffect: () => {},
+};
+new Function(read("client.js"))();
+const factory = module.factory((name) => {
+  assert.equal(name, "react");
+  return React;
+});
+
+// Capture what the bundle registers.
+const registered = {};
+const dictionaries = {};
+let styles = "";
+globalThis.document = {
+  createElement: () => ({
+    dataset: {},
+    set textContent(v) {
+      styles = v;
+    },
+    remove() {},
+  }),
+  head: { appendChild() {} },
+};
+factory.apply({
+  effect: (fn) => fn(),
+  get: () => undefined,
+  locale: {
+    register: (ns, dicts) => {
+      dictionaries[ns] = dicts;
+    },
+    bind: () => (key) => key,
+  },
+  slots: {
+    inject: (_name, fn) => fn(),
+    register: (opts, component) => {
+      registered[opts.name] = { opts, component };
+    },
+  },
+});
+assert.ok(styles.includes(".zlak-page"), "styles injected");
+
+const source = read("client.js");
+const { en, vi, zh } = dictionaries["zlak-flow"];
+const asked = new Set();
+const t = (key) => {
+  asked.add(key);
+  return key;
+};
+const Panel = registered.main.component;
+const find = (node, pred, out = []) => {
+  if (node && typeof node === "object") {
+    if (pred(node)) out.push(node);
+    for (const child of node.children ?? []) find(child, pred, out);
+  }
+  return out;
+};
+const render = (task, profile, alias) => {
+  seed = [task, profile, alias, "", ""];
+  const node = Panel({ zlakT: t, zlakStart: () => true });
+  return {
+    buttons: find(node, (n) => n.type === "button"),
+    invalid:
+      find(node, (n) => n.children?.includes("start.invalidField")).length > 0,
+  };
+};
+
+test("the embedded coder template matches config/coder.example.json", () => {
+  const match = source.match(/const CODER_TEMPLATE = `([\s\S]*?)`;\n/);
+  assert.ok(match, "CODER_TEMPLATE found");
+  const template = match[1].replace(/\\\$/g, "$");
+  assert.equal(template, read("config/coder.example.json"));
+  JSON.parse(template);
+});
+
+test("EN, VI and ZH dictionaries have the same keys", () => {
+  assert.deepEqual(Object.keys(vi).sort(), Object.keys(en).sort());
+  assert.deepEqual(Object.keys(zh).sort(), Object.keys(en).sort());
+});
+
+test("every locale file has a title and description", () => {
+  for (const id of ["en", "vi", "zh"]) {
+    const { meta } = JSON.parse(read(`locale/${id}.json`));
+    assert.equal(meta.title, "zlak-flow", id);
+    assert.ok(meta.description.length > 100, id);
+  }
+});
+
+test("the primary button text uses the host's on-color token", () => {
+  assert.match(
+    source,
+    /\.zlak-primary\{[^}]*color:var\(--dsw-alias-label-on-color/,
+  );
+});
+
+test("the panel renders and every key it asks for exists", () => {
+  seed = [];
+  const tree = Panel({ zlakT: t, zlakStart: () => true });
+  assert.deepEqual(
+    [...asked].filter((key) => !(key in en)),
+    [],
+  );
+  const buttons = find(tree, (n) => n.type === "button");
+  assert.equal(buttons.length, 3);
+  assert.equal(buttons[0].props.disabled, true, "start disabled on empty task");
+  assert.equal(buttons[1].props.disabled, true, "copy disabled on empty task");
+  assert.notEqual(buttons[2].props.disabled, true, "template copy enabled");
+});
+
+test("the panel validates the profile and alias fields", () => {
+  let view = render("Add x", "default", "fast");
+  assert.equal(view.buttons[0].props.disabled, false);
+  assert.equal(view.invalid, false);
+  for (const [profile, alias] of [
+    ["my profile", ""],
+    ["", "--adopt"],
+    ['a"b', ""],
+    ["", "it's"],
+  ]) {
+    view = render("Add x", profile, alias);
+    assert.equal(
+      view.buttons[0].props.disabled,
+      true,
+      `start: ${profile}|${alias}`,
+    );
+    assert.equal(
+      view.buttons[1].props.disabled,
+      true,
+      `copy: ${profile}|${alias}`,
+    );
+    assert.equal(view.invalid, true, `warning: ${profile}|${alias}`);
+  }
+  view = render("Add x", "openai/gpt-5.1", "deepseek-chat");
+  assert.equal(view.invalid, false, "provider/model style values accepted");
+});
+
+test("the /zlak-flow command", async () => {
+  const host = await import(`${root}index.js`);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: {
+      register: (c) => {
+        commands[c.name] = c;
+      },
+    },
+  });
+  assert.deepEqual(Object.keys(commands), ["zlak-flow"]);
+  const command = commands["zlak-flow"];
+  assert.equal(command.handler({ rawInput: "   " }).kind, "error");
+  assert.equal(command.handler({ rawInput: "x", agent: {} }).kind, "error");
+  assert.equal(
+    command.handler({ agent: {} }).kind,
+    "error",
+    "missing rawInput is usage, not a crash",
+  );
+  let queued;
+  const result = command.handler({
+    rawInput: "Add tests",
+    agent: {
+      followup: (m) => {
+        queued = m;
+      },
+    },
+  });
+  assert.equal(result.kind, "success");
+  const protocol = queued.content[0].text;
+  assert.ok(protocol.endsWith("THIS RUN'S INPUT\nAdd tests"));
+  for (const marker of [
+    "\u23f8 PART FAILED",
+    "After PART FAILED",
+    "0. No configuration",
+    "a command profile cannot",
+    "## Setup",
+    "## Approve all",
+    "git check-ignore",
+    "\u23f8 COMMIT",
+    "HOST PROVIDERS",
+  ]) {
+    assert.ok(protocol.includes(marker), `protocol mentions ${marker}`);
+  }
+});
+
+test("the protocol is injected as hidden context and only the input is visible", async () => {
+  const host = await import(`${root}index.js`);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: { register: (c) => (commands[c.name] = c) },
+  });
+  const calls = [];
+  const agent = {
+    inject: (m) => calls.push(["inject", m]),
+    followup: (m) => calls.push(["followup", m]),
+  };
+  const result = commands["zlak-flow"].handler({
+    rawInput: "Add tests",
+    agent,
+  });
+  assert.equal(result.kind, "success");
+  assert.deepEqual(
+    calls.map(([kind]) => kind),
+    ["inject", "followup"],
+    "context is queued before the turn that wakes the agent",
+  );
+  const [, context] = calls[0];
+  assert.deepEqual(context.source, {
+    kind: "skill-invocation",
+    name: "zlak-flow",
+    form: "instructions",
+  });
+  assert.ok(context.content[0].text.includes("⏸ GATE 1"));
+  const [, visible] = calls[1];
+  assert.equal(visible.source.kind, "user");
+  assert.equal(visible.content[0].text, "THIS RUN'S INPUT\nAdd tests");
+});
+
+test("a rejected start promise surfaces as a failure on the page", async () => {
+  seed = ["Add x", "", "", "", ""];
+  let failureSet;
+  const realUseState = React.useState;
+  let calls = 0;
+  React.useState = (init) => {
+    const index = calls++;
+    const [value] = realUseState(init);
+    return [
+      value,
+      index === 4
+        ? (v) => {
+            failureSet = v;
+          }
+        : () => {},
+    ];
+  };
+  const started = Panel({
+    zlakT: t,
+    zlakStart: () => Promise.reject(new Error("no")),
+  });
+  React.useState = realUseState;
+  find(started, (n) => n.type === "button")[0].props.onClick();
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(failureSet, "start.failed");
+});
+
+test("the command reads the host's providers and models", async () => {
+  const host = await import(`${root}index.js`);
+  assert.deepEqual(host.inject, ["commands", "llm"]);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: {
+      register: (c) => {
+        commands[c.name] = c;
+      },
+    },
+    llm: {
+      listProviders: () => [
+        { id: "deepseek", name: "DeepSeek" },
+        { id: "byteplus", name: "BytePlus" },
+      ],
+      listModels: async (id) =>
+        id === "deepseek" ? [{ id: "flash" }, "pro"] : [{ name: "flash" }],
+    },
+  });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  let queued;
+  const agent = { followup: (m) => (queued = m) };
+  commands["zlak-flow"].handler({ rawInput: "--setup", agent });
+  const text = queued.content[0].text;
+  assert.ok(
+    text.includes("THIS RUN'S INPUT\n--setup\n\nHOST PROVIDERS"),
+    text.slice(-300),
+  );
+  assert.ok(text.includes("- deepseek (DeepSeek): flash, pro"));
+  assert.ok(text.includes("- byteplus (BytePlus): flash"));
+  assert.ok(!/key|token|secret/i.test(text.split("HOST PROVIDERS (read")[1]));
+});
+
+test("the command still runs when the host has no llm service", async () => {
+  const host = await import(`${root}index.js`);
+  const commands = {};
+  host.apply({
+    effect: (fn) => fn(),
+    commands: { register: (c) => (commands[c.name] = c) },
+    llm: {
+      listProviders: () => {
+        throw new Error("down");
+      },
+    },
+  });
+  let queued;
+  commands["zlak-flow"].handler({
+    rawInput: "x",
+    agent: { followup: (m) => (queued = m) },
+  });
+  assert.ok(!queued.content[0].text.includes("HOST PROVIDERS (read"));
+});

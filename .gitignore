@@ -1,0 +1,21 @@
+# Local
+.DS_Store
+*.local
+*.log*
+
+/.claude/launch.json
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# IDE
+!.vscode/extensions.json
+.idea
+
+# Test / coverage
+coverage
+
+artifacts/
+
+plans/

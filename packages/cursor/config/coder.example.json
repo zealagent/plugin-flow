@@ -1,0 +1,62 @@
+{
+  "_readme": "Save as <project>/.zlak-flow/coder.json. 'active' is the default coder profile; override per run with --coder model:<profile>[/<alias>]. api_key_env is the NAME of an environment variable, never the key itself. 'protocol' is the transport: anthropic | openai | command. Any provider that speaks one of them works, and protocol 'host' names a provider the host app already holds (written by /zlak-flow --setup, no base_url or key). A profile may 'extends' another and override only what differs.",
+  "version": 6,
+  "active": "default",
+  "fallback": [],
+  "coders": {
+    "default": {
+      "protocol": "openai",
+      "base_url": "REPLACE_WITH_BASE_URL",
+      "api_key_env": "CODER_API_KEY",
+      "model": "default",
+      "models": { "default": "REPLACE_WITH_MODEL_ID" },
+      "temperature": 0.2,
+      "max_tokens": 8192,
+      "timeout_seconds": 900
+    },
+    "anthropic-compatible": {
+      "extends": "default",
+      "protocol": "anthropic",
+      "base_url": "REPLACE_WITH_ANTHROPIC_BASE_URL",
+      "api_key_env": "CODER_API_KEY"
+    },
+    "cli": {
+      "protocol": "command",
+      "command": "REPLACE_WITH_CLI --model {model} --prompt-file {prompt_file}",
+      "env": { "CODER_API_KEY": "${CODER_API_KEY}" },
+      "model": "default",
+      "models": { "default": "REPLACE_WITH_MODEL_ID" },
+      "timeout_seconds": 900
+    }
+  },
+  "workspace": {
+    "branch_prefix": "task/",
+    "test_command": "REPLACE_WITH_TEST_COMMAND"
+  },
+  "roles": {
+    "planner": { "use": "self" },
+    "reviewer": { "use": "self", "verify_high_severity": true }
+  },
+  "limits": {
+    "plan_max_lines": 120,
+    "plan_max_steps": 8,
+    "plan_max_files_touched": 6,
+    "review_max_diff_lines": 600,
+    "max_concurrent_jobs": 1,
+    "job_prompt_max_chars": 24000,
+    "job_memory_limit_mb": 4096
+  },
+  "adopt": {
+    "plan_search_paths": [
+      "plans",
+      "docs/plans",
+      "PLAN.md",
+      "TODO.md",
+      "ROADMAP.md"
+    ],
+    "brd_search_paths": ["docs/brd", "docs/requirements", "BRD.md", "PRD.md"],
+    "context_files": ["README.md", "CONTRIBUTING.md", "AGENTS.md"],
+    "ignore": ["node_modules", ".git", "dist", "build", ".venv", "vendor"],
+    "require_clean_tree": true
+  }
+}

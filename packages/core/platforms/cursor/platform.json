@@ -1,0 +1,12 @@
+{
+  "name": "Cursor",
+  "format": "skill-md",
+  "output": "commands/zlak-flow.md",
+  "header": "command-header.md",
+  "args": "The text the user typed after `/zlak-flow`. Cursor documents no argument placeholder for commands: read the message itself.",
+  "copies": [
+    { "from": "config/coder.example.json", "to": "config/coder.example.json" }
+  ],
+  "manifests": [".cursor-plugin/plugin.json"],
+  "pack": { "type": "pnpm-pack" }
+}

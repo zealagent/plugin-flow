@@ -1,0 +1,58 @@
+{
+  "name": "@zealakit/agent-plugin-flow",
+  "version": "1.0.0-beta.1",
+  "private": true,
+  "description": "PM/Reviewer build workflow with a human approval gate at every step (BRD, Plan, delegated coding, Review, Commit): shared sources in packages/core, one plugin per platform.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git"
+  },
+  "homepage": "https://github.com/zealakit/agent-plugin-flow#readme",
+  "bugs": {
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
+  },
+  "keywords": [
+    "workflow",
+    "pm",
+    "review",
+    "human-in-the-loop",
+    "approval-gates",
+    "claude-code",
+    "plugin",
+    "zealakit"
+  ],
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "sync:check": "node scripts/sync.mjs --check",
+    "test": "node --test \"packages/*/tests/*.test.mjs\" \"scripts/tests/*.test.mjs\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "check": "pnpm sync:check && pnpm typecheck && pnpm test && pnpm lint && pnpm check:parity",
+    "monitor": "node --strip-types monitor/server.ts",
+    "check:parity": "node scripts/check-parity.mjs",
+    "set-version": "node scripts/set-version.mjs",
+    "pack:packages": "node scripts/pack-packages.mjs",
+    "release:check": "pnpm check && pnpm readme:check && pnpm pack:packages",
+    "readme:check": "node scripts/check-readmes.mjs",
+    "npm:publish:check": "node --strip-types scripts/npm-publish.ts check",
+    "npm:publish:claude": "node --strip-types scripts/npm-publish.ts claude",
+    "npm:publish:codex": "node --strip-types scripts/npm-publish.ts codex",
+    "npm:publish:gemini": "node --strip-types scripts/npm-publish.ts gemini",
+    "npm:publish:opencode": "node --strip-types scripts/npm-publish.ts opencode",
+    "npm:publish:copilot": "node --strip-types scripts/npm-publish.ts copilot",
+    "npm:publish:cursor": "node --strip-types scripts/npm-publish.ts cursor",
+    "npm:publish:dsh": "node --strip-types scripts/npm-publish.ts dsh",
+    "npm:publish:all": "node --strip-types scripts/npm-publish.ts all"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}

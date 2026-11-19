@@ -1,0 +1,13 @@
+{
+  "name": "Gemini CLI",
+  "format": "toml-command",
+  "output": "commands/zlak-flow.toml",
+  "description": "Run the zlak-flow PM/Reviewer workflow: BRD, Plan, delegated coding, Review, Commit, with a human gate at every step.",
+  "header": null,
+  "args": "{{args}}",
+  "copies": [
+    { "from": "config/coder.example.json", "to": "config/coder.example.json" }
+  ],
+  "manifests": ["gemini-extension.json"],
+  "pack": { "type": "pnpm-pack" }
+}

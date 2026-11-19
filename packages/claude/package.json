@@ -1,0 +1,40 @@
+{
+  "name": "@zealakit/agent-plugin-flow-claude",
+  "version": "1.0.0-beta.1",
+  "type": "module",
+  "description": "zlak-flow for Claude Code: the PM/Reviewer workflow with approval gates, as the /zlak-flow skill.",
+  "author": "nqhed - Huy Ed. Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zealakit/agent-plugin-flow.git",
+    "directory": "packages/claude"
+  },
+  "homepage": "https://github.com/zealakit/agent-plugin-flow/tree/main/packages/claude",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/zealakit/agent-plugin-flow/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-plugin",
+    "workflow",
+    "human-in-the-loop",
+    "approval-gates",
+    "zealakit"
+  ],
+  "files": [
+    ".claude-plugin",
+    "skills",
+    "config",
+    "README.md",
+    "README_VI.md",
+    "README_CN.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,49 @@
+# Zealakit Agent Plugin Flow
+
+[English](https://github.com/zealakit/agent-plugin-flow/blob/main/README.md) | [Tiếng Việt](https://github.com/zealakit/agent-plugin-flow/blob/main/README_VI.md) | [中文](https://github.com/zealakit/agent-plugin-flow/blob/main/README_CN.md)
+
+![Zealakit Agent Plugin Flow cover](https://github.com/zealakit/agent-plugin-flow/blob/main/assets/images/agent-plugin-flow-cover.jpg?raw=true)
+
+Quy trình xây dựng PM/Reviewer với cổng phê duyệt của con người ở mọi bước, dành cho các nền tảng agent bạn đang dùng: BRD, Plan, giao việc viết code, Review, Commit.
+
+- **Một giao thức** — cùng các phase, cổng và quy tắc trên mọi nền tảng, viết một lần trong một core riêng.
+- **Mỗi nền tảng một plugin** — Claude Code và DeepSeek Harness, mỗi plugin tự chứa đủ và đúng phong cách của nền tảng đó.
+- **Coder tùy chọn** — lập kế hoạch và review có thể chạy trong session của bạn hoặc trên một model rẻ hơn; coder có thể là bất kỳ nhà cung cấp, model hay CLI nào bạn cấu hình.
+
+Plugin Flow không bao giờ bỏ qua cổng, không tự viết code và không lưu API key. Nó là một quy trình làm việc, không phải một model.
+
+> **Note**
+> Plugin Flow chạy quy trình PM/Reviewer với cổng phê duyệt của con người ở mọi bước: BRD, Plan, giao việc viết code, Review, Commit. Nó không bao giờ bỏ qua cổng và không lưu API key; nó chỉ ghi tên biến môi trường chứa key.
+>
+> Nó không phải là model viết code hay môi trường chạy agent. Coder là model hoặc CLI bạn cấu hình trong `.zlak-flow/coder.json`.
+
+## Platforms
+
+| Platform | Package | Documentation |
+| --- | --- | --- |
+| Claude Code | `@zealakit/agent-plugin-flow-claude` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/claude/README.md) |
+| DeepSeek Harness | `@zealakit/agent-plugin-flow-dsh` | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/dsh/README.md) |
+| GitHub Copilot | `@zealakit/agent-plugin-flow-copilot` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/copilot/README.md) |
+| Cursor | `@zealakit/agent-plugin-flow-cursor` (plugin `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/cursor/README.md) |
+| OpenCode | `@zealakit/agent-plugin-flow-opencode` (command `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/opencode/README.md) |
+| Gemini CLI | `@zealakit/agent-plugin-flow-gemini` (extension `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/gemini/README.md) |
+| Codex CLI | `@zealakit/agent-plugin-flow-codex` (skill `zlak-flow`) | [README](https://github.com/zealakit/agent-plugin-flow/blob/main/packages/codex/README.md) |
+
+Mỗi plugin nền tảng tự chứa đủ và được cài riêng. Mọi nền tảng đều chạy bằng `/zlak-flow`, trừ Codex CLI chạy bằng `$zlak-flow`.
+
+## Installation
+
+```text
+Claude Code:      /plugin marketplace add zealakit/agent-plugin-flow
+                  /plugin install zlak-flow@zealakit
+DeepSeek Harness: enable @zealakit/agent-plugin-flow-dsh in Settings → Plugins
+Codex CLI:        cd packages/codex && ./install.sh
+Gemini CLI:       gemini extensions install ./packages/gemini
+OpenCode:         cd packages/opencode && node install.mjs
+GitHub Copilot:   cd packages/copilot && node install.mjs
+Cursor:           cd packages/cursor && node install.mjs
+```
+
+## License
+
+MIT © Zealakit

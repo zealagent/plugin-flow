@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "zlak-flow",
+    "description": "在左侧边栏添加 zlak-flow 入口，打开 PM/Reviewer 构建工作流：task 框加上可选的 coder profile 和 model alias，会把 /zlak-flow 命令填入一个新会话；同一页面还说明六个 phase 及其审批关卡、可把 Plan 和 Review 交给其他模型的角色取值、各个参数、coder 传输 lane（兼容 Anthropic、兼容 OpenAI，或任何 CLI）、大小限制、.zlak-flow 文件布局以及 adopt 标签。该 bundle 也注册了 /zlak-flow 命令，供从输入框发起的运行使用。没有任何内容绑定到某个供应商：该 profile 能访问的任何 provider、模型或 CLI 都可以担任 planner、reviewer 或 coder。限制：本页只负责启动和说明运行，不读取 .zlak-flow 状态文件，所以进度和待批准事项都留在对话中；关卡之所以有效，只是因为模型遵循协议，没有 hook 强制执行；Phase 3 需要 profile 提供的 coder 机制，没有时会带着提示停止；.zlak-flow/coder.json 是约定而不是经过校验的 schema。只有 Phase 5 会提交，插件从不 push，从不读取凭据，自己也不发起任何网络请求。"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "zlak-flow",
+  "version": "1.0.0-beta.1",
+  "description": "PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding on any coder model or CLI, Review, Commit. Run it with /zlak-flow."
+}

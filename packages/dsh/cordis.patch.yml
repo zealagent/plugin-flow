@@ -1,0 +1,3 @@
+- insert:
+    - id: zlak-flow
+      name: "@zealakit/agent-plugin-flow-dsh"

@@ -1,0 +1,14 @@
+{
+  "name": "zealakit",
+  "description": "Zealakit plugins for Claude Code.",
+  "owner": {
+    "name": "nqhed - Huy Ed. Nguyen"
+  },
+  "plugins": [
+    {
+      "name": "zlak-flow",
+      "source": "./packages/claude",
+      "description": "PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding, Review, Commit."
+    }
+  ]
+}

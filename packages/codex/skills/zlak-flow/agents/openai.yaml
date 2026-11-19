@@ -1,0 +1,8 @@
+interface:
+  display_name: "zlak-flow"
+  short_description: "PM/Reviewer workflow with an approval gate at every step"
+  default_prompt: "Run $zlak-flow on this task:"
+
+policy:
+  # A gated workflow must start only when the user asks for it.
+  allow_implicit_invocation: false

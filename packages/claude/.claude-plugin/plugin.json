@@ -1,0 +1,18 @@
+{
+  "name": "zlak-flow",
+  "version": "1.0.0-beta.1",
+  "description": "PM/Reviewer workflow with a human approval gate at every step: BRD, Plan, delegated coding on any coder model or CLI, Review, Commit. Invoke with /zlak-flow.",
+  "author": {
+    "name": "nqhed - Huy Ed. Nguyen"
+  },
+  "homepage": "https://github.com/zealakit/agent-plugin-flow/tree/main/packages/claude",
+  "repository": "https://github.com/zealakit/agent-plugin-flow",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "pm",
+    "review",
+    "human-in-the-loop",
+    "approval-gates"
+  ]
+}
